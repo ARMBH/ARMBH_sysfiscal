@@ -9,13 +9,13 @@ Dessa forma, será possível o acompanhamento online do andamento pelos interess
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Tabela de Conteúdo**
 
-- [Processos](#processos)
+- [Informações](#informa%C3%A7%C3%B5es)
 - [Documentação](#documenta%C3%A7%C3%A3o)
   - [Read me](#read-me)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Processos
+## Informações
 [Processos de Fiscalização](http://www.agenciarmbh.mg.gov.br/processos-fiscalizacao-parcelamento/) - Página oficial contendo todas as informações sobre o processo de fiscalização.
 
 
