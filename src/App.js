@@ -1,13 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
-import logo1 from './logo.PNG';
+import logo from './logo.PNG';
 import './App.css';
 
 function App() {
 	return (
 		<div className="App">
 			<header className="App-header">
-				<img src={logo1} className="App-logo" alt="logo" />
+				<img src={logo} className="App-logo" alt="logo" />
 				<p>Sistema de Fiscalização de Parcelamento do Solo para Fins Urbanos</p>
 				<a
 					className="App-link"
