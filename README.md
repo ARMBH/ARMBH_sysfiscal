@@ -28,8 +28,8 @@ A documentação técnica juntamente com levantamento de requisitos está hosped
 
 ### Layout
 O layout será baseado no seguinte repositório:
-[Repositório Exemplo](https://github.com/tabler/tabler-react/tree/master/example)
-[Live Demo](http://tabler-react.com/)
+- [Código Fonte](https://github.com/tabler/tabler-react/tree/master/example)
+- [Live Demo](http://tabler-react.com/)
 
 ### Read me
 Execute o comando abaixo no prompt para atualizar o "Readme" após editar o conteúdo do mesmo.
