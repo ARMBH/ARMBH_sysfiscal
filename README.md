@@ -12,6 +12,7 @@ Dessa forma, será possível o acompanhamento online do andamento pelos interess
 - [Informações](#informa%C3%A7%C3%B5es)
 - [Documentação](#documenta%C3%A7%C3%A3o)
   - [Documentação Técnica e Levantamento de Requisitos](#documenta%C3%A7%C3%A3o-t%C3%A9cnica-e-levantamento-de-requisitos)
+  - [Layout](#layout)
   - [Read me](#read-me)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -24,6 +25,11 @@ Dessa forma, será possível o acompanhamento online do andamento pelos interess
 ### Documentação Técnica e Levantamento de Requisitos
 A documentação técnica juntamente com levantamento de requisitos está hospedado no Google Docs - por enquanto.
 [Documentação Técnica e Levantamento de Requisitos](https://docs.google.com/document/d/1_CGWnM1T3zVtROOVs3LKnPE1Oo4tiJeVsqPLkYT73T4/edit)
+
+### Layout
+O layout será baseado no seguinte repositório:
+[Repositório Exemplo](https://github.com/tabler/tabler-react/tree/master/example)
+[Live Demo](http://tabler-react.com/)
 
 ### Read me
 Execute o comando abaixo no prompt para atualizar o "Readme" após editar o conteúdo do mesmo.
