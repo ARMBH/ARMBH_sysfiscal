@@ -20,6 +20,9 @@ Dessa forma, será possível o acompanhamento online do andamento pelos interess
 ## Informações
 [Processos de Fiscalização](http://www.agenciarmbh.mg.gov.br/processos-fiscalizacao-parcelamento/) - Página oficial contendo todas as informações sobre o processo de fiscalização.
 
+## Utilização
+Digite o comando abaixo para iniciar o frontend em modo desenvolvedor:
+`npm start`
 
 ## Documentação
 ### Documentação Técnica e Levantamento de Requisitos
