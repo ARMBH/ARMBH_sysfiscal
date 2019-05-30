@@ -1,12 +1,17 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from 'react';
+import { Route, Router } from 'react-router-dom';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import './styles/App.css';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import Auth0Wrapper from './components/Auth/Auth0Wrapper';
+import history from './utils/history';
+
+
+const mainRoutes = (
+	<Router history={history}>
+		<Route path="/" render={props => <Auth0Wrapper {...props} />} />
+	</Router>
+);
+
+ReactDOM.render(mainRoutes, document.getElementById('root'));
