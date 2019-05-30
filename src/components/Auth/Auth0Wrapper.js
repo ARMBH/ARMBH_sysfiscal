@@ -19,6 +19,19 @@ export default class Auth0Wrapper extends React.Component {
 
 	constructor() {
 		super();
+		if (
+			localStorage.getItem('accessToken') &&
+			localStorage.getItem('idToken') &&
+			localStorage.getItem('expiresAt')
+		) {
+			console.log('Auth.js.constructor() IF - Data found in the localStorage');
+			this.accessToken = localStorage.getItem('accessToken');
+			this.idToken = localStorage.getItem('idToken');
+			this.expiresAt = localStorage.getItem('expiresAt');
+		} else {
+			console.log('Auth.js.constructor() ELSE - No data found in the localstorage ELSE');
+		}
+
 		this.login = this.login.bind(this);
 		this.logout = this.logout.bind(this);
 		this.handleAuthentication = this.handleAuthentication.bind(this);
@@ -60,16 +73,19 @@ export default class Auth0Wrapper extends React.Component {
 	}
 
 	setSession(authResult) {
+		console.log('Auth.js.setSession() called with : authResult ->', authResult);
 		// Set isLoggedIn flag in localStorage
-		localStorage.setItem('isLoggedIn', 'true');
-		console.log(authResult);
-		console.log(process.env.NODE_ENV);
 
 		// Set the time that the access token will expire at
 		let expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
 		this.accessToken = authResult.accessToken;
 		this.idToken = authResult.idToken;
 		this.expiresAt = expiresAt;
+
+		localStorage.setItem('accessToken', authResult.accessToken);
+		localStorage.setItem('idToken', authResult.idToken);
+		localStorage.setItem('expiresAt', new Date().getTime() / 1000 + authResult.expiresIn);
+		localStorage.setItem('isLoggedIn', true);
 
 		// navigate to the home route
 		history.replace('/');
