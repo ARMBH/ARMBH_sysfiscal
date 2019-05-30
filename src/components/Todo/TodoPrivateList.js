@@ -1,81 +1,92 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment } from 'react';
 
-import TodoItem from "./TodoItem";
-import TodoFilters from "./TodoFilters";
+import TodoItem from './TodoItem';
+import TodoFilters from './TodoFilters';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+
+const GET_MY_TODOS = gql`
+	query getMyTodos {
+		processos(where: { is_public: { _eq: false } }, order_by: { created_at: desc }) {
+			id
+			title
+			created_at
+			is_completed
+		}
+	}
+`;
 
 class TodoPrivateList extends Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      filter: "all",
-      clearInProgress: false,
-      todos: [
-        {
-          id: "1",
-          title: "This is private todo 1",
-          is_completed: true,
-          is_public: false
-        },
-        {
-          id: "2",
-          title: "This is private todo 2",
-          is_completed: false,
-          is_public: false
-        }
-      ]
-    };
+		this.state = {
+			filter: 'all',
+			clearInProgress: false
+		};
 
-    this.filterResults = this.filterResults.bind(this);
-    this.clearCompleted = this.clearCompleted.bind(this);
-  }
+		this.filterResults = this.filterResults.bind(this);
+		this.clearCompleted = this.clearCompleted.bind(this);
+	}
 
-  filterResults(filter) {
-    this.setState({
-      ...this.state,
-      filter: filter
-    });
-  }
+	filterResults(filter) {
+		this.setState({
+			...this.state,
+			filter: filter
+		});
+	}
 
-  clearCompleted() {}
+	clearCompleted() {}
 
-  render() {
-    let filteredTodos = this.state.todos;
-    if (this.state.filter === "active") {
-      filteredTodos = this.state.todos.filter(todo => todo.is_completed !== true);
-    } else if (this.state.filter === "completed") {
-      filteredTodos = this.state.todos.filter(todo => todo.is_completed === true);
-    }
+	render() {
+		const { todos } = this.props;
 
-    const todoList = [];
-    filteredTodos.forEach((todo, index) => {
-      todoList.push(
-        <TodoItem
-          key={index}
-          index={index}
-          todo={todo}
-        />
-      );
-    });
+		let filteredTodos = todos;
+		if (this.state.filter === 'active') {
+			filteredTodos = todos.filter(todo => todo.is_completed !== true);
+		} else if (this.state.filter === 'completed') {
+			filteredTodos = todos.filter(todo => todo.is_completed === true);
+		}
 
-    return (
-      <Fragment>
-        <div className="todoListWrapper">
-          <ul>
-            { todoList }
-          </ul>
-        </div>
+		const todoList = [];
+		filteredTodos.forEach((todo, index) => {
+			todoList.push(<TodoItem key={index} index={index} todo={todo} />);
+		});
 
-        <TodoFilters
-          todos={filteredTodos}
-          currentFilter={this.state.filter}
-          filterResultsFn={this.filterResults}
-          clearCompletedFn={this.clearCompleted}
-          clearInProgress={this.state.clearInProgress}
-        />
-      </Fragment>
-    );
-  }
+		return (
+			<Fragment>
+				<div className="todoListWrapper">
+					<ul>{todoList}</ul>
+				</div>
+
+				<TodoFilters
+					todos={filteredTodos}
+					currentFilter={this.state.filter}
+					filterResultsFn={this.filterResults}
+					clearCompletedFn={this.clearCompleted}
+					clearInProgress={this.state.clearInProgress}
+				/>
+			</Fragment>
+		);
+	}
 }
 
-export default TodoPrivateList;
+const TodoPrivateListQuery = () => {
+	return (
+		<Query query={GET_MY_TODOS}>
+			{({ loading, error, data, client }) => {
+				if (loading) {
+					return <div>Loading...</div>;
+				}
+				if (error) {
+					console.error(error);
+					return <div>Error!</div>;
+				}
+				return <TodoPrivateList client={client} todos={data.processos} />;
+			}}
+		</Query>
+	);
+};
+
+export default TodoPrivateListQuery;
+export { GET_MY_TODOS };
