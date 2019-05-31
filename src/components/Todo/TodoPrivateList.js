@@ -7,7 +7,7 @@ import { Query } from 'react-apollo';
 
 const GET_MY_TODOS = gql`
 	query getMyTodos {
-		processos(where: { is_public: { _eq: false } }, order_by: { created_at: desc }) {
+		todos(where: { is_public: { _eq: false } }, order_by: { created_at: desc }) {
 			id
 			title
 			created_at
@@ -82,7 +82,7 @@ const TodoPrivateListQuery = () => {
 					console.error(error);
 					return <div>Error!</div>;
 				}
-				return <TodoPrivateList client={client} todos={data.processos} />;
+				return <TodoPrivateList client={client} todos={data.todos} />;
 			}}
 		</Query>
 	);
