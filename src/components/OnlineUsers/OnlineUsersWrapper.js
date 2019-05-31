@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import gql from 'graphql-tag';
-import { withApollo } from 'react-apollo';
+import { withApollo, Subscription } from 'react-apollo';
 
 import OnlineUser from './OnlineUser';
 
@@ -8,10 +8,6 @@ class OnlineUsersWrapper extends Component {
 	constructor(props) {
 		super(props);
 		this.client = props.client;
-
-		this.state = {
-			onlineUsers: [{ name: 'someUser1' }, { name: 'someUser2' }]
-		};
 	}
 
 	updateLastSeen() {
@@ -36,16 +32,43 @@ class OnlineUsersWrapper extends Component {
 	}
 
 	render() {
-		const onlineUsersList = [];
-		this.state.onlineUsers.forEach((user, index) => {
-			onlineUsersList.push(<OnlineUser key={index} index={index} user={user} />);
-		});
-
 		return (
 			<div className="onlineUsersWrapper">
-				<div className="sliderHeader">Online users - {this.state.onlineUsers.length}</div>
-
-				{onlineUsersList}
+				<Subscription
+					subscription={gql`
+						subscription getOnlineUsers {
+							online_users(order_by: { user: { name: asc } }) {
+								id
+								user {
+									name
+								}
+							}
+						}
+					`}
+				>
+					{({ loading, error, data }) => {
+						if (loading) {
+							return <span>Loading...</span>;
+						}
+						if (error) {
+							console.error(error);
+							return <span>Error!</span>;
+						}
+						if (data) {
+							const users = data.online_users;
+							const onlineUsersList = [];
+							users.forEach((u, index) => {
+								onlineUsersList.push(<OnlineUser key={index} index={index} user={u.user} />);
+							});
+							return (
+								<Fragment>
+									<div className="sliderHeader">Online users - {users.length}</div>
+									{onlineUsersList}
+								</Fragment>
+							);
+						}
+					}}
+				</Subscription>
 			</div>
 		);
 	}
