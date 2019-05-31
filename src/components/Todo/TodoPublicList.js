@@ -1,103 +1,172 @@
 import React, { Component, Fragment } from 'react';
+import { Subscription, withApollo } from 'react-apollo';
+import gql from 'graphql-tag';
+import TaskItem from './TaskItem';
 
-import TaskItem from "./TaskItem";
+class _TodoPublicList extends Component {
+	constructor(props) {
+		super(props);
 
-class TodoPublicList extends Component {
-  constructor() {
-    super();
+		this.state = {
+			olderTodosAvailable: props.latestTodo ? true : false,
+			newTodosCount: 0,
+			error: false,
+			todos: []
+		};
 
-    this.state = {
-      olderTodosAvailable: true,
-      newTodosCount: 1,
-      todos: [
-        {
-          id: "1",
-          title: "This is public todo 1",
-          user: {
-            name: "someUser1"
-          }
-        },
-        {
-          id: "2",
-          title: "This is public todo 2",
-          is_completed: false,
-          is_public: true,
-          user: {
-            name: "someUser2"
-          }
-        },
-        {
-          id: "3",
-          title: "This is public todo 3",
-          user: {
-            name: "someUser3"
-          }
-        },
-        {
-          id: "4",
-          title: "This is public todo 4",
-          user: {
-            name: "someUser4"
-          }
-        }
-      ]
-    };
+		this.loadNew = this.loadNew.bind(this);
+		this.loadOlder = this.loadOlder.bind(this);
 
-    this.loadNew = this.loadNew.bind(this);
-    this.loadOlder = this.loadOlder.bind(this);
-  }
+		this.client = props.client;
+		this.oldestTodoId = props.latestTodo ? props.latestTodo.id + 1 : 0;
+		this.newestTodoId = props.latestTodo ? props.latestTodo.id : 0;
+	}
 
-  loadNew() {}
+	loadNew() {
+		const GET_NEW_PUBLIC_TODOS = gql`
+			query getNewPublicTodos($latestVisibleId: Int) {
+				todos(
+					where: { is_public: { _eq: true }, id: { _gt: $latestVisibleId } }
+					order_by: { created_at: desc }
+				) {
+					id
+					title
+					created_at
+					user {
+						name
+					}
+				}
+			}
+		`;
 
-  loadOlder() {}
+		this.client
+			.query({
+				query: GET_NEW_PUBLIC_TODOS,
+				variables: { latestVisibleId: this.state.todos.length ? this.state.todos[0].id : null }
+			})
+			.then(({ data }) => {
+				this.newestTodoId = data.todos[0].id;
+				this.setState({ todos: [...data.todos, ...this.state.todos], newTodosCount: 0 });
+			})
+			.catch(error => {
+				console.error(error);
+				this.setState({ error: true });
+			});
+	}
 
-  render() {
+	loadOlder() {
+		const GET_OLD_PUBLIC_TODOS = gql`
+			query getOldPublicTodos($oldestTodoId: Int!) {
+				todos(
+					where: { is_public: { _eq: true }, id: { _lt: $oldestTodoId } }
+					limit: 7
+					order_by: { created_at: desc }
+				) {
+					id
+					title
+					created_at
+					user {
+						name
+					}
+				}
+			}
+		`;
 
-    let todos = this.state.todos;
+		this.client
+			.query({
+				query: GET_OLD_PUBLIC_TODOS,
+				variables: { oldestTodoId: this.oldestTodoId }
+			})
+			.then(({ data }) => {
+				if (data.todos.length) {
+					this.oldestTodoId = data.todos[data.todos.length - 1].id;
+					this.setState({ todos: [...this.state.todos, ...data.todos] });
+				} else {
+					this.setState({ olderTodosAvailable: false });
+				}
+			})
+			.catch(error => {
+				console.error(error);
+				this.setState({ error: true });
+			});
+	}
 
-    const todoList = (
-      <ul>
-        {
-          todos.map((todo, index) => {
-            return (
-              <TaskItem
-                key={index}
-                index={index}
-                todo={todo}
-              />
-            );
-          })
-        }
-      </ul>
-    );
+	componentDidUpdate(prevProps) {
+		// Do we have a new todo available?
+		if (this.props.latestTodo && this.props.latestTodo.id > this.newestTodoId) {
+			this.newestTodoId = this.props.latestTodo.id;
+			this.setState({ newTodosCount: this.state.newTodosCount + 1 });
+		}
+	}
 
-    let newTodosNotification = '';
-    if (this.state.newTodosCount) {
-      newTodosNotification = (
-        <div className={"loadMoreSection"} onClick={this.loadNew}>
-          New tasks have arrived! ({this.state.newTodosCount.toString()})
-        </div>
-      );
-    }
+	componentDidMount() {
+		this.loadOlder();
+	}
 
-    const olderTodosMsg = (
-      <div className={"loadMoreSection"} onClick={this.loadOlder}>
-        { this.state.olderTodosAvailable ? 'Load older tasks' : 'No more public tasks!'}
-      </div>
-    );
+	render() {
+		let todos = this.state.todos;
 
-    return (
-      <Fragment>
-        <div className="todoListWrapper">
-          { newTodosNotification }
+		const todoList = (
+			<ul>
+				{todos.map((todo, index) => {
+					return <TaskItem key={index} index={index} todo={todo} />;
+				})}
+			</ul>
+		);
 
-          { todoList }
+		let newTodosNotification = '';
+		if (this.state.newTodosCount) {
+			newTodosNotification = (
+				<div className={'loadMoreSection'} onClick={this.loadNew}>
+					New tasks have arrived! ({this.state.newTodosCount.toString()})
+				</div>
+			);
+		}
 
-          { olderTodosMsg }
-        </div>
-      </Fragment>
-    );
-  }
+		const olderTodosMsg = (
+			<div className={'loadMoreSection'} onClick={this.loadOlder}>
+				{this.state.olderTodosAvailable ? 'Load older tasks' : 'No more public tasks!'}
+			</div>
+		);
+
+		return (
+			<Fragment>
+				<div className="todoListWrapper">
+					{newTodosNotification}
+
+					{todoList}
+
+					{olderTodosMsg}
+				</div>
+			</Fragment>
+		);
+	}
 }
 
-export default TodoPublicList;
+const TodoPublicList = withApollo(_TodoPublicList);
+
+// Run a subscription to get the latest public todo
+const NOTIFY_NEW_PUBLIC_TODOS = gql`
+	subscription notifyNewPublicTodos {
+		todos(where: { is_public: { _eq: true } }, limit: 1, order_by: { created_at: desc }) {
+			id
+			created_at
+		}
+	}
+`;
+const TodoPublicListSubscription = () => {
+	return (
+		<Subscription subscription={NOTIFY_NEW_PUBLIC_TODOS}>
+			{({ loading, error, data }) => {
+				if (loading) {
+					return <span>Loading...</span>;
+				}
+				if (error) {
+					return <span>Error</span>;
+				}
+				return <TodoPublicList latestTodo={data.todos.length ? data.todos[0] : null} />;
+			}}
+		</Subscription>
+	);
+};
+export default TodoPublicListSubscription;
