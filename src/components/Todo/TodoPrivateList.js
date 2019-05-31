@@ -27,6 +27,9 @@ class TodoPrivateList extends Component {
 
 		this.filterResults = this.filterResults.bind(this);
 		this.clearCompleted = this.clearCompleted.bind(this);
+
+		// Set the apollo client
+		this.client = props.client;
 	}
 
 	filterResults(filter) {
@@ -36,7 +39,27 @@ class TodoPrivateList extends Component {
 		});
 	}
 
-	clearCompleted() {}
+	clearCompleted() {
+		// Remove all the todos that are completed
+		const CLEAR_COMPLETED = gql`
+			mutation clearCompleted {
+				delete_todos(where: { is_completed: { _eq: true }, is_public: { _eq: false } }) {
+					affected_rows
+				}
+			}
+		`;
+		this.client.mutate({
+			mutation: CLEAR_COMPLETED,
+			optimisticResponse: null,
+			update: (cache, { data }) => {
+				const existingTodos = cache.readQuery({ query: GET_MY_TODOS });
+				const newTodos = existingTodos.todos.filter(t => !t.is_completed);
+				let diferenca = existingTodos.todos.length - newTodos.length;
+				console.log(`Foram apagados ${diferenca} Todos.`);
+				cache.writeQuery({ query: GET_MY_TODOS, data: { todos: newTodos } });
+			}
+		});
+	}
 
 	render() {
 		const { todos } = this.props;
