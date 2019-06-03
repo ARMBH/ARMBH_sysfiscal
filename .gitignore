@@ -60,4 +60,4 @@ typings/
 # next.js build output
 .next
 
-auth0-variables.js
+auth0-variables.js*
