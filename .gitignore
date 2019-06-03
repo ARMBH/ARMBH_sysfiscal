@@ -61,3 +61,5 @@ typings/
 .next
 
 auth0-variables.js*
+
+constants.js*
