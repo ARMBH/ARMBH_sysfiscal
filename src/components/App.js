@@ -1,56 +1,67 @@
-import React from 'react';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Navbar, Button } from "react-bootstrap";
+import "../styles/App.css";
 
-import Header from './Header';
-import TodoPrivateWrapper from './Todo/TodoPrivateWrapper';
-import TodoPublicWrapper from './Todo/TodoPublicWrapper';
-import OnlineUsersWrapper from './OnlineUsers/OnlineUsersWrapper';
+class App extends Component {
+  goTo(route) {
+    this.props.history.replace(`/${route}`);
+  }
 
-import ApolloClient from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { WebSocketLink } from 'apollo-link-ws';
-import { ApolloProvider } from 'react-apollo';
+  login() {
+    this.props.auth.login();
+  }
 
-const createApolloClient = authToken => {
-	return new ApolloClient({
-		link: new WebSocketLink({
-			uri: 'ws://localhost:8080/v1/graphql',
-			options: {
-				reconnect: true,
-				connectionParams: {
-					headers: {
-						Authorization: `Bearer ${authToken}`
-					}
-				}
-			}
-		}),
-		cache: new InMemoryCache()
-	});
-};
+  logout() {
+    this.props.auth.logout();
+  }
 
-const App = ({ auth }) => {
-	const client = createApolloClient(auth.idToken);
-	return (
-		<ApolloProvider client={client}>
-			<div>
-				<Header logoutHandler={auth.logout} />
-				<div className="container-fluid p-left-right-0">
-					<div className="col-xs-12 col-md-9 p-left-right-0">
-						<div className="col-xs-12 col-md-6 sliderMenu p-30">
-							<TodoPrivateWrapper />
-						</div>
-						<div className="col-xs-12 col-md-6 sliderMenu p-30 bg-gray border-right">
-							<TodoPublicWrapper />
-						</div>
-					</div>
-					<div className="col-xs-12 col-md-3 p-left-right-0">
-						<div className="col-xs-12 col-md-12 sliderMenu p-30 bg-gray">
-							<OnlineUsersWrapper />
-						</div>
-					</div>
-				</div>
-			</div>
-		</ApolloProvider>
-	);
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated()) {
+      this.props.history.push("/home");
+    }
+  }
+
+  render() {
+    const { isAuthenticated } = this.props.auth;
+
+    return (
+      <div>
+        <Navbar fluid className="removeMarBottom">
+          <Navbar.Header className="navheader">
+            <Navbar.Brand className="navBrand">
+              GraphQL Tutorial App
+            </Navbar.Brand>
+            {!isAuthenticated() && (
+              <Button
+                id="qsLoginBtn"
+                bsStyle="primary"
+                className="btn-margin logoutBtn"
+                onClick={this.login.bind(this)}
+              >
+                Log In
+              </Button>
+            )}
+            {isAuthenticated() && (
+              <Button
+                id="qsLogoutBtn"
+                bsStyle="primary"
+                className="btn-margin logoutBtn"
+                onClick={this.logout.bind(this)}
+              >
+                Log Out
+              </Button>
+            )}
+          </Navbar.Header>
+        </Navbar>
+      </div>
+    );
+  }
+}
+
+App.propTypes = {
+  history: PropTypes.object,
+  auth: PropTypes.object
 };
 
 export default App;
