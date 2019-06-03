@@ -11,7 +11,7 @@ class OnlineUsersWrapper extends Component {
 	}
 
 	updateLastSeen() {
-		console.log('Ping last_seen');
+		//console.log('Ping last_seen');
 		// Use the apollo client to run a mutation to update the last_seen value
 		const UPDATE_LASTSEEN_MUTATION = gql`
 			mutation updateLastSeen($now: timestamptz!) {

@@ -24,7 +24,7 @@ export default class Auth0Wrapper extends React.Component {
 			localStorage.getItem('idToken') &&
 			localStorage.getItem('expiresAt')
 		) {
-			console.log('Auth.js.constructor() IF - Data found in the localStorage');
+			//console.log('Auth.js.constructor() IF - Data found in the localStorage');
 			this.accessToken = localStorage.getItem('accessToken');
 			this.idToken = localStorage.getItem('idToken');
 			this.expiresAt = localStorage.getItem('expiresAt');
@@ -47,7 +47,7 @@ export default class Auth0Wrapper extends React.Component {
 	}
 
 	login() {
-		this.auth0.authorize();
+		this.auth0.authorize(); 
 	}
 
 	handleAuthentication = () => {
@@ -73,7 +73,7 @@ export default class Auth0Wrapper extends React.Component {
 	}
 
 	setSession(authResult) {
-		console.log('Auth.js.setSession() called with : authResult ->', authResult);
+		//console.log('Auth.js.setSession() called with : authResult ->', authResult);
 		// Set isLoggedIn flag in localStorage
 
 		// Set the time that the access token will expire at
