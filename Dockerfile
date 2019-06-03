@@ -1,3 +1,4 @@
+# Este Docker File ainda não funciona
 FROM node:carbon
 
 # Create app directory
@@ -15,6 +16,6 @@ COPY src /app
 #Build react/vue/angular bundle static files
 RUN npm run build
 
-EXPOSE 8080
+# EXPOSE 8080
 # serve dist folder on port 8080
-CMD ["serve", "-s", "dist", "-p", "8080"]
+# CMD ["serve", "-s", "dist", "-p", "8080"]
