@@ -1,0 +1,5 @@
+export const AUTH_CONFIG = {
+  domain: 'EDITE_AQUI.auth0.com',
+  clientId: 'EDITE_AQUI',
+  callbackUrl: 'http://EDITE_AQUI/callback' 
+};
