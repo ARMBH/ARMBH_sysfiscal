@@ -5,10 +5,13 @@ import Home from "./components/Home/Home";
 import Callback from "./components/Callback/Callback";
 import auth from "./components/Auth/Auth";
 import LandingPage from "./components/LandingPage/LandingPage";
+import BlogPage from "./components/BlogPage/BlogPage";
 import history from "./utils/history";
 
 import { ApolloProvider } from "react-apollo";
 import makeApolloClient from "./apollo";
+
+import "tabler-react/dist/Tabler.css";
 
 let client;
 
@@ -53,6 +56,11 @@ export const makeMainRoutes = () => {
           exact
           path="/home"
           render={props => provideClient(Home, props)}
+        />
+        <Route
+          exact
+          path="/blog"
+          render={props => provideClient(BlogPage, props)}
         />
         <Route
           path="/callback"

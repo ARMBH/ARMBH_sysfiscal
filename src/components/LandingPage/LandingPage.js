@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import "../../styles/App.css";
+//import '../../styles/App.css';
 import { Link } from "react-router-dom";
 class LandingPage extends Component {
   login() {
@@ -19,7 +19,7 @@ class LandingPage extends Component {
     const rightImg = require("../../images/right-img.png");
 
     return (
-      <div className="container-fluid gradientBgColor minHeight">
+      <div className="gradientBgColor minHeight">
         <div>
           <div className="headerWrapper">
             <div className="headerDescription">
@@ -119,20 +119,6 @@ class LandingPage extends Component {
                   </div>
                 </div>
               </div>
-              {/*
-              <div className="footer">
-                Built with
-                <i className="fas fa-heart" />
-                by{" "}
-                <a
-                  href="https://hasura.io/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Hasura
-                </a>
-              </div>
-              */}
             </div>
             <div className="tutorialImg col-md-6 col-sm-6 col-xs-12 hidden-xs noPadd">
               <img className="img-responsive" src={rightImg} alt="View" />

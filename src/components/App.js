@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Navbar, Button } from "react-bootstrap";
-import "../styles/App.css";
 
 class App extends Component {
   goTo(route) {
@@ -49,7 +48,7 @@ class App extends Component {
                 className="btn-margin logoutBtn"
                 onClick={this.logout.bind(this)}
               >
-                Log Out
+                Log Outa
               </Button>
             )}
           </Navbar.Header>

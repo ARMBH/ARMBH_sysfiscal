@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 //import moment from 'moment';
 import gql from "graphql-tag";
-import "../../styles/App.css";
+
 import TodoPublicWrapper from "../Todo/TodoPublicWrapper";
 import TodoPrivateWrapper from "../Todo/TodoPrivateWrapper";
 import OnlineUsers from "../OnlineUsers/OnlineUsers";
 import { Navbar, Button } from "react-bootstrap";
 import auth from "../Auth/Auth";
 import Loading from "../Loading/Loading";
+import SiteWrapper from "../SiteWrapper/SiteWrapper";
+import { Page, Grid, BlogCard } from "tabler-react";
 
 class App extends Component {
   constructor() {
@@ -40,15 +42,16 @@ class App extends Component {
 
   componentDidMount() {
     const { renewSession } = auth;
-
     if (localStorage.getItem("isLoggedIn") === "true") {
       // eslint-disable-next-line
       const lastSeenMutation = setInterval(
         this.updateLastSeen.bind(this),
         5000
       );
+
       renewSession().then(data => {
-        this.setState({ session: true });
+        //this.setState({ session: true });
+        console.log("Ok - sessão renovada");
       });
     } else {
       window.location.href = "/";
@@ -56,71 +59,77 @@ class App extends Component {
   }
   render() {
     const { isAuthenticated } = this.props.auth;
-    if (!this.state.session) {
-      return (
-        <div>
-          <Loading color="#4286f4" type="spinningBubbles" />
-        </div>
-      );
-    }
+    /*
+		if (!this.state.session) {
+			return (
+				<div>
+					<Loading color="#4286f4" type="spinningBubbles" />
+				</div>
+			);
+		}
+		*/
     return (
-      <div>
-        <Navbar fluid className="removeMarBottom">
-          <Navbar.Header className="navheader">
-            <Navbar.Brand className="navBrand">
-              React Apollo Todo App
-            </Navbar.Brand>
-            {!isAuthenticated() && (
-              <Button
-                id="qsLoginBtn"
-                bsStyle="primary"
-                className="btn-margin logoutBtn"
-                onClick={this.login.bind(this)}
-              >
-                Log In
-              </Button>
-            )}
-            {isAuthenticated() && (
-              <Button
-                id="qsLogoutBtn"
-                bsStyle="primary"
-                className="btn-margin logoutBtn"
-                onClick={this.logout.bind(this)}
-              >
-                Log Out
-              </Button>
-            )}
-          </Navbar.Header>
-        </Navbar>
-        <div>
-          <div className="col-xs-12 col-md-12 col-lg-9 col-sm-12 noPadd">
+      <SiteWrapper {...this.props}>
+        <Page.Content title="Blog Component">
+          <div>
+            <Navbar fluid className="removeMarBottom">
+              <Navbar.Header className="navheader">
+                <Navbar.Brand className="navBrand">
+                  React Apollo Todo App
+                </Navbar.Brand>
+                {!isAuthenticated() && (
+                  <Button
+                    id="qsLoginBtn"
+                    bsStyle="primary"
+                    className="btn-margin logoutBtn"
+                    onClick={this.login.bind(this)}
+                  >
+                    Log In
+                  </Button>
+                )}
+                {isAuthenticated() && (
+                  <Button
+                    id="qsLogoutBtn"
+                    bsStyle="primary"
+                    className="btn-margin logoutBtn"
+                    onClick={this.logout.bind(this)}
+                  >
+                    Log Out
+                  </Button>
+                )}
+              </Navbar.Header>
+            </Navbar>
             <div>
-              <div className="col-md-6 col-sm-12">
-                <div className="wd95 addPaddTopBottom">
-                  <div className="sectionHeader">Personal todos</div>
-                  <TodoPrivateWrapper
-                    client={this.props.client}
-                    userId={auth.getSub()}
-                  />
+              <div className="col-xs-12 col-md-12 col-lg-9 col-sm-12 noPadd">
+                <div>
+                  <div className="col-md-6 col-sm-12">
+                    <div className="wd95 addPaddTopBottom">
+                      <div className="sectionHeader">Personal todos</div>
+                      <TodoPrivateWrapper
+                        client={this.props.client}
+                        userId={auth.getSub()}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-xs-12 col-md-6 col-sm-12 grayBgColor todoMainWrapper commonBorRight">
+                    <div className="wd95 addPaddTopBottom">
+                      <div className="sectionHeader">Public todos</div>
+                      <TodoPublicWrapper
+                        client={this.props.client}
+                        userId={auth.getSub()}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="col-xs-12 col-md-6 col-sm-12 grayBgColor todoMainWrapper commonBorRight">
-                <div className="wd95 addPaddTopBottom">
-                  <div className="sectionHeader">Public todos</div>
-                  <TodoPublicWrapper
-                    client={this.props.client}
-                    userId={auth.getSub()}
-                  />
-                </div>
+              <div className="col-xs-12 col-lg-3 col-md-12 col-sm-12 noPadd">
+                <OnlineUsers />
               </div>
             </div>
+            <div className="footerWrapper">React Apollo Todo App</div>
           </div>
-          <div className="col-xs-12 col-lg-3 col-md-12 col-sm-12 noPadd">
-            <OnlineUsers />
-          </div>
-        </div>
-        <div className="footerWrapper">React Apollo Todo App</div>
-      </div>
+        </Page.Content>
+      </SiteWrapper>
     );
   }
 }
