@@ -24,8 +24,7 @@ class LandingPage extends Component {
         <div>
           <div className="headerWrapper">
             <div className="headerDescription">
-              {isAuthenticated() && <Link to="/home">Sysfiscal App</Link>}
-              {!isAuthenticated() && <span>Sysfiscal App</span>}
+              <span className="titulo">Sysfiscal App</span>
             </div>
             <div className="loginBtn">
               {!isAuthenticated() && (
@@ -35,7 +34,7 @@ class LandingPage extends Component {
                   className="btn-margin logoutBtn"
                   onClick={this.login.bind(this)}
                 >
-                  Log In
+                  <span className="titulo">Log In</span>
                 </button>
               )}
               {isAuthenticated() && (
