@@ -13,7 +13,11 @@ import {
 } from "tabler-react";
 import "tabler-react/dist/Tabler.css";
 import type { NotificationProps } from "tabler-react";
+import auth from "../Auth/Auth";
+import gql from "graphql-tag";
+
 const authLogo = require("../../images/auth.png");
+let promessa;
 type Props = {|
   +children: React.Node
 |};
@@ -144,11 +148,46 @@ const accountDropdownProps = {
 };
 
 class SiteWrapper extends React.Component<Props, State> {
-  constructor(props) {
-    super(props);
+  login() {
+    this.props.auth.login();
   }
+  logout() {
+    this.props.auth.logout();
+  }
+
+  updateLastSeen() {
+    //console.log('Ping last_seen');
+    // Use the apollo client to run a mutation to update the last_seen value
+    const UPDATE_LASTSEEN_MUTATION = gql`
+      mutation updateLastSeen($now: timestamptz!) {
+        update_users(where: {}, _set: { last_seen: $now }) {
+          affected_rows
+        }
+      }
+    `;
+    this.props.client.mutate({
+      mutation: UPDATE_LASTSEEN_MUTATION,
+      variables: { now: new Date().toISOString() }
+    });
+  }
+
   componentDidMount() {
-    //console.log(this.props);
+    const { renewSession } = auth;
+
+    if (localStorage.getItem("isLoggedIn") === "true") {
+      // eslint-disable-next-line
+      const lastSeenMutation = setInterval(
+        this.updateLastSeen.bind(this),
+        5000
+      );
+
+      renewSession().then(data => {
+        this.setState({ session: true });
+        console.log("Ok - sessão renovada");
+      });
+    } else {
+      window.location.href = "/";
+    }
   }
   state = {
     notificationsObjects: [
@@ -192,6 +231,8 @@ class SiteWrapper extends React.Component<Props, State> {
       (a, v) => a || v.unread,
       false
     );
+    const { isAuthenticated } = this.props.auth;
+    //if (isAuthenticated()) alert('To on');
     return (
       <Site.Wrapper
         headerProps={{
@@ -210,6 +251,26 @@ class SiteWrapper extends React.Component<Props, State> {
               >
                 Source code
               </Button>
+              {!isAuthenticated() && (
+                <Button
+                  id="qsLoginBtn"
+                  bsStyle="primary"
+                  className="btn-margin logoutBtn"
+                  onClick={this.login.bind(this)}
+                >
+                  Log In
+                </Button>
+              )}
+              {isAuthenticated() && (
+                <Button
+                  id="qsLogoutBtn"
+                  bsStyle="primary"
+                  className="btn-margin logoutBtn"
+                  onClick={this.logout.bind(this)}
+                >
+                  Log Out
+                </Button>
+              )}
             </Nav.Item>
           ),
           notificationsTray: {

@@ -46,7 +46,7 @@ class Auth {
     });
   };
 
-  setSession(authResult) {
+  setSession(authResult, redireciona = true) {
     // Set isLoggedIn flag in localStorage
     localStorage.setItem("isLoggedIn", "true");
 
@@ -62,7 +62,7 @@ class Auth {
     localStorage.setItem("auth0:expires_at", this.expiresAt);
     localStorage.setItem("auth0:id_token:sub", this.sub);
     // navigate to the home route
-    history.replace("/home");
+    if (redireciona) history.replace("/home");
     // window.location.href="/home";
   }
 
@@ -83,7 +83,7 @@ class Auth {
     return new Promise((resolve, reject) => {
       _this.auth0.checkSession({}, (err, authResult) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
-          _this.setSession(authResult);
+          _this.setSession(authResult, false);
           resolve(authResult);
         } else if (err) {
           _this.logout();

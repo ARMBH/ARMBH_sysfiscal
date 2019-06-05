@@ -1,64 +1,21 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 //import moment from 'moment';
-import gql from "graphql-tag";
 
 import TodoPublicWrapper from "../Todo/TodoPublicWrapper";
 import TodoPrivateWrapper from "../Todo/TodoPrivateWrapper";
 import OnlineUsers from "../OnlineUsers/OnlineUsers";
-import { Navbar, Button } from "react-bootstrap";
-import auth from "../Auth/Auth";
-import Loading from "../Loading/Loading";
+import { Navbar } from "react-bootstrap";
+
+//import Loading from '../Loading/Loading';
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import { Page, Grid, BlogCard } from "tabler-react";
+import { Page } from "tabler-react";
+
+import auth from "../Auth/Auth";
+//import gql from 'graphql-tag';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = { session: false };
-  }
-  login() {
-    this.props.auth.login();
-  }
-  logout() {
-    this.props.auth.logout();
-  }
-
-  updateLastSeen() {
-    //console.log('Ping last_seen');
-    // Use the apollo client to run a mutation to update the last_seen value
-    const UPDATE_LASTSEEN_MUTATION = gql`
-      mutation updateLastSeen($now: timestamptz!) {
-        update_users(where: {}, _set: { last_seen: $now }) {
-          affected_rows
-        }
-      }
-    `;
-    this.props.client.mutate({
-      mutation: UPDATE_LASTSEEN_MUTATION,
-      variables: { now: new Date().toISOString() }
-    });
-  }
-
-  componentDidMount() {
-    const { renewSession } = auth;
-    if (localStorage.getItem("isLoggedIn") === "true") {
-      // eslint-disable-next-line
-      const lastSeenMutation = setInterval(
-        this.updateLastSeen.bind(this),
-        5000
-      );
-
-      renewSession().then(data => {
-        //this.setState({ session: true });
-        console.log("Ok - sessão renovada");
-      });
-    } else {
-      window.location.href = "/";
-    }
-  }
   render() {
-    const { isAuthenticated } = this.props.auth;
     /*
 		if (!this.state.session) {
 			return (
@@ -77,26 +34,6 @@ class App extends Component {
                 <Navbar.Brand className="navBrand">
                   React Apollo Todo App
                 </Navbar.Brand>
-                {!isAuthenticated() && (
-                  <Button
-                    id="qsLoginBtn"
-                    bsStyle="primary"
-                    className="btn-margin logoutBtn"
-                    onClick={this.login.bind(this)}
-                  >
-                    Log In
-                  </Button>
-                )}
-                {isAuthenticated() && (
-                  <Button
-                    id="qsLogoutBtn"
-                    bsStyle="primary"
-                    className="btn-margin logoutBtn"
-                    onClick={this.logout.bind(this)}
-                  >
-                    Log Out
-                  </Button>
-                )}
               </Navbar.Header>
             </Navbar>
             <div>
