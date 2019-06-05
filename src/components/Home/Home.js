@@ -27,7 +27,7 @@ class App extends Component {
 		*/
     return (
       <SiteWrapper {...this.props}>
-        <Page.Content title="Blog Component">
+        <Page.Content title="Página Inicial">
           <div>
             <Navbar fluid className="removeMarBottom">
               <Navbar.Header className="navheader">

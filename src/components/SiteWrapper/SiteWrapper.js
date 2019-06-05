@@ -15,7 +15,9 @@ import "tabler-react/dist/Tabler.css";
 import type { NotificationProps } from "tabler-react";
 import auth from "../Auth/Auth";
 import gql from "graphql-tag";
-
+import { Query } from "react-apollo";
+import Account from "./Account";
+import { QUERY_USER } from "./SiteWrapperQueries";
 const authLogo = require("../../images/auth.png");
 
 type Props = {|
@@ -133,8 +135,8 @@ const navBarItems: Array<navItem> = [
 ];
 
 const accountDropdownProps = {
-  avatarURL: "./demo/faces/female/25.jpg",
-  name: "Jane Pearson",
+  //avatarURL: './demo/faces/female/25.jpg',
+  name: "User",
   description: "Administrator",
   options: [
     { icon: "user", value: "Profile" },
@@ -155,9 +157,21 @@ class SiteWrapper extends React.Component<Props, State> {
     this.props.auth.logout();
   }
 
+  getUser(userId) {
+    if (!this.state.name) {
+      this.props.client.mutate({
+        mutation: QUERY_USER,
+        variables: { userId: userId },
+        update: (cache, data) => {
+          if (data) {
+            accountDropdownProps.name = data.data.users[0].name;
+            this.setState({ name: data.data.users[0].name });
+          }
+        }
+      });
+    }
+  }
   updateLastSeen() {
-    //console.log('Ping last_seen');
-    // Use the apollo client to run a mutation to update the last_seen value
     const UPDATE_LASTSEEN_MUTATION = gql`
       mutation updateLastSeen($now: timestamptz!) {
         update_users(where: {}, _set: { last_seen: $now }) {
@@ -170,12 +184,12 @@ class SiteWrapper extends React.Component<Props, State> {
       variables: { now: new Date().toISOString() }
     });
   }
+
   componentWillUnmount() {
     //console.log('');
   }
   componentDidMount() {
     const { renewSession } = auth;
-
     if (localStorage.getItem("isLoggedIn") === "true") {
       // eslint-disable-next-line
       const lastSeenMutation = setInterval(
@@ -186,15 +200,14 @@ class SiteWrapper extends React.Component<Props, State> {
       renewSession().then(data => {
         if (localStorage.getItem("session") !== true) {
           this.setState({ session: true });
-          console.log("SetState");
         }
         localStorage.setItem("session", true);
-        console.log("Ok - sessão renovada");
       });
     } else {
       window.location.href = "/";
     }
   }
+
   state = {
     notificationsObjects: [
       {
@@ -237,13 +250,16 @@ class SiteWrapper extends React.Component<Props, State> {
       (a, v) => a || v.unread,
       false
     );
+
     const { isAuthenticated } = this.props.auth;
+    const userId = auth.getSub();
+    if (userId) this.getUser(userId);
 
     return (
       <Site.Wrapper
         headerProps={{
           href: "/",
-          alt: "Tabler React",
+          alt: "Sys Fiscal",
           imageURL: authLogo,
           navItems: (
             <Nav.Item type="div" className="d-none d-md-flex">
