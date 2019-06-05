@@ -15,8 +15,7 @@ import "tabler-react/dist/Tabler.css";
 import type { NotificationProps } from "tabler-react";
 import auth from "../Auth/Auth";
 import gql from "graphql-tag";
-import { Query } from "react-apollo";
-import Account from "./Account";
+
 import { QUERY_USER } from "./SiteWrapperQueries";
 const authLogo = require("../../images/auth.png");
 
@@ -198,7 +197,7 @@ class SiteWrapper extends React.Component<Props, State> {
       );
 
       renewSession().then(data => {
-        if (localStorage.getItem("session") !== true) {
+        if (localStorage.getItem("session") !== "true") {
           this.setState({ session: true });
         }
         localStorage.setItem("session", true);
