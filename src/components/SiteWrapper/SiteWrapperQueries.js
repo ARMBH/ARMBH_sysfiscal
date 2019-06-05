@@ -9,4 +9,12 @@ const QUERY_USER = gql`
   }
 `;
 
-export { QUERY_USER };
+const UPDATE_LASTSEEN_MUTATION = gql`
+  mutation updateLastSeen($now: timestamptz!) {
+    update_users(where: {}, _set: { last_seen: $now }) {
+      affected_rows
+    }
+  }
+`;
+
+export { QUERY_USER, UPDATE_LASTSEEN_MUTATION };

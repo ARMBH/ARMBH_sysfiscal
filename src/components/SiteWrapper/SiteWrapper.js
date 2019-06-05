@@ -14,9 +14,8 @@ import {
 import "tabler-react/dist/Tabler.css";
 import type { NotificationProps } from "tabler-react";
 import auth from "../Auth/Auth";
-import gql from "graphql-tag";
 
-import { QUERY_USER } from "./SiteWrapperQueries";
+import { QUERY_USER, UPDATE_LASTSEEN_MUTATION } from "./SiteWrapperQueries";
 const authLogo = require("../../images/auth.png");
 
 type Props = {|
@@ -136,7 +135,7 @@ const navBarItems: Array<navItem> = [
 const accountDropdownProps = {
   //avatarURL: './demo/faces/female/25.jpg',
   name: "User",
-  description: "Administrator",
+  description: "Role",
   options: [
     { icon: "user", value: "Profile" },
     { icon: "settings", value: "Settings" },
@@ -170,14 +169,8 @@ class SiteWrapper extends React.Component<Props, State> {
       });
     }
   }
+
   updateLastSeen() {
-    const UPDATE_LASTSEEN_MUTATION = gql`
-      mutation updateLastSeen($now: timestamptz!) {
-        update_users(where: {}, _set: { last_seen: $now }) {
-          affected_rows
-        }
-      }
-    `;
     this.props.client.mutate({
       mutation: UPDATE_LASTSEEN_MUTATION,
       variables: { now: new Date().toISOString() }
@@ -187,6 +180,7 @@ class SiteWrapper extends React.Component<Props, State> {
   componentWillUnmount() {
     //console.log('');
   }
+
   componentDidMount() {
     const { renewSession } = auth;
     if (localStorage.getItem("isLoggedIn") === "true") {
