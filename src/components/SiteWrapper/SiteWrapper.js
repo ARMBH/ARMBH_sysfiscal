@@ -17,7 +17,7 @@ import auth from "../Auth/Auth";
 import gql from "graphql-tag";
 
 const authLogo = require("../../images/auth.png");
-let promessa;
+
 type Props = {|
   +children: React.Node
 |};
@@ -170,7 +170,9 @@ class SiteWrapper extends React.Component<Props, State> {
       variables: { now: new Date().toISOString() }
     });
   }
-
+  componentWillUnmount() {
+    //console.log('');
+  }
   componentDidMount() {
     const { renewSession } = auth;
 
@@ -182,7 +184,11 @@ class SiteWrapper extends React.Component<Props, State> {
       );
 
       renewSession().then(data => {
-        this.setState({ session: true });
+        if (localStorage.getItem("session") !== true) {
+          this.setState({ session: true });
+          console.log("SetState");
+        }
+        localStorage.setItem("session", true);
         console.log("Ok - sessão renovada");
       });
     } else {
@@ -232,7 +238,7 @@ class SiteWrapper extends React.Component<Props, State> {
       false
     );
     const { isAuthenticated } = this.props.auth;
-    //if (isAuthenticated()) alert('To on');
+
     return (
       <Site.Wrapper
         headerProps={{
