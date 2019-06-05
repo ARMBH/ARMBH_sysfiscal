@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 //import '../../styles/App.css';
+import "../../styles/LandingPage.css";
 import { Link } from "react-router-dom";
 class LandingPage extends Component {
   login() {
