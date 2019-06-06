@@ -1,0 +1,8 @@
+.todoCompleto {
+  text-decoration: line-through;
+  color: green;
+}
+
+.mudaCursor {
+  cursor: default !important;
+}
