@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Subscription } from "react-apollo";
 import gql from "graphql-tag";
-import { Grid, StampCard, StatsCard, ProgressCard } from "tabler-react";
+import { Grid, StampCard, ProgressCard } from "tabler-react";
 
 const SUBSCRIPTION_ONLINE_USERS = gql`
   subscription getOnlineUsers {
@@ -16,7 +16,6 @@ const SUBSCRIPTION_ONLINE_USERS = gql`
 
 class OnlineUsers extends Component {
   render() {
-    console.log(this.props);
     return (
       <Subscription subscription={SUBSCRIPTION_ONLINE_USERS}>
         {({ loading, error, data }) => {
