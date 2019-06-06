@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Subscription } from "react-apollo";
 import gql from "graphql-tag";
+import { Grid, StampCard, StatsCard, ProgressCard } from "tabler-react";
 
 const SUBSCRIPTION_ONLINE_USERS = gql`
   subscription getOnlineUsers {
@@ -15,37 +16,47 @@ const SUBSCRIPTION_ONLINE_USERS = gql`
 
 class OnlineUsers extends Component {
   render() {
+    console.log(this.props);
     return (
       <Subscription subscription={SUBSCRIPTION_ONLINE_USERS}>
         {({ loading, error, data }) => {
           if (loading) {
-            return <div>Loading. Please wait...</div>;
+            return <div>Carregando...</div>;
           }
           if (error) {
             return <div>Error loading users</div>;
           }
-          return (
-            <div className="sliderMenu grayBgColor">
-              <div className="sliderHeader">
-                Usuários Online - {data.online_users.length}
-              </div>
-              {data.online_users.map((user, index) => {
-                return (
-                  <div key={user.user.name} className="userInfo">
-                    <div className="userImg">
-                      <i className="far fa-user" />
-                    </div>
-                    <div
-                      data-test={index + "_" + user.name}
-                      className="userName"
-                    >
-                      {user.user.name}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          );
+          if (this.props.total === true) {
+            return (
+              <React.Fragment>
+                <Grid.Col width={6} sm={4} lg={2}>
+                  <ProgressCard
+                    header="Usuários Online"
+                    content={data.online_users.length}
+                    progressColor="yellow"
+                    //progressWidth={34}
+                  />
+                </Grid.Col>
+              </React.Fragment>
+            );
+          } else {
+            return (
+              <React.Fragment>
+                {data.online_users.map((user, index) => {
+                  return (
+                    <Grid.Col sm={6} lg={3} key={user.user.name}>
+                      <StampCard
+                        color="blue"
+                        icon="user-plus"
+                        header={<span>{user.user.name}</span>}
+                        footer={"Role"}
+                      />
+                    </Grid.Col>
+                  );
+                })}
+              </React.Fragment>
+            );
+          }
         }}
       </Subscription>
     );

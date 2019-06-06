@@ -85,14 +85,7 @@ class App extends Component {
                 label="Daily earnings"
               />
             </Grid.Col>
-            <Grid.Col width={6} sm={4} lg={2}>
-              <StatsCard
-                layout={1}
-                movement={-1}
-                total="621"
-                label="Products"
-              />
-            </Grid.Col>
+            <OnlineUsers total={true} />
             <Grid.Col lg={6}>
               <Card>
                 <Card.Header>
@@ -161,62 +154,18 @@ class App extends Component {
                 </Grid.Col>
               </Grid.Row>
             </Grid.Col>
-            <Grid.Col sm={6} lg={3}>
-              <StampCard
-                color="blue"
-                icon="dollar-sign"
-                header={
-                  <a href="#">
-                    132 <small>Sales</small>
-                  </a>
-                }
-                footer={"12 waiting payments"}
-              />
-            </Grid.Col>
-            <Grid.Col sm={6} lg={3}>
-              <StampCard
-                color="green"
-                icon="shopping-cart"
-                header={
-                  <a href="#">
-                    78 <small>Orders</small>
-                  </a>
-                }
-                footer={"32 shipped"}
-              />
-            </Grid.Col>
-            <Grid.Col sm={6} lg={3}>
-              <StampCard
-                color="red"
-                icon="users"
-                header={
-                  <a href="#">
-                    1,352 <small>Members</small>
-                  </a>
-                }
-                footer={"163 registered today"}
-              />
-            </Grid.Col>
-            <Grid.Col sm={6} lg={3}>
-              <StampCard
-                color="yellow"
-                icon="message-square"
-                header={
-                  <a href="#">
-                    132 <small>Comments</small>
-                  </a>
-                }
-                footer={"16 waiting"}
-              />
-            </Grid.Col>
           </Grid.Row>
-
+          <Grid.Row>
+            <h4>Usuários Online</h4>
+          </Grid.Row>
+          <Grid.Row>
+            <OnlineUsers total={false} />
+          </Grid.Row>
           <h1>Public todos</h1>
           <TodoPublicWrapper
             client={this.props.client}
             userId={auth.getSub()}
           />
-          <OnlineUsers />
         </Page.Content>
       </SiteWrapper>
     );
