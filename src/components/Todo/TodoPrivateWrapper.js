@@ -5,6 +5,8 @@ import TodoPrivateList from "./TodoPrivateList";
 
 class TodoPrivateWrapper extends Component {
   render() {
+    let { userId } = this.props;
+
     return (
       <React.Fragment>
         <TodoInput />

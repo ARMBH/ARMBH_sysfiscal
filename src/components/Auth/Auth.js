@@ -57,6 +57,8 @@ class Auth {
     this.expiresAt = expiresAt;
     this.sub = authResult.idTokenPayload.sub;
 
+    //console.log(authResult);
+
     localStorage.setItem("auth0:access_token", this.accessToken);
     localStorage.setItem("auth0:id_token", this.idToken);
     localStorage.setItem("auth0:expires_at", this.expiresAt);
@@ -75,6 +77,8 @@ class Auth {
   }
 
   getSub() {
+    if (localStorage.getItem("auth0:id_token:sub"))
+      return localStorage.getItem("auth0:id_token:sub");
     return this.sub;
   }
 
@@ -101,7 +105,7 @@ class Auth {
 
     // Remove isLoggedIn flag from localStorage
     localStorage.removeItem("isLoggedIn");
-
+    localStorage.clear();
     // navigate to the home route
     history.replace("/");
     // window.location.href="/home";
