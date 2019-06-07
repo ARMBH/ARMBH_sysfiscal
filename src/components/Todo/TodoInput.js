@@ -51,7 +51,9 @@ const TodoInput = ({ isPublic = false }) => {
             <Form
               onSubmit={e => {
                 e.preventDefault();
-                addTodo({ variables: { todo: todoInput, isPublic } });
+                if (todoInput.length > 3)
+                  addTodo({ variables: { todo: todoInput, isPublic } });
+                else alert("Digite ao menos 3 caracteres.");
               }}
             >
               <input
