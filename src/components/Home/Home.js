@@ -31,16 +31,19 @@ import auth from "../Auth/Auth";
 //import gql from 'graphql-tag';
 
 class App extends Component {
+  logout() {
+    this.props.auth.logout();
+  }
+
   render() {
-    /*
-		if (!this.state.session) {
-			return (
-				<div>
-					<Loading color="#4286f4" type="spinningBubbles" />
-				</div>
-			);
-		}
-		*/
+    let { auth } = this.props;
+
+    const { param } = this.props.match.params;
+    if (param === "logout") {
+      this.logout();
+      alert("Sair!");
+    }
+
     return (
       <SiteWrapper {...this.props}>
         <Page.Content title="Página Inicial">

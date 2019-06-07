@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 //import '../../styles/App.css';
 import "../../styles/LandingPage.css";
 //import { Link } from "react-router-dom";
+
 class LandingPage extends Component {
   login() {
     this.props.auth.login();
@@ -12,11 +13,6 @@ class LandingPage extends Component {
   }
   render() {
     const { isAuthenticated } = this.props.auth;
-    //const reactLogo = require('../../images/React-logo.png');
-    //const authLogo = require('../../images/auth.png');
-    //const graphql = require('../../images/graphql.png');
-    //const hasuraLogo = require('../../images/green-logo-white.svg');
-    //const apolloLogo = require('../../images/apollo.png');
     const rightImg = require("../../images/right-img.png");
 
     return (

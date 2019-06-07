@@ -59,6 +59,11 @@ export const makeMainRoutes = () => {
         />
         <Route
           exact
+          path="/home/:param"
+          render={props => provideClient(Home, props)}
+        />
+        <Route
+          exact
           path="/blog"
           render={props => provideClient(BlogPage, props)}
         />

@@ -58,7 +58,7 @@ const navBarItems: Array<navItem> = [
     subItems: [
       {
         value: "Cards Design",
-        to: "/cards",
+        to: "/home/logout",
         LinkComponent: NavLink
       },
       { value: "Charts", to: "/charts", LinkComponent: NavLink },
@@ -131,9 +131,10 @@ const navBarItems: Array<navItem> = [
         : "/documentation"
   }
 ];
+const avatarURL = require("../../images/right-img.png");
 
 const accountDropdownProps = {
-  //avatarURL: './demo/faces/female/25.jpg',
+  avatarURL: avatarURL,
   name: "User",
   description: "Role",
   options: [
@@ -143,7 +144,12 @@ const accountDropdownProps = {
     { icon: "send", value: "Message" },
     { isDivider: true },
     { icon: "help-circle", value: "Need help?" },
-    { icon: "log-out", value: "Sign out" }
+    {
+      icon: "log-out",
+      value: "Sign out",
+      RootComponent: NavLink,
+      to: "/home/logout"
+    }
   ]
 };
 
@@ -162,6 +168,8 @@ class SiteWrapper extends React.Component<Props, State> {
         variables: { userId: userId },
         update: (cache, data) => {
           if (data) {
+            //Configurar o preenchimento do AvatarURL
+            accountDropdownProps.avatarURL = require("../../images/user-icon.png");
             accountDropdownProps.name = data.data.users[0].name;
             this.setState({ name: data.data.users[0].name });
           }
@@ -244,7 +252,6 @@ class SiteWrapper extends React.Component<Props, State> {
       false
     );
 
-    const { isAuthenticated } = this.props.auth;
     const userId = auth.getSub();
     if (userId) this.getUser(userId);
 
@@ -266,26 +273,6 @@ class SiteWrapper extends React.Component<Props, State> {
               >
                 Source code
               </Button>
-              {!isAuthenticated() && (
-                <Button
-                  id="qsLoginBtn"
-                  bsStyle="primary"
-                  className="btn-margin logoutBtn"
-                  onClick={this.login.bind(this)}
-                >
-                  Log In
-                </Button>
-              )}
-              {isAuthenticated() && (
-                <Button
-                  id="qsLogoutBtn"
-                  bsStyle="primary"
-                  className="btn-margin logoutBtn"
-                  onClick={this.logout.bind(this)}
-                >
-                  Log Out
-                </Button>
-              )}
             </Nav.Item>
           ),
           notificationsTray: {
