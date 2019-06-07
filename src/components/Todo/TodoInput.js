@@ -57,7 +57,11 @@ const TodoInput = ({ isPublic = false }) => {
               }}
             >
               <input
-                className="form-control"
+                className={
+                  todoInput.length > 3
+                    ? "form-control is-valid"
+                    : "form-control "
+                }
                 placeholder="Adicionar novo Processo?"
                 value={todoInput}
                 onChange={e => setTodoInput(e.target.value)}
