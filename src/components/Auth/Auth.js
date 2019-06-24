@@ -35,7 +35,7 @@ class Auth {
         // store in db
         this.auth0.client.userInfo(authResult.accessToken, function(err, user) {
           // Now you have the user's information
-          // The code to insert this user info to db has been handled at Auth0 Rule.
+          // The code to insert this user info to db has been handled at Auth0 Rule
         });
       } else if (err) {
         history.replace("/home");
