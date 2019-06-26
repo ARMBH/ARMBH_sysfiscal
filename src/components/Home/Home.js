@@ -27,7 +27,7 @@ import {
   Badge
 } from "tabler-react";
 
-import auth from "../Auth/Auth";
+//import auth from "../Auth/Auth";
 //import gql from 'graphql-tag';
 
 class App extends Component {
@@ -102,6 +102,21 @@ class App extends Component {
             </Grid.Col>
 
             <Grid.Col md={6}>
+              <h1>Public todos</h1>
+              <TodoPublicWrapper
+                client={this.props.client}
+                userId={auth.getSub()}
+              />
+            </Grid.Col>
+          </Grid.Row>
+          <Grid.Row>
+            <h4>Usuários Online</h4>
+          </Grid.Row>
+          <Grid.Row>
+            <OnlineUsers total={false} />
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Col md={6}>
               <Alert type="primary">
                 <Alert.Link
                   href={
@@ -158,17 +173,6 @@ class App extends Component {
               </Grid.Row>
             </Grid.Col>
           </Grid.Row>
-          <Grid.Row>
-            <h4>Usuários Online</h4>
-          </Grid.Row>
-          <Grid.Row>
-            <OnlineUsers total={false} />
-          </Grid.Row>
-          <h1>Public todos</h1>
-          <TodoPublicWrapper
-            client={this.props.client}
-            userId={auth.getSub()}
-          />
         </Page.Content>
       </SiteWrapper>
     );

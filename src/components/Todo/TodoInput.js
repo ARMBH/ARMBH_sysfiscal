@@ -38,7 +38,8 @@ const TodoInput = ({ isPublic = false }) => {
     });
   };
 
-  const resetInput = () => {
+  const resetInput = data => {
+    console.log(data.insert_todos.returning[0].title);
     setTodoInput("");
     input.focus();
   };

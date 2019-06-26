@@ -53,12 +53,12 @@ const navBarItems: Array<navItem> = [
     useExact: true
   },
   {
-    value: "Interface",
+    value: "Processos",
     icon: "box",
     subItems: [
       {
-        value: "Cards Design",
-        to: "/home/logout",
+        value: "Novo Processo",
+        to: "/processo/novo",
         LinkComponent: NavLink
       },
       { value: "Charts", to: "/charts", LinkComponent: NavLink },

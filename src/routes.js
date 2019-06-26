@@ -6,6 +6,7 @@ import Callback from "./components/Callback/Callback";
 import auth from "./components/Auth/Auth";
 import LandingPage from "./components/LandingPage/LandingPage";
 import BlogPage from "./components/BlogPage/BlogPage";
+import ProcessoForm from "./components/Processo/ProcessoForm";
 import history from "./utils/history";
 
 import { ApolloProvider } from "react-apollo";
@@ -66,6 +67,16 @@ export const makeMainRoutes = () => {
           exact
           path="/blog"
           render={props => provideClient(BlogPage, props)}
+        />
+        <Route
+          exact
+          path="/processo"
+          render={props => provideClient(ProcessoForm, props)}
+        />
+        <Route
+          exact
+          path="/processo/:param"
+          render={props => provideClient(ProcessoForm, props)}
         />
         <Route
           path="/callback"
