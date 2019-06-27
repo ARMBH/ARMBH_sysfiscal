@@ -4,11 +4,13 @@ import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import MomentPure from "moment";
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import { Form, Button, Page, Grid } from "tabler-react";
-//import Moment from 'react-moment';
-import "moment-timezone";
-import "moment/locale/pt-br";
+import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
+import Moment from "react-moment";
+//import 'moment-timezone';
+//import 'moment/locale/pt-br';
+
 //import Loading from '../Loading/Loading';
+import _ from "lodash";
 
 const ADD_PROCESSO = gql`
   mutation($title: String!, $descricao: String!, $origem_solicitacao: String!) {
@@ -92,11 +94,14 @@ class ProcessoForm extends Component {
             console.log(
               "Processo não encontrado ou você não possui permissão para visualizar este processo."
             );
+            this.setState({ id: "" });
             this.props.history.push("/processo/todos");
-            return null;
+            return false;
+          } else {
+            console.log("do Get processo");
+            console.log(data.data.processos[0]);
+            this.setState(data.data.processos[0]);
           }
-          //console.log(data.data.processos[0]);
-          this.setState(data.data.processos[0]);
         }
       }
     });
@@ -105,10 +110,14 @@ class ProcessoForm extends Component {
   componentDidMount() {
     const { param } = this.props.match.params;
     if (parseInt(param, 10) > 0) {
-      this.getProcesso(param);
-      this.setState({
-        id: param
-      });
+      this.setState(
+        {
+          id: param
+        },
+        () => {
+          this.getProcesso(param);
+        }
+      );
     }
   }
 
@@ -121,18 +130,29 @@ class ProcessoForm extends Component {
       console.log(this.state.id + " editado com sucesso!");
     } else {
       //alert(data.insert_processos.returning[0].title);
-      this.setState({
-        id: data.insert_processos.returning[0].id
-      });
-      //Encaminhar para  lista de processos ou para o processo com ID ja preenchido
-      this.props.history.push(
-        "/processo/" + data.insert_processos.returning[0].id
+      this.setState(
+        {
+          ...data.insert_processos.returning[0]
+        },
+        () => {
+          this.props.history.push(
+            "/processo/" + data.insert_processos.returning[0].id
+          );
+        }
       );
     }
   };
 
   render() {
-    const { id, title, origem_solicitacao, descricao } = this.state;
+    const {
+      id,
+      title,
+      origem_solicitacao,
+      descricao,
+      created_at,
+      updated_at
+    } = this.state;
+
     let contentTitle = "Novo Processo";
     if (id) contentTitle = "Editar Processo nº " + id;
 
@@ -171,7 +191,22 @@ class ProcessoForm extends Component {
 
                             mutationProcesso({
                               variables: variables
-                            });
+                            })
+                              .then(res => {
+                                if (!res.errors) {
+                                  this.setState({
+                                    updated_at: variables.updated_at
+                                  });
+                                  //onCompleted é chamado aqui
+                                } else {
+                                  // handle errors with status code 200
+                                  console.log("Erro 200: " + res);
+                                }
+                              })
+                              .catch(e => {
+                                //Erro de GraphQL
+                                console.log("Erro GraphQL: " + e);
+                              });
                           }}
                         >
                           <Form.Group label="Título">
@@ -206,12 +241,35 @@ class ProcessoForm extends Component {
                             />
                           </Form.Group>
                           {id ? (
+                            <React.Fragment>
+                              <Form.Group label="Criado em">
+                                {MomentPure(created_at).format("LLL")}{" "}
+                                <Tag>
+                                  <Moment fromNow>{created_at}</Moment>
+                                </Tag>
+                              </Form.Group>
+                              <Form.Group label="Última atualização">
+                                {MomentPure(updated_at).format("LLL")}{" "}
+                                <Tag>
+                                  <Moment fromNow>{updated_at}</Moment>
+                                </Tag>
+                              </Form.Group>
+                            </React.Fragment>
+                          ) : (
+                            "opa"
+                          )}
+                          {error && (
+                            <Alert type="danger">
+                              Erro ao salvar Processo.
+                            </Alert>
+                          )}
+                          {id ? (
                             <Button
                               type="submit"
                               color="primary"
                               className="ml-auto"
                             >
-                              Editar Processo
+                              {loading ? "Carregando..." : "Editar Processo"}
                             </Button>
                           ) : (
                             <Button
@@ -219,12 +277,12 @@ class ProcessoForm extends Component {
                               color="success"
                               className="ml-auto"
                             >
-                              Adicionar Novo Processo
+                              {loading
+                                ? "Carregando..."
+                                : "Adicionar Novo Processo"}
                             </Button>
                           )}
                         </Form>
-
-                        {error && <p>Erro ao salvar Processo.</p>}
                       </Grid.Col>
                     </Grid.Row>
                   </Page.Card>

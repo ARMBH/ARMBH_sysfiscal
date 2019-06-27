@@ -58,7 +58,7 @@ const navBarItems: Array<navItem> = [
     subItems: [
       {
         value: "Novo Processo",
-        to: "/processo/novo",
+        to: "/novoprocesso/",
         LinkComponent: NavLink
       },
       { value: "Charts", to: "/charts", LinkComponent: NavLink },

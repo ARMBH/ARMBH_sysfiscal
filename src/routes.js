@@ -70,7 +70,7 @@ export const makeMainRoutes = () => {
         />
         <Route
           exact
-          path="/processo"
+          path="/novoprocesso/"
           render={props => provideClient(ProcessoForm, props)}
         />
         <Route
