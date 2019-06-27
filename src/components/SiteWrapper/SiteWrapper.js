@@ -57,6 +57,11 @@ const navBarItems: Array<navItem> = [
     icon: "box",
     subItems: [
       {
+        value: "Listar Todos os Processos",
+        to: "/listaprocessos/",
+        LinkComponent: NavLink
+      },
+      {
         value: "Novo Processo",
         to: "/novoprocesso/",
         LinkComponent: NavLink

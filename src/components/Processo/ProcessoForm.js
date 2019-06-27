@@ -10,6 +10,8 @@ import Moment from "react-moment";
 //import 'moment-timezone';
 //import 'moment/locale/pt-br';
 import { toast } from "react-toastify";
+import DataPorExtenso from "../Utils/DataPorExtenso";
+import DataDesdeAgora from "../Utils/DataDesdeAgora";
 
 class ProcessoForm extends Component {
   constructor() {
@@ -126,10 +128,11 @@ class ProcessoForm extends Component {
 
                             if (id) {
                               variables.id = id;
-                              variables.updated_at = MomentPure().format(
-                                "YYYY-MM-DD[T]HH:mm:ss"
-                              );
-                              //console.log(variables);
+                              variables.updated_at =
+                                MomentPure()
+                                  .utc()
+                                  .format("YYYY-MM-DD[T]HH:mm:ss") +
+                                ".000000+00:00";
                             }
 
                             mutationProcesso({
@@ -191,14 +194,15 @@ class ProcessoForm extends Component {
                                 {user ? user.name : "Carregando..."}
                               </Form.Group>
                               <Form.Group label="Criado em">
-                                {MomentPure(created_at).format("LLL")}{" "}
+                                <DataPorExtenso data={created_at} />{" "}
                                 <Tag>
                                   <Moment fromNow>{created_at}</Moment>
                                 </Tag>
                               </Form.Group>
                               <Form.Group label="Última atualização">
-                                {MomentPure(updated_at).format("LLL")}{" "}
+                                <DataPorExtenso data={updated_at} />{" "}
                                 <Tag color="success">
+                                  {" "}
                                   <Moment fromNow>{updated_at}</Moment>
                                 </Tag>
                               </Form.Group>
@@ -234,6 +238,11 @@ class ProcessoForm extends Component {
                       </Grid.Col>
                     </Grid.Row>
                   </Page.Card>
+                  <Button
+                    onClick={() => this.props.history.push("/listaprocessos/")}
+                  >
+                    Voltar para a lista
+                  </Button>
                 </Page.Content>
               </SiteWrapper>
             );

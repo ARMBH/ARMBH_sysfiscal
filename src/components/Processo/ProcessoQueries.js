@@ -61,4 +61,19 @@ const QUERY_PROCESSO = gql`
   }
 `;
 
-export { QUERY_PROCESSO, EDIT_PROCESSO, ADD_PROCESSO };
+const QUERY_PROCESSOS = gql`
+  {
+    processos(order_by: { id: desc }) {
+      updated_at
+      created_at
+      id
+      title
+      user {
+        name
+        id
+      }
+    }
+  }
+`;
+
+export { QUERY_PROCESSO, EDIT_PROCESSO, ADD_PROCESSO, QUERY_PROCESSOS };

@@ -7,6 +7,7 @@ import auth from "./components/Auth/Auth";
 import LandingPage from "./components/LandingPage/LandingPage";
 import BlogPage from "./components/BlogPage/BlogPage";
 import ProcessoForm from "./components/Processo/ProcessoForm";
+import ListaProcessos from "./components/Processo/ListaProcessos";
 import history from "./utils/history";
 
 import { ApolloProvider } from "react-apollo";
@@ -77,6 +78,11 @@ export const makeMainRoutes = () => {
           exact
           path="/novoprocesso/"
           render={props => provideClient(ProcessoForm, props)}
+        />
+        <Route
+          exact
+          path="/listaprocessos/"
+          render={props => provideClient(ListaProcessos, props)}
         />
         <Route
           exact
