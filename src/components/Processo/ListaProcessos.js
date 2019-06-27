@@ -29,6 +29,8 @@ class ListaProcessos extends Component {
       updated_at,
       user
     } = this.state;
+    let { auth } = this.props;
+    const userLogado = auth.getSub();
 
     let contentTitle = "Lista de todos os processos";
     if (id) contentTitle = "Editar Processo nº " + id;
@@ -39,8 +41,23 @@ class ListaProcessos extends Component {
     return (
       <SiteWrapper {...this.props}>
         <Page.Content title={contentTitle}>
-          <Page.Card title={cardTitle}>
-            <Grid.Row cards deck>
+          <Grid.Row cards deck>
+            <Grid.Col>
+              <div style={{ padding: "1rem" }}>
+                <Button.List align="right">
+                  <Button
+                    color="success"
+                    icon="file-plus"
+                    onClick={() => this.props.history.push("/novoprocesso/")}
+                  >
+                    Adicionar Novo processo
+                  </Button>
+                </Button.List>
+              </div>
+            </Grid.Col>
+          </Grid.Row>
+          <Grid.Row cards deck>
+            <Card title={cardTitle}>
               <Query query={QUERY_PROCESSOS} pollInterval={500}>
                 {({ loading, error, data }) => {
                   if (loading) return "Carregando...";
@@ -57,8 +74,8 @@ class ListaProcessos extends Component {
                           <Table.Row>
                             <Table.ColHeader>Nº</Table.ColHeader>
                             <Table.ColHeader>Descrição</Table.ColHeader>
-                            <Table.ColHeader>Data</Table.ColHeader>
-                            <Table.ColHeader>Últ.</Table.ColHeader>
+                            <Table.ColHeader>Criado em</Table.ColHeader>
+                            <Table.ColHeader>Últ. atualização</Table.ColHeader>
                             <Table.ColHeader>Criado por</Table.ColHeader>
                             <Table.ColHeader />
                           </Table.Row>
@@ -76,11 +93,25 @@ class ListaProcessos extends Component {
                               </Table.Col>
                               <Table.Col>{processo.user.name}</Table.Col>
                               <Table.Col>
-                                <Button
-                                  onClick={() => this.gotoProcesso(processo.id)}
-                                >
-                                  Editar
-                                </Button>
+                                {userLogado === processo.user.id ? (
+                                  <Button
+                                    size="sm"
+                                    color="primary"
+                                    icon="edit"
+                                    onClick={() =>
+                                      this.gotoProcesso(processo.id)
+                                    }
+                                  />
+                                ) : (
+                                  <Button
+                                    size="sm"
+                                    color="secondary"
+                                    icon="eye"
+                                    onClick={() =>
+                                      this.gotoProcesso(processo.id)
+                                    }
+                                  />
+                                )}
                               </Table.Col>
                             </Table.Row>
                           ))}
@@ -90,8 +121,8 @@ class ListaProcessos extends Component {
                   );
                 }}
               </Query>
-            </Grid.Row>
-          </Page.Card>
+            </Card>
+          </Grid.Row>
         </Page.Content>
       </SiteWrapper>
     );

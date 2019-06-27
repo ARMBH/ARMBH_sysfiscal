@@ -97,7 +97,8 @@ class ProcessoForm extends Component {
       updated_at,
       user
     } = this.state;
-
+    let { auth } = this.props;
+    const userLogado = auth.getSub();
     let contentTitle = "Novo Processo";
     if (id) contentTitle = "Editar Processo nº " + id;
 
@@ -105,6 +106,7 @@ class ProcessoForm extends Component {
     if (id) cardTitle = title + "";
 
     let mutation = ADD_PROCESSO;
+
     if (id) mutation = EDIT_PROCESSO;
 
     return (
@@ -139,6 +141,7 @@ class ProcessoForm extends Component {
                               variables: variables
                             })
                               .then(res => {
+                                //console.log(res);
                                 if (!res.errors) {
                                   this.setState({
                                     updated_at: variables.updated_at
@@ -195,14 +198,13 @@ class ProcessoForm extends Component {
                               </Form.Group>
                               <Form.Group label="Criado em">
                                 <DataPorExtenso data={created_at} />{" "}
-                                <Tag>
+                                <Tag color="info">
                                   <Moment fromNow>{created_at}</Moment>
                                 </Tag>
                               </Form.Group>
                               <Form.Group label="Última atualização">
                                 <DataPorExtenso data={updated_at} />{" "}
                                 <Tag color="success">
-                                  {" "}
                                   <Moment fromNow>{updated_at}</Moment>
                                 </Tag>
                               </Form.Group>
@@ -216,15 +218,45 @@ class ProcessoForm extends Component {
                             </Alert>
                           )}
                           {id ? (
-                            <Button
-                              type="submit"
-                              color="primary"
-                              className="ml-auto"
-                            >
-                              {loading ? "Carregando..." : "Editar Processo"}
-                            </Button>
+                            <React.Fragment>
+                              <Button.List align="right">
+                                {user && user.id === userLogado ? (
+                                  <React.Fragment>
+                                    <Button
+                                      outline
+                                      color="warning"
+                                      icon="chevrons-left"
+                                      onClick={() =>
+                                        this.props.history.push(
+                                          "/listaprocessos/"
+                                        )
+                                      }
+                                    >
+                                      Cancelar
+                                    </Button>
+                                    <Button
+                                      icon="edit"
+                                      type="submit"
+                                      color="primary"
+                                      className="ml-auto"
+                                    >
+                                      {loading
+                                        ? "Carregando..."
+                                        : "Editar Processo"}
+                                    </Button>
+                                  </React.Fragment>
+                                ) : (
+                                  <Tag color="secondary">
+                                    {loading
+                                      ? "Carregando..."
+                                      : "Apenas Visualização"}
+                                  </Tag>
+                                )}
+                              </Button.List>
+                            </React.Fragment>
                           ) : (
                             <Button
+                              icon="check"
                               type="submit"
                               color="success"
                               className="ml-auto"
@@ -239,6 +271,7 @@ class ProcessoForm extends Component {
                     </Grid.Row>
                   </Page.Card>
                   <Button
+                    icon="chevrons-left"
                     onClick={() => this.props.history.push("/listaprocessos/")}
                   >
                     Voltar para a lista
