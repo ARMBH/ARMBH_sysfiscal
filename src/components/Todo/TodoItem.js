@@ -4,7 +4,7 @@ import { withApollo } from "react-apollo";
 import { GET_MY_TODOS } from "./TodoPrivateList";
 import { Table, Avatar, Icon, Form } from "tabler-react";
 import Moment from "react-moment";
-import "moment-timezone";
+//import "moment-timezone";
 import "moment/locale/pt-br";
 
 import "../../styles/TodoItem.css";

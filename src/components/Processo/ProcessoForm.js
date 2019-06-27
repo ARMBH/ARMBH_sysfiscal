@@ -5,73 +5,10 @@ import { Mutation } from "react-apollo";
 import MomentPure from "moment";
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
+import { QUERY_PROCESSO, EDIT_PROCESSO, ADD_PROCESSO } from "./ProcessoQueries";
 import Moment from "react-moment";
 //import 'moment-timezone';
 //import 'moment/locale/pt-br';
-
-//import Loading from '../Loading/Loading';
-import _ from "lodash";
-
-const ADD_PROCESSO = gql`
-  mutation($title: String!, $descricao: String!, $origem_solicitacao: String!) {
-    insert_processos(
-      objects: {
-        title: $title
-        descricao: $descricao
-        origem_solicitacao: $origem_solicitacao
-      }
-    ) {
-      affected_rows
-      returning {
-        id
-        title
-      }
-    }
-  }
-`;
-
-const EDIT_PROCESSO = gql`
-  mutation(
-    $id: Int!
-    $title: String!
-    $descricao: String!
-    $origem_solicitacao: String!
-    $updated_at: timestamptz
-  ) {
-    update_processos(
-      where: { id: { _eq: $id } }
-      _set: {
-        updated_at: $updated_at
-        title: $title
-        origem_solicitacao: $origem_solicitacao
-        descricao: $descricao
-      }
-    ) {
-      affected_rows
-      returning {
-        id
-        title
-      }
-    }
-  }
-`;
-
-const QUERY_PROCESSO = gql`
-  query getUser($processoId: Int!) {
-    processos(where: { id: { _eq: $processoId } }) {
-      id
-      title
-      updated_at
-      user {
-        id
-        name
-      }
-      origem_solicitacao
-      descricao
-      created_at
-    }
-  }
-`;
 
 class ProcessoForm extends Component {
   constructor() {
@@ -98,6 +35,7 @@ class ProcessoForm extends Component {
             this.props.history.push("/processo/todos");
             return false;
           } else {
+            console.log(data.data.processos[0].user.name);
             console.log("do Get processo");
             console.log(data.data.processos[0]);
             this.setState(data.data.processos[0]);
@@ -150,7 +88,8 @@ class ProcessoForm extends Component {
       origem_solicitacao,
       descricao,
       created_at,
-      updated_at
+      updated_at,
+      user
     } = this.state;
 
     let contentTitle = "Novo Processo";
@@ -199,7 +138,7 @@ class ProcessoForm extends Component {
                                   });
                                   //onCompleted é chamado aqui
                                 } else {
-                                  // handle errors with status code 200
+                                  // Erros code 200
                                   console.log("Erro 200: " + res);
                                 }
                               })
@@ -242,6 +181,9 @@ class ProcessoForm extends Component {
                           </Form.Group>
                           {id ? (
                             <React.Fragment>
+                              <Form.Group label="Criado por">
+                                {user ? user.name : "Carregando..."}
+                              </Form.Group>
                               <Form.Group label="Criado em">
                                 {MomentPure(created_at).format("LLL")}{" "}
                                 <Tag>
@@ -250,13 +192,13 @@ class ProcessoForm extends Component {
                               </Form.Group>
                               <Form.Group label="Última atualização">
                                 {MomentPure(updated_at).format("LLL")}{" "}
-                                <Tag>
+                                <Tag color="success">
                                   <Moment fromNow>{updated_at}</Moment>
                                 </Tag>
                               </Form.Group>
                             </React.Fragment>
                           ) : (
-                            "opa"
+                            ""
                           )}
                           {error && (
                             <Alert type="danger">
