@@ -9,6 +9,7 @@ import { QUERY_PROCESSO, EDIT_PROCESSO, ADD_PROCESSO } from "./ProcessoQueries";
 import Moment from "react-moment";
 //import 'moment-timezone';
 //import 'moment/locale/pt-br';
+import { toast } from "react-toastify";
 
 class ProcessoForm extends Component {
   constructor() {
@@ -31,13 +32,13 @@ class ProcessoForm extends Component {
             console.log(
               "Processo não encontrado ou você não possui permissão para visualizar este processo."
             );
+            toast.error(
+              "Processo não encontrado ou você não possui permissão para visualizar este processo."
+            );
             this.setState({ id: "" });
             this.props.history.push("/processo/todos");
             return false;
           } else {
-            console.log(data.data.processos[0].user.name);
-            console.log("do Get processo");
-            console.log(data.data.processos[0]);
             this.setState(data.data.processos[0]);
           }
         }
@@ -65,9 +66,12 @@ class ProcessoForm extends Component {
 
   handleCompleted = data => {
     if (this.state.id) {
-      console.log(this.state.id + " editado com sucesso!");
+      let message = "Processo " + this.state.id + " editado com sucesso!";
+      toast.success(message);
     } else {
-      //alert(data.insert_processos.returning[0].title);
+      toast.success(
+        data.insert_processos.returning[0].title + " criado com sucesso!"
+      );
       this.setState(
         {
           ...data.insert_processos.returning[0]
@@ -125,7 +129,7 @@ class ProcessoForm extends Component {
                               variables.updated_at = MomentPure().format(
                                 "YYYY-MM-DD[T]HH:mm:ss"
                               );
-                              console.log(variables);
+                              //console.log(variables);
                             }
 
                             mutationProcesso({
@@ -139,12 +143,14 @@ class ProcessoForm extends Component {
                                   //onCompleted é chamado aqui
                                 } else {
                                   // Erros code 200
+                                  toast.error("Erro 200: " + res);
                                   console.log("Erro 200: " + res);
                                 }
                               })
                               .catch(e => {
                                 //Erro de GraphQL
-                                console.log("Erro GraphQL: " + e);
+                                toast.error("Erro GraphQL: " + e);
+                                //console.log("Erro GraphQL: " + e);
                               });
                           }}
                         >

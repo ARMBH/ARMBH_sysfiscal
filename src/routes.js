@@ -13,6 +13,11 @@ import { ApolloProvider } from "react-apollo";
 import makeApolloClient from "./apollo";
 
 import "tabler-react/dist/Tabler.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// Call it once in your app. At the root of your app is the best place
+toast.configure();
 
 let client;
 
