@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { Subscription, withApollo } from "react-apollo";
 import gql from "graphql-tag";
-import TaskItem from "./TaskItem";
+//import TaskItem from "./TaskItem";
 import TodoItem from "./TodoItem";
-import TodoFilters from "./TodoFilters";
+//import TodoFilters from "./TodoFilters";
 import { Table, Card } from "tabler-react";
 
 class _TodoPublicList extends Component {

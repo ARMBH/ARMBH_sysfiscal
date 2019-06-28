@@ -1,17 +1,12 @@
 import React, { Component } from "react";
-//import PropTypes from 'prop-types';
-import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import MomentPure from "moment";
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
 import { QUERY_PROCESSO, EDIT_PROCESSO, ADD_PROCESSO } from "./ProcessoQueries";
 import Moment from "react-moment";
-//import 'moment-timezone';
-//import 'moment/locale/pt-br';
 import { toast } from "react-toastify";
 import DataPorExtenso from "../Utils/DataPorExtenso";
-import DataDesdeAgora from "../Utils/DataDesdeAgora";
 
 class ProcessoForm extends Component {
   constructor() {
@@ -189,7 +184,13 @@ class ProcessoForm extends Component {
                           </Form.Group>
                           <Form.Group
                             label={
-                              <Form.Label aside={descricao.length + "/100"}>
+                              <Form.Label
+                                aside={
+                                  descricao
+                                    ? descricao.length + "/100"
+                                    : "0/100"
+                                }
+                              >
                                 Descrição
                               </Form.Label>
                             }

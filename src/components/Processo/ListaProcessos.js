@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-//import PropTypes from 'prop-types';
-import gql from "graphql-tag";
-import { Mutation } from "react-apollo";
-import MomentPure from "moment";
+import Moment from "moment";
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
+import { Button, Page, Grid, Badge } from "tabler-react";
 import { Table, Card } from "tabler-react";
 import { QUERY_PROCESSOS } from "./ProcessoQueries";
-import { toast } from "react-toastify";
+//import { toast } from 'react-toastify';
 import { Query } from "react-apollo";
 import DataPorExtenso from "../Utils/DataPorExtenso";
 
@@ -20,15 +17,7 @@ class ListaProcessos extends Component {
     this.props.history.push("/processo/" + id);
   }
   render() {
-    const {
-      id,
-      title,
-      origem_solicitacao,
-      descricao,
-      created_at,
-      updated_at,
-      user
-    } = this.state;
+    const { id, title } = this.state;
     let { auth } = this.props;
     const userLogado = auth.getSub();
 
@@ -84,7 +73,16 @@ class ListaProcessos extends Component {
                           {data.processos.map((processo, index) => (
                             <Table.Row key={index}>
                               <Table.Col>{processo.id}</Table.Col>
-                              <Table.Col>{processo.title}</Table.Col>
+                              <Table.Col>
+                                {" "}
+                                {Moment().diff(processo.created_at, "hours") <
+                                24 ? (
+                                  <Badge color="success">Novo</Badge>
+                                ) : (
+                                  ""
+                                )}{" "}
+                                {processo.title}
+                              </Table.Col>
                               <Table.Col>
                                 <DataPorExtenso data={processo.created_at} />
                               </Table.Col>

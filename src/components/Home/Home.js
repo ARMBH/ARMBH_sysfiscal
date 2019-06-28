@@ -10,21 +10,21 @@ import OnlineUsers from "../OnlineUsers/OnlineUsers";
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import {
   Page,
-  Avatar,
-  Icon,
+  //Avatar,
+  //Icon,
   Grid,
   Card,
-  Text,
-  Table,
+  //Text,
+  //Table,
   Alert,
-  Progress,
-  colors,
-  Dropdown,
-  Button,
-  StampCard,
+  //Progress,
+  //colors,
+  //Dropdown,
+  //Button,
+  //StampCard,
   StatsCard,
-  ProgressCard,
-  Badge
+  ProgressCard
+  //Badge
 } from "tabler-react";
 
 //import auth from "../Auth/Auth";
