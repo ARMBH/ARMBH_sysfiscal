@@ -88,6 +88,7 @@ class ProcessoForm extends Component {
   };
 
   render() {
+    //Declara variaveis do state/props para facilitar
     const {
       id,
       title,
@@ -98,15 +99,23 @@ class ProcessoForm extends Component {
       user
     } = this.state;
     let { auth } = this.props;
+
+    //Adquire ID do user que está logado para verificar se ele pode editar o formulário
     const userLogado = auth.getSub();
+    let disableForm = true;
+
+    if (user && user.id === userLogado) disableForm = false;
+    else disableForm = true;
+
+    //Altera o título de acordo com o Edição/Adição de Processo
     let contentTitle = "Novo Processo";
     if (id) contentTitle = "Editar Processo nº " + id;
 
     let cardTitle = "Cadastro de Novo Processo";
     if (id) cardTitle = title + "";
 
+    //Altera a mutation a ser utilizada de acordo com o Edição/Adição de Processo
     let mutation = ADD_PROCESSO;
-
     if (id) mutation = EDIT_PROCESSO;
 
     return (
@@ -146,7 +155,7 @@ class ProcessoForm extends Component {
                                   this.setState({
                                     updated_at: variables.updated_at
                                   });
-                                  //onCompleted é chamado aqui
+                                  //onCompleted é chamado caso entre aqui
                                 } else {
                                   // Erros code 200
                                   toast.error("Erro 200: " + res);
@@ -162,6 +171,7 @@ class ProcessoForm extends Component {
                         >
                           <Form.Group label="Título">
                             <Form.Input
+                              disabled={disableForm}
                               value={title}
                               name="title"
                               placeholder="Digite um título..."
@@ -170,6 +180,7 @@ class ProcessoForm extends Component {
                           </Form.Group>
                           <Form.Group label="Origem da Solicitação">
                             <Form.Input
+                              disabled={disableForm}
                               value={origem_solicitacao}
                               name="origem_solicitacao"
                               placeholder="Digite a origem deste processo..."
@@ -184,6 +195,7 @@ class ProcessoForm extends Component {
                             }
                           >
                             <Form.Textarea
+                              disabled={disableForm}
                               name="descricao"
                               value={descricao}
                               placeholder="Descreva este processo (opcional)"
@@ -220,7 +232,7 @@ class ProcessoForm extends Component {
                           {id ? (
                             <React.Fragment>
                               <Button.List align="right">
-                                {user && user.id === userLogado ? (
+                                {!disableForm ? (
                                   <React.Fragment>
                                     <Button
                                       outline

@@ -36,8 +36,8 @@ const provideClient = (Component, renderProps) => {
     );
   } else {
     // not logged in already, hence redirect to login page
-    if (renderProps.match.path !== "/") {
-      window.location.href = "/";
+    if (renderProps.match.path !== "/login") {
+      window.location.href = "/login";
     } else {
       return <Component auth={auth} {...renderProps} />;
     }
@@ -56,9 +56,10 @@ export const makeMainRoutes = () => {
       <div>
         <Route
           exact
-          path="/"
+          path="/login"
           render={props => provideClient(LandingPage, props)}
         />
+        <Route exact path="/" render={props => provideClient(Home, props)} />
         <Route
           exact
           path="/home"
