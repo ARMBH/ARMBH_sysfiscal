@@ -99,7 +99,7 @@ class ProcessoForm extends Component {
     const userLogado = auth.getSub();
     let disableForm = true;
 
-    if (user && user.id === userLogado) disableForm = false;
+    if (!id || (user && user.id === userLogado)) disableForm = false;
     else disableForm = true;
 
     //Altera o título de acordo com o Edição/Adição de Processo
