@@ -91,7 +91,8 @@ class ProcessoForm extends Component {
       descricao,
       created_at,
       updated_at,
-      user
+      user,
+      status
     } = this.state;
     let { auth } = this.props;
 
@@ -227,6 +228,9 @@ class ProcessoForm extends Component {
                                 <Tag color="success">
                                   <Moment fromNow>{updated_at}</Moment>
                                 </Tag>
+                              </Form.Group>
+                              <Form.Group label="Status">
+                                <Tag color="success">{status}</Tag>
                               </Form.Group>
                             </React.Fragment>
                           ) : (

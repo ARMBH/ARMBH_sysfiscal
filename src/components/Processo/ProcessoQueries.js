@@ -57,6 +57,7 @@ const QUERY_PROCESSO = gql`
       origem_solicitacao
       descricao
       created_at
+      status
     }
   }
 `;
@@ -68,6 +69,7 @@ const QUERY_PROCESSOS = gql`
       created_at
       id
       title
+      status
       user {
         name
         id

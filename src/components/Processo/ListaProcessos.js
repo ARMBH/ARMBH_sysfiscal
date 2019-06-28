@@ -53,6 +53,7 @@ class ListaProcessos extends Component {
                 if (data.processos.length > 0)
                   cardTitle =
                     "Mostrando " + data.processos.length + " processos";
+                else cardTitle = "Nenhum processo encontrado";
                 return (
                   <React.Fragment>
                     <Card title={cardTitle}>
@@ -85,7 +86,9 @@ class ListaProcessos extends Component {
                                 <Table.Col>
                                   {Moment().diff(processo.created_at, "hours") <
                                   24 ? (
-                                    <Badge color="success">Novo</Badge>
+                                    <Badge color="success">
+                                      {processo.status}
+                                    </Badge>
                                   ) : (
                                     ""
                                   )}
