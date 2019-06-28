@@ -110,8 +110,13 @@ class ProcessoForm extends Component {
     if (id) cardTitle = title + "";
 
     //Altera a mutation a ser utilizada de acordo com o Edição/Adição de Processo
+    //Caso seja de criação de NOVO processo impede o setState de ser chamado após redirecionamento da edição do processo
     let mutation = ADD_PROCESSO;
-    if (id) mutation = EDIT_PROCESSO;
+    let mutationType = "add";
+    if (id) {
+      mutation = EDIT_PROCESSO;
+      mutationType = "edit";
+    }
 
     return (
       <React.Fragment>
@@ -147,9 +152,11 @@ class ProcessoForm extends Component {
                               .then(res => {
                                 //console.log(res);
                                 if (!res.errors) {
-                                  this.setState({
-                                    updated_at: variables.updated_at
-                                  });
+                                  if (mutationType === "edit") {
+                                    this.setState({
+                                      updated_at: variables.updated_at
+                                    });
+                                  }
                                   //onCompleted é chamado caso entre aqui
                                 } else {
                                   // Erros code 200
