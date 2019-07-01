@@ -78,4 +78,20 @@ const QUERY_PROCESSOS = gql`
   }
 `;
 
-export { QUERY_PROCESSO, EDIT_PROCESSO, ADD_PROCESSO, QUERY_PROCESSOS };
+const SUBSCRIPTION_TOTAL_PROCESSOS = gql`
+  subscription getProcessos {
+    processos_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+`;
+
+export {
+  QUERY_PROCESSO,
+  EDIT_PROCESSO,
+  ADD_PROCESSO,
+  QUERY_PROCESSOS,
+  SUBSCRIPTION_TOTAL_PROCESSOS
+};

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import TodoPublicWrapper from "../Todo/TodoPublicWrapper";
 import TodoPrivateWrapper from "../Todo/TodoPrivateWrapper";
 import OnlineUsers from "../OnlineUsers/OnlineUsers";
-
+import ProcessoWidget from "../Processo/ProcessoWidget";
 //import Loading from '../Loading/Loading';
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import {
@@ -80,14 +80,9 @@ class App extends Component {
                 label="Followers"
               />
             </Grid.Col>
-            <Grid.Col width={6} sm={4} lg={2}>
-              <StatsCard
-                layout={1}
-                movement={-2}
-                total="$95"
-                label="Daily earnings"
-              />
-            </Grid.Col>
+
+            <ProcessoWidget total={true} />
+
             <OnlineUsers total={true} />
             <Grid.Col lg={6}>
               <Card>
