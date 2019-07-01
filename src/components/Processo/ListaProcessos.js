@@ -86,12 +86,13 @@ class ListaProcessos extends Component {
                                 <Table.Col>
                                   {Moment().diff(processo.created_at, "hours") <
                                   24 ? (
-                                    <Badge color="success">
-                                      {processo.status}
-                                    </Badge>
+                                    <React.Fragment>
+                                      <Badge color="success">Recente</Badge>{" "}
+                                    </React.Fragment>
                                   ) : (
                                     ""
                                   )}
+                                  <Badge color="info">{processo.status}</Badge>
                                 </Table.Col>
                                 <Table.Col>
                                   <DataPorExtenso data={processo.created_at} />
