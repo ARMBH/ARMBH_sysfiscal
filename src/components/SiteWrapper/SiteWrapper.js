@@ -65,12 +65,6 @@ const navBarItems: Array<navItem> = [
         value: "Novo Processo",
         to: "/novoprocesso/",
         LinkComponent: NavLink
-      },
-      { value: "Charts", to: "/charts", LinkComponent: NavLink },
-      {
-        value: "Pricing Cards",
-        to: "/pricing-cards",
-        LinkComponent: NavLink
       }
     ]
   },

@@ -49,7 +49,7 @@ class ListaProcessos extends Component {
             <Query query={QUERY_PROCESSOS} pollInterval={500}>
               {({ loading, error, data }) => {
                 if (loading) return "Carregando...";
-                if (error) return `Error! ${error.message}`;
+                if (error) return `Erro! ${error.message}`;
                 if (data.processos.length > 0)
                   cardTitle =
                     "Mostrando " + data.processos.length + " processos";
