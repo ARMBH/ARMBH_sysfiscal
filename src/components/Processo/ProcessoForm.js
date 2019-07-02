@@ -7,6 +7,10 @@ import { QUERY_PROCESSO, EDIT_PROCESSO, ADD_PROCESSO } from "./ProcessoQueries";
 import Moment from "react-moment";
 import { toast } from "react-toastify";
 import DataPorExtenso from "../Utils/DataPorExtenso";
+import DatePicker, { registerLocale } from "react-datepicker";
+import ptBR from "date-fns/locale/pt-BR";
+import "react-datepicker/dist/react-datepicker.css";
+registerLocale("pt-BR", ptBR);
 
 class ProcessoForm extends Component {
   constructor() {
@@ -15,7 +19,8 @@ class ProcessoForm extends Component {
       //id: '',
       title: "",
       origem_solicitacao: "",
-      descricao: ""
+      descricao: "",
+      data_prazo: ""
     };
   }
 
@@ -56,6 +61,9 @@ class ProcessoForm extends Component {
       );
     }
   }
+  handleChangeData = e => {
+    this.setState({ data_prazo: e });
+  };
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -91,6 +99,7 @@ class ProcessoForm extends Component {
       descricao,
       created_at,
       updated_at,
+      data_prazo,
       user,
       status
     } = this.state;
@@ -145,6 +154,8 @@ class ProcessoForm extends Component {
                                   .utc()
                                   .format("YYYY-MM-DD[T]HH:mm:ss") +
                                 ".000000+00:00";
+                            } else {
+                              variables.data_prazo = data_prazo;
                             }
 
                             mutationProcesso({
@@ -212,6 +223,21 @@ class ProcessoForm extends Component {
                               onChange={this.handleChange}
                             />
                           </Form.Group>
+                          {!id ? (
+                            <Form.Group label="Defina um Prazo">
+                              <DatePicker
+                                locale="pt-BR"
+                                className="form-control"
+                                selected={this.state.data_prazo}
+                                name="data_prazo"
+                                onChange={this.handleChangeData}
+                                placeholderText="Escolha um prazo..."
+                                dateFormat="dd/MM/yyyy"
+                              />
+                            </Form.Group>
+                          ) : (
+                            ""
+                          )}
                           {id ? (
                             <React.Fragment>
                               <Form.Group label="Criado por">
@@ -227,6 +253,12 @@ class ProcessoForm extends Component {
                                 <DataPorExtenso data={updated_at} />{" "}
                                 <Tag color="success">
                                   <Moment fromNow>{updated_at}</Moment>
+                                </Tag>
+                              </Form.Group>
+                              <Form.Group label="Prazo">
+                                <DataPorExtenso data={data_prazo} />{" "}
+                                <Tag color="success">
+                                  <Moment fromNow>{data_prazo}</Moment>
                                 </Tag>
                               </Form.Group>
                               <Form.Group label="Status">

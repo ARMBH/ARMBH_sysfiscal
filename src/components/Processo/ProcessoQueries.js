@@ -1,12 +1,18 @@
 import gql from "graphql-tag";
 
 const ADD_PROCESSO = gql`
-  mutation($title: String!, $descricao: String!, $origem_solicitacao: String!) {
+  mutation(
+    $title: String!
+    $descricao: String!
+    $origem_solicitacao: String!
+    $data_prazo: timestamptz
+  ) {
     insert_processos(
       objects: {
         title: $title
         descricao: $descricao
         origem_solicitacao: $origem_solicitacao
+        data_prazo: $data_prazo
       }
     ) {
       affected_rows
@@ -58,6 +64,7 @@ const QUERY_PROCESSO = gql`
       descricao
       created_at
       status
+      data_prazo
     }
   }
 `;
@@ -70,6 +77,7 @@ const QUERY_PROCESSOS = gql`
       id
       title
       status
+      data_prazo
       user {
         name
         id
