@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Subscription } from "react-apollo";
-import gql from "graphql-tag";
-import { Grid, StampCard, ProgressCard } from "tabler-react";
+import { Grid, ProgressCard } from "tabler-react";
 import { SUBSCRIPTION_TOTAL_PROCESSOS } from "./ProcessoQueries";
 
 class ProcessoWidget extends Component {
