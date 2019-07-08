@@ -7,6 +7,7 @@ import { ADD_DOCORIGEM, QUERY_PROCESSO } from "./ProcessoQueries";
 
 import { toast } from "react-toastify";
 import FileBase64 from "react-file-base64";
+import "./InputFile.css";
 
 class ProcessoUploadDoc extends Component {
   constructor() {
@@ -115,7 +116,7 @@ class ProcessoUploadDoc extends Component {
 
   render() {
     //Declara variaveis do state/props para facilitar
-    const { id, title, user, files, disableForm } = this.state;
+    const { id, title, files, disableForm } = this.state;
     const { auth } = this.props;
 
     //Adquire ID do user que está logado para verificar se ele pode editar o formulário
