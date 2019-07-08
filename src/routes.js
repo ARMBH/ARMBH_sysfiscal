@@ -93,7 +93,7 @@ export const makeMainRoutes = () => {
         />
         <Route
           exact
-          path="/docorigem/:param"
+          path="/adicionardoc/:param"
           render={props => provideClient(ProcessoUploadDoc, props)}
         />
         <Route

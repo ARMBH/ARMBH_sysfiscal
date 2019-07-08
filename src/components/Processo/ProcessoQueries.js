@@ -98,6 +98,24 @@ const QUERY_PROCESSO = gql`
   }
 `;
 
+const QUERY_DOCUMENTOS = gql`
+  query getDocumentos($processoId: Int!) {
+    documentos(
+      where: { processo_id: { _eq: $processoId } }
+      order_by: { created_at: asc }
+    ) {
+      id
+      name
+      created_at
+      size
+      type
+      user {
+        name
+      }
+    }
+  }
+`;
+
 const QUERY_PROCESSOS = gql`
   {
     processos(order_by: { id: desc }) {
@@ -131,5 +149,6 @@ export {
   ADD_PROCESSO,
   QUERY_PROCESSOS,
   SUBSCRIPTION_TOTAL_PROCESSOS,
-  ADD_DOCORIGEM
+  ADD_DOCORIGEM,
+  QUERY_DOCUMENTOS
 };

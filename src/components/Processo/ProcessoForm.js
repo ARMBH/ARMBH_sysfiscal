@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import MomentPure from "moment";
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
+import ListaDocumentos from "./ListaDocumentos";
 import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
 import { QUERY_PROCESSO, EDIT_PROCESSO, ADD_PROCESSO } from "./ProcessoQueries";
 import Moment from "react-moment";
@@ -263,6 +264,9 @@ class ProcessoForm extends Component {
                               </Form.Group>
                               <Form.Group label="Status">
                                 <Tag color="success">{status}</Tag>
+                              </Form.Group>
+                              <Form.Group label="Documentos">
+                                <ListaDocumentos id={id} />
                               </Form.Group>
                             </React.Fragment>
                           ) : (
