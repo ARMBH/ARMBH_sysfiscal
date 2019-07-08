@@ -7,6 +7,7 @@ import auth from "./components/Auth/Auth";
 import LandingPage from "./components/LandingPage/LandingPage";
 import BlogPage from "./components/BlogPage/BlogPage";
 import ProcessoForm from "./components/Processo/ProcessoForm";
+import ProcessoUploadDoc from "./components/Processo/ProcessoUploadDoc";
 import ListaProcessos from "./components/Processo/ListaProcessos";
 import history from "./utils/history";
 
@@ -89,6 +90,11 @@ export const makeMainRoutes = () => {
           exact
           path="/processo/:param"
           render={props => provideClient(ProcessoForm, props)}
+        />
+        <Route
+          exact
+          path="/docorigem/:param"
+          render={props => provideClient(ProcessoUploadDoc, props)}
         />
         <Route
           path="/callback"
