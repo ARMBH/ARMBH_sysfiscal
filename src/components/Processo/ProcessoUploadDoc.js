@@ -17,18 +17,29 @@ class ProcessoUploadDoc extends Component {
       origem_solicitacao: "",
       descricao: "",
       data_prazo: "",
-      files: []
+      files: [],
+      disableForm: true
     };
   }
-  // Callback~
+  // Callback upload arquivos
   getFiles(files) {
     this.setState({ files: files });
-    toast.info(
-      "O arquivo " +
-        this.state.files.name +
-        " está pronto para ser enviado ao servidor. "
-    );
-    //console.log(this.state);
+
+    if (files.file.size > 10591292) {
+      this.setState({ disableForm: true });
+      toast.error(
+        "O arquivo " +
+          this.state.files.name +
+          " tem mais de 10mb. Não é possível fazer upload. Selecione outro arquivo. "
+      );
+    } else {
+      toast.info(
+        "O arquivo " +
+          this.state.files.name +
+          " está pronto para ser enviado ao servidor. "
+      );
+      this.setState({ disableForm: false });
+    }
   }
 
   getProcesso(processoId) {
@@ -104,19 +115,11 @@ class ProcessoUploadDoc extends Component {
 
   render() {
     //Declara variaveis do state/props para facilitar
-    const {
-      id,
-      title,
-      origem_solicitacao,
-      descricao,
-      user,
-      files
-    } = this.state;
-    //let { auth } = this.props;
+    const { id, title, user, files, disableForm } = this.state;
+    const { auth } = this.props;
 
     //Adquire ID do user que está logado para verificar se ele pode editar o formulário
-    //const userLogado = auth.getSub();
-    let disableForm = true;
+    const userLogado = auth.getSub();
 
     /**
 		if (!id || (user && user.id === userLogado)) disableForm = false;
@@ -129,11 +132,6 @@ class ProcessoUploadDoc extends Component {
 
     let cardTitle = "Cadastro de Novo Documento de Origem";
     if (id) cardTitle = title + "";
-
-    if (files.size) {
-      //console.log(files.file.size);
-      disableForm = false;
-    }
 
     let mutation = ADD_DOCORIGEM;
     let mutationType = "add";
@@ -153,7 +151,7 @@ class ProcessoUploadDoc extends Component {
                             e.preventDefault();
                             let variables = {
                               processo_id: id,
-                              user_id: user.id,
+                              user_id: userLogado,
                               name: files.name,
                               type: files.type,
                               size: files.size,

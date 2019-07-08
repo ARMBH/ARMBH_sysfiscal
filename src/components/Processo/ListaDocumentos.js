@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Moment from "moment";
-import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import { Button, Page, Grid, Badge } from "tabler-react";
+
+import { Badge, Icon } from "tabler-react";
 import { Table, Card } from "tabler-react";
 import { QUERY_DOCUMENTOS } from "./ProcessoQueries";
 //import { toast } from 'react-toastify';
@@ -19,8 +19,9 @@ class ListaDocumentos extends Component {
   tituloTabela() {
     const link = "/adicionardoc/" + this.props.id;
     return (
-      <Link className="btn btn-primary" to={link}>
-        adicionardoc
+      <Link className="btn btn-outline-primary ml-auto" to={link}>
+        <Icon name="plus-circle" />
+        Adicionar Novo Documento
       </Link>
     );
   }
@@ -29,13 +30,18 @@ class ListaDocumentos extends Component {
     const { id } = this.props;
     let cardTitle = "";
     return (
-      <Query query={QUERY_DOCUMENTOS} variables={{ processoId: id }}>
+      <Query
+        pollInterval={500}
+        query={QUERY_DOCUMENTOS}
+        variables={{ processoId: id }}
+      >
         {({ loading, error, data }) => {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;
           if (data.documentos.length > 0)
             cardTitle = "Mostrando " + data.documentos.length + " documentos";
           else cardTitle = "Nenhum documento encontrado";
+          console.log(cardTitle);
           return (
             <React.Fragment>
               <Card title={this.tituloTabela()}>

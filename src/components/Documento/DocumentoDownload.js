@@ -1,18 +1,15 @@
 import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-
-import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import { Form, Button, Page, Grid, Alert, Tag, Icon } from "tabler-react";
+import { Button, Icon } from "tabler-react";
 import { QUERY_DOCUMENTO } from "./DocumentoQueries";
 import { Query } from "react-apollo";
 import { toast } from "react-toastify";
-import FileBase64 from "react-file-base64";
 
 class DocumentoDownload extends Component {
   constructor() {
     super();
     this.state = {
-      gerarLink: false
+      gerarLink: false,
+      blobUrl: ""
     };
   }
 
@@ -36,6 +33,10 @@ class DocumentoDownload extends Component {
     return blob;
   };
 
+  handleLink() {
+    this.setState({ gerarLink: true });
+  }
+
   geraLink() {
     return (
       <Query query={QUERY_DOCUMENTO} variables={{ id: this.props.id }}>
@@ -48,11 +49,15 @@ class DocumentoDownload extends Component {
             );
           if (error) return `Erro! ${error.message}`;
 
-          const documento = data.documentos[0];
-          const newBase64 = documento.base64.split(",")[1];
-          const blob = this.b64toBlob(newBase64, documento.type);
-          const blobUrl = URL.createObjectURL(blob);
-          window.open(blobUrl, "_blank");
+          if (this.state.blobUrl === "") {
+            const documento = data.documentos[0];
+            const newBase64 = documento.base64.split(",")[1];
+            const blob = this.b64toBlob(newBase64, documento.type);
+            this.setState({ blobUrl: URL.createObjectURL(blob) }, () => {
+              toast.info(documento.name + " pronto para download.");
+              window.open(this.state.blobUrl, "_blank");
+            });
+          }
 
           return (
             <React.Fragment>
@@ -63,7 +68,7 @@ class DocumentoDownload extends Component {
                       className="btn btn-success ml-auto"
                       key={index}
                       download={documento.name}
-                      href={blobUrl}
+                      href={this.state.blobUrl}
                     >
                       <Icon name="download" /> Download
                     </a>
@@ -85,7 +90,10 @@ class DocumentoDownload extends Component {
         {!gerarLink ? (
           <Button
             disabled={gerarLink}
-            onClick={() => this.setState({ gerarLink: true })}
+            onClick={e => {
+              //e.preventDefault();
+              this.handleLink();
+            }}
           >
             <Icon name="download" /> Download
           </Button>
