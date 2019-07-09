@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Moment from "moment";
 
-import { Badge, Icon } from "tabler-react";
+import { Badge, Icon, Button } from "tabler-react";
 import { Table, Card } from "tabler-react";
 import { QUERY_DOCUMENTOS } from "./ProcessoQueries";
 //import { toast } from 'react-toastify';
@@ -19,7 +19,7 @@ class ListaDocumentos extends Component {
   tituloTabela() {
     const link = "/adicionardoc/" + this.props.id;
     return (
-      <Link className="btn btn-outline-primary ml-auto" to={link}>
+      <Link className="btn btn-primary ml-auto" to={link}>
         <Icon name="plus-circle" />
         Adicionar Novo Documento
       </Link>
@@ -38,13 +38,19 @@ class ListaDocumentos extends Component {
         {({ loading, error, data }) => {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;
-          if (data.documentos.length > 0)
-            cardTitle = "Mostrando " + data.documentos.length + " documentos";
-          else cardTitle = "Nenhum documento encontrado";
+          if (data.documentos.length > 0) {
+            cardTitle =
+              "Processo " +
+              id +
+              " - foram encontrados " +
+              data.documentos.length +
+              " documento";
+            if (data.documentos.length > 1) cardTitle = cardTitle + "s";
+          } else cardTitle = "Sem documentos";
           //console.log(cardTitle);
           return (
             <React.Fragment>
-              <Card title={this.tituloTabela()}>
+              <Card title={cardTitle}>
                 {data.documentos.length > 0 ? (
                   <Table
                     cards={true}
@@ -95,6 +101,7 @@ class ListaDocumentos extends Component {
                   <Card.Body>Nenhum documento encontrado.</Card.Body>
                 )}
               </Card>
+              <Button.List align="right">{this.tituloTabela()}</Button.List>
             </React.Fragment>
           );
         }}

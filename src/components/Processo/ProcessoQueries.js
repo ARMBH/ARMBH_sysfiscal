@@ -112,6 +112,9 @@ const QUERY_DOCUMENTOS = gql`
       user {
         name
       }
+      processo {
+        title
+      }
     }
   }
 `;

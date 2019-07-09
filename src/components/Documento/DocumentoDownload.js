@@ -96,7 +96,7 @@ class DocumentoDownload extends Component {
             }}
           >
             <Icon name="download" />
-            Preparar arquivo
+            Download
           </Button>
         ) : (
           this.geraLink()

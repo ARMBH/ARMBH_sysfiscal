@@ -265,9 +265,6 @@ class ProcessoForm extends Component {
                               <Form.Group label="Status">
                                 <Tag color="success">{status}</Tag>
                               </Form.Group>
-                              <Form.Group label="Documentos">
-                                <ListaDocumentos id={id} />
-                              </Form.Group>
                             </React.Fragment>
                           ) : (
                             ""
@@ -330,6 +327,17 @@ class ProcessoForm extends Component {
                       </Grid.Col>
                     </Grid.Row>
                   </Page.Card>
+                  {id ? (
+                    <React.Fragment>
+                      <Page.Card>
+                        <Form.Group label="Documentos">
+                          <ListaDocumentos id={id} />
+                        </Form.Group>
+                      </Page.Card>
+                    </React.Fragment>
+                  ) : (
+                    "Não"
+                  )}
                   <Button
                     icon="chevrons-left"
                     onClick={() => this.props.history.push("/listaprocessos/")}
