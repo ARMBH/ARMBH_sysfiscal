@@ -3,10 +3,13 @@ import { Mutation } from "react-apollo";
 import MomentPure from "moment";
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import ListaDocumentos from "../Documento/ListaDocumentos";
+import ListaHistoricos from "../Historico/ListaHistoricos";
+
 import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
 import { QUERY_PROCESSO, EDIT_PROCESSO, ADD_PROCESSO } from "./ProcessoQueries";
 import Moment from "react-moment";
 import { toast } from "react-toastify";
+import logar from "../Historico/HistoricoLog";
 import DataPorExtenso from "../Utils/DataPorExtenso";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptBR from "date-fns/locale/pt-BR";
@@ -74,6 +77,7 @@ class ProcessoForm extends Component {
     if (this.state.id) {
       let message = "Processo " + this.state.id + " editado com sucesso!";
       toast.success(message);
+      logar.logar(this.props.client, this.state.id, "Processo", message);
     } else {
       toast.success(
         data.insert_processos.returning[0].title + " criado com sucesso!"
@@ -83,6 +87,12 @@ class ProcessoForm extends Component {
           ...data.insert_processos.returning[0]
         },
         () => {
+          logar.logar(
+            this.props.client,
+            data.insert_processos.returning[0].id,
+            "Processo",
+            "Criação do Processo"
+          );
           this.props.history.push(
             "/processo/" + data.insert_processos.returning[0].id
           );
@@ -327,16 +337,21 @@ class ProcessoForm extends Component {
                       </Grid.Col>
                     </Grid.Row>
                   </Page.Card>
-                  {id ? (
+                  {id ? ( //Início da parte de Baixo quando o Processo já existe
                     <React.Fragment>
                       <Page.Card>
                         <Form.Group label="Documentos">
                           <ListaDocumentos id={id} title={title} />
                         </Form.Group>
                       </Page.Card>
+                      <Page.Card>
+                        <Form.Group label="Histórico">
+                          <ListaHistoricos id={id} title={title} />
+                        </Form.Group>
+                      </Page.Card>
                     </React.Fragment>
                   ) : (
-                    "Não"
+                    ""
                   )}
                   <Button
                     icon="chevrons-left"

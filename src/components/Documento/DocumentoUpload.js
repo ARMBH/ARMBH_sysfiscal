@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import FileBase64 from "react-file-base64";
 import "./InputFile.css";
 
+import logar from "../Historico/HistoricoLog";
+
 class DocumentoUpload extends Component {
   constructor() {
     super();
@@ -95,6 +97,7 @@ class DocumentoUpload extends Component {
         this.state.id +
         "!";
       toast.success(message);
+      logar.logar(this.props.client, this.state.id, "Documento", message);
       this.props.history.push(
         "/processo/" + data.insert_documentos.returning[0].processo_id
       );
