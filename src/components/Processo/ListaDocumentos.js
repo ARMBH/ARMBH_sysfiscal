@@ -41,7 +41,7 @@ class ListaDocumentos extends Component {
           if (data.documentos.length > 0)
             cardTitle = "Mostrando " + data.documentos.length + " documentos";
           else cardTitle = "Nenhum documento encontrado";
-          console.log(cardTitle);
+          //console.log(cardTitle);
           return (
             <React.Fragment>
               <Card title={this.tituloTabela()}>

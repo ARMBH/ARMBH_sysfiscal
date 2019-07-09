@@ -95,7 +95,8 @@ class DocumentoDownload extends Component {
               this.handleLink();
             }}
           >
-            <Icon name="download" /> Download
+            <Icon name="download" />
+            Preparar arquivo
           </Button>
         ) : (
           this.geraLink()
