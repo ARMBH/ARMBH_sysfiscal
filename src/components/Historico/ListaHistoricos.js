@@ -35,10 +35,10 @@ class ListaHistoricos extends Component {
               title +
               " (" +
               data.historicos.length +
-              " histórico";
+              " registro";
             if (data.historicos.length > 1) cardTitle = cardTitle + "s";
             cardTitle = cardTitle + ")";
-          } else cardTitle = "Sem históricos";
+          } else cardTitle = "Sem registros";
           //console.log(cardTitle);
           return (
             <React.Fragment>
