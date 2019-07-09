@@ -75,12 +75,12 @@ class ProcessoForm extends Component {
 
   handleCompleted = data => {
     if (this.state.id) {
-      let message = "Processo " + this.state.id + " editado com sucesso!";
+      let message = "Processo " + this.state.id + " editado com sucesso";
       toast.success(message);
       logar.logar(this.props.client, this.state.id, "Processo", message);
     } else {
       toast.success(
-        data.insert_processos.returning[0].title + " criado com sucesso!"
+        data.insert_processos.returning[0].title + " criado com sucesso"
       );
       this.setState(
         {

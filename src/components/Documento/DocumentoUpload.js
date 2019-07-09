@@ -103,7 +103,7 @@ class DocumentoUpload extends Component {
       );
     } else {
       toast.success(
-        data.insert_documentos.returning[0].name + " criado com sucesso!"
+        data.insert_documentos.returning[0].name + " criado com sucesso"
       );
       this.setState(
         {
