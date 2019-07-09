@@ -53,6 +53,10 @@ const makeApolloClient = () => {
       connectionCallback: err => {
         if (err) {
           wsLink.subscriptionClient.close(false, false);
+
+          //Caso dê erro no token o usuário é deslogado
+          auth.logout();
+          console.log(err);
         }
       }
     })
