@@ -24,35 +24,6 @@ const ADD_PROCESSO = gql`
   }
 `;
 
-const ADD_DOCORIGEM = gql`
-  mutation(
-    $name: String!
-    $type: String!
-    $size: String!
-    $base64: String!
-    $user_id: String!
-    $processo_id: Int!
-  ) {
-    insert_documentos(
-      objects: {
-        name: $name
-        type: $type
-        size: $size
-        base64: $base64
-        user_id: $user_id
-        processo_id: $processo_id
-      }
-    ) {
-      affected_rows
-      returning {
-        id
-        name
-        processo_id
-      }
-    }
-  }
-`;
-
 const EDIT_PROCESSO = gql`
   mutation(
     $id: Int!
@@ -98,27 +69,6 @@ const QUERY_PROCESSO = gql`
   }
 `;
 
-const QUERY_DOCUMENTOS = gql`
-  query getDocumentos($processoId: Int!) {
-    documentos(
-      where: { processo_id: { _eq: $processoId } }
-      order_by: { created_at: asc }
-    ) {
-      id
-      name
-      created_at
-      size
-      type
-      user {
-        name
-      }
-      processo {
-        title
-      }
-    }
-  }
-`;
-
 const QUERY_PROCESSOS = gql`
   {
     processos(order_by: { id: desc }) {
@@ -151,7 +101,5 @@ export {
   EDIT_PROCESSO,
   ADD_PROCESSO,
   QUERY_PROCESSOS,
-  SUBSCRIPTION_TOTAL_PROCESSOS,
-  ADD_DOCORIGEM,
-  QUERY_DOCUMENTOS
+  SUBSCRIPTION_TOTAL_PROCESSOS
 };

@@ -3,13 +3,14 @@ import { Mutation } from "react-apollo";
 
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
-import { ADD_DOCORIGEM, QUERY_PROCESSO } from "./ProcessoQueries";
+import { ADD_DOCUMENTO } from "./DocumentoQueries";
+import { QUERY_PROCESSO } from "../Processo/ProcessoQueries";
 
 import { toast } from "react-toastify";
 import FileBase64 from "react-file-base64";
 import "./InputFile.css";
 
-class ProcessoUploadDoc extends Component {
+class DocumentoUpload extends Component {
   constructor() {
     super();
     this.state = {
@@ -134,7 +135,7 @@ class ProcessoUploadDoc extends Component {
     let cardTitle = "Cadastro de Novo Documento de Origem";
     if (id) cardTitle = title + "";
 
-    let mutation = ADD_DOCORIGEM;
+    let mutation = ADD_DOCUMENTO;
     let mutationType = "add";
 
     return (
@@ -259,4 +260,4 @@ class ProcessoUploadDoc extends Component {
   }
 }
 
-export default ProcessoUploadDoc;
+export default DocumentoUpload;

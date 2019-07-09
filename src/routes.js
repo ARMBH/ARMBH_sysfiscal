@@ -7,7 +7,7 @@ import auth from "./components/Auth/Auth";
 import LandingPage from "./components/LandingPage/LandingPage";
 import BlogPage from "./components/BlogPage/BlogPage";
 import ProcessoForm from "./components/Processo/ProcessoForm";
-import ProcessoUploadDoc from "./components/Processo/ProcessoUploadDoc";
+import DocumentoUpload from "./components/Documento/DocumentoUpload";
 import ListaProcessos from "./components/Processo/ListaProcessos";
 import history from "./utils/history";
 
@@ -94,7 +94,7 @@ export const makeMainRoutes = () => {
         <Route
           exact
           path="/adicionardoc/:param"
-          render={props => provideClient(ProcessoUploadDoc, props)}
+          render={props => provideClient(DocumentoUpload, props)}
         />
         <Route
           path="/callback"

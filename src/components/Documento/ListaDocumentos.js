@@ -3,7 +3,7 @@ import Moment from "moment";
 
 import { Badge, Icon, Button } from "tabler-react";
 import { Table, Card } from "tabler-react";
-import { QUERY_DOCUMENTOS } from "./ProcessoQueries";
+import { QUERY_DOCUMENTOS } from "./DocumentoQueries";
 //import { toast } from 'react-toastify';
 import { Query } from "react-apollo";
 import DataPorExtenso from "../Utils/DataPorExtenso";

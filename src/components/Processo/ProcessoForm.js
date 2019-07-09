@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import MomentPure from "moment";
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import ListaDocumentos from "./ListaDocumentos";
+import ListaDocumentos from "../Documento/ListaDocumentos";
 import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
 import { QUERY_PROCESSO, EDIT_PROCESSO, ADD_PROCESSO } from "./ProcessoQueries";
 import Moment from "react-moment";
