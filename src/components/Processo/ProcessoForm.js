@@ -331,7 +331,7 @@ class ProcessoForm extends Component {
                     <React.Fragment>
                       <Page.Card>
                         <Form.Group label="Documentos">
-                          <ListaDocumentos id={id} />
+                          <ListaDocumentos id={id} title={title} />
                         </Form.Group>
                       </Page.Card>
                     </React.Fragment>

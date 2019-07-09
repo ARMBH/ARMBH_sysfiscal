@@ -27,7 +27,8 @@ class ListaDocumentos extends Component {
   }
 
   render() {
-    const { id } = this.props;
+    let { id, title } = this.props;
+    if (!title) title = "";
     let cardTitle = "";
     return (
       <Query
@@ -42,10 +43,13 @@ class ListaDocumentos extends Component {
             cardTitle =
               "Processo " +
               id +
-              " - foram encontrados " +
+              " - " +
+              title +
+              " (" +
               data.documentos.length +
               " documento";
             if (data.documentos.length > 1) cardTitle = cardTitle + "s";
+            cardTitle = cardTitle + ")";
           } else cardTitle = "Sem documentos";
           //console.log(cardTitle);
           return (

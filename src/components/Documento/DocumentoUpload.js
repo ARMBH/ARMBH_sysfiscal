@@ -129,10 +129,10 @@ class DocumentoUpload extends Component {
  */
 
     //Altera o título de acordo com o Edição/Adição de Processo
-    let contentTitle = "Adicionar Documento de Origem";
-    if (id) contentTitle = "Adicionar Documento de Origem ao Processo nº " + id;
+    let contentTitle = "Adicionar Novo Documento";
+    if (id) contentTitle = "Adicionar Novo Documento ao Processo nº " + id;
 
-    let cardTitle = "Cadastro de Novo Documento de Origem";
+    let cardTitle = "Cadastro de Novo Documento";
     if (id) cardTitle = title + "";
 
     let mutation = ADD_DOCUMENTO;
