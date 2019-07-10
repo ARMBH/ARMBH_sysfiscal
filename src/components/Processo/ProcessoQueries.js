@@ -71,6 +71,10 @@ const QUERY_PROCESSO = gql`
       description
       created_at
       status_id
+      status {
+        name
+        type
+      }
       municipio_id
       demandante_id
       due_date

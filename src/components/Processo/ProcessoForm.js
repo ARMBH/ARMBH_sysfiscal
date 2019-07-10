@@ -420,22 +420,13 @@ class ProcessoForm extends Component {
                                 </Tag>
                               </Form.Group>
                               <Form.Group label="Status">
-                                <Query
-                                  query={QUERY_STATUS_UNICO}
-                                  variables={{ id: status_id }}
-                                >
-                                  {({ loading, error, data }) => {
-                                    if (loading) return "Carregando...";
-                                    if (error) return `Erro! ${error.message}`;
-                                    return (
-                                      <React.Fragment>
-                                        <Tag color={data.status[0].type}>
-                                          {data.status[0].name}
-                                        </Tag>
-                                      </React.Fragment>
-                                    );
-                                  }}
-                                </Query>
+                                {this.state.status ? (
+                                  <Tag color={this.state.status.type}>
+                                    {this.state.status.name}
+                                  </Tag>
+                                ) : (
+                                  "Carregando..."
+                                )}
                               </Form.Group>
                             </React.Fragment>
                           ) : (
