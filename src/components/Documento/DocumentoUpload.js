@@ -16,11 +16,8 @@ class DocumentoUpload extends Component {
   constructor() {
     super();
     this.state = {
-      //id: '',
-      title: "",
-      origem_solicitacao: "",
-      descricao: "",
-      data_prazo: "",
+      name: "",
+      description: "",
       files: [],
       disableForm: true
     };
@@ -63,7 +60,7 @@ class DocumentoUpload extends Component {
             this.props.history.push("/listaprocessos");
             return false;
           } else {
-            this.setState(data.data.processos[0]);
+            this.setState({ name: data.data.processos[0].name });
           }
         }
       }
@@ -120,7 +117,7 @@ class DocumentoUpload extends Component {
 
   render() {
     //Declara variaveis do state/props para facilitar
-    const { id, title, files, disableForm } = this.state;
+    const { id, name, files, disableForm, description } = this.state;
     const { auth } = this.props;
 
     //Adquire ID do user que está logado para verificar se ele pode editar o formulário
@@ -136,7 +133,7 @@ class DocumentoUpload extends Component {
     if (id) contentTitle = "Adicionar Novo Documento ao Processo nº " + id;
 
     let cardTitle = "Cadastro de Novo Documento";
-    if (id) cardTitle = title + "";
+    if (id) cardTitle = name + "";
 
     let mutation = ADD_DOCUMENTO;
     let mutationType = "add";
@@ -160,7 +157,8 @@ class DocumentoUpload extends Component {
                               name: files.name,
                               type: files.type,
                               size: files.size,
-                              base64: files.base64
+                              base64: files.base64,
+                              description: description
                             };
 
                             mutationProcesso({
@@ -195,6 +193,27 @@ class DocumentoUpload extends Component {
                                 onDone={this.getFiles.bind(this)}
                                 className="btn btn-primary ml-auto"
                               />
+                              <Form.Group
+                                label={
+                                  <Form.Label
+                                    aside={
+                                      description
+                                        ? description.length + "/1000"
+                                        : "0/1000"
+                                    }
+                                  >
+                                    Descrição
+                                  </Form.Label>
+                                }
+                              >
+                                <Form.Textarea
+                                  name="description"
+                                  value={description}
+                                  placeholder="Descreva este documento"
+                                  rows={6}
+                                  onChange={this.handleChange}
+                                />
+                              </Form.Group>
                             </React.Fragment>
                           ) : (
                             ""

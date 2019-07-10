@@ -9,6 +9,7 @@ const QUERY_DOCUMENTO = gql`
       size
       type
       base64
+      description
       user {
         name
       }
@@ -27,11 +28,12 @@ const QUERY_DOCUMENTOS = gql`
       created_at
       size
       type
+      description
       user {
         name
       }
       processo {
-        title
+        name
       }
     }
   }
@@ -42,6 +44,7 @@ const ADD_DOCUMENTO = gql`
     $name: String!
     $type: String!
     $size: String!
+    $description: String!
     $base64: String!
     $user_id: String!
     $processo_id: Int!
@@ -54,6 +57,7 @@ const ADD_DOCUMENTO = gql`
         base64: $base64
         user_id: $user_id
         processo_id: $processo_id
+        description: $description
       }
     ) {
       affected_rows

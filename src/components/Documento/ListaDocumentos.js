@@ -9,6 +9,7 @@ import { Query } from "react-apollo";
 import DataPorExtenso from "../Utils/DataPorExtenso";
 import DocumentoDownload from "../Documento/DocumentoDownload";
 import { Link } from "react-router-dom";
+import ReactTooltip from "react-tooltip";
 
 class ListaDocumentos extends Component {
   constructor() {
@@ -50,6 +51,7 @@ class ListaDocumentos extends Component {
               " documento";
             if (data.documentos.length > 1) cardTitle = cardTitle + "s";
             cardTitle = cardTitle + ")";
+            console.log(data.documentos);
           } else cardTitle = "Sem documentos";
           //console.log(cardTitle);
           return (
@@ -77,7 +79,7 @@ class ListaDocumentos extends Component {
                       {data.documentos.map((documento, index) => (
                         <Table.Row key={index}>
                           <Table.Col>{documento.id}</Table.Col>
-                          <Table.Col>{documento.name}</Table.Col>
+                          <Table.Col> {documento.name} </Table.Col>
                           <Table.Col>
                             <Badge color="info">{documento.type}</Badge>
                           </Table.Col>
@@ -95,7 +97,16 @@ class ListaDocumentos extends Component {
                             <DataPorExtenso data={documento.created_at} />
                           </Table.Col>
                           <Table.Col>
-                            <DocumentoDownload id={documento.id} />
+                            <DocumentoDownload id={documento.id} />{" "}
+                            {documento.description ? (
+                              <span data-tip={documento.description}>
+                                <Button color="secondary">
+                                  <Icon name="help-circle" />
+                                </Button>
+                              </span>
+                            ) : (
+                              ""
+                            )}
                           </Table.Col>
                         </Table.Row>
                       ))}
@@ -106,6 +117,7 @@ class ListaDocumentos extends Component {
                 )}
               </Card>
               <Button.List align="right">{this.tituloTabela()}</Button.List>
+              <ReactTooltip />
             </React.Fragment>
           );
         }}
