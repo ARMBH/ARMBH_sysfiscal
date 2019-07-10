@@ -67,20 +67,22 @@ class ListaProcessos extends Component {
                           <Table.Header>
                             <Table.Row>
                               <Table.ColHeader>Nº</Table.ColHeader>
-                              <Table.ColHeader>Descrição</Table.ColHeader>
+                              <Table.ColHeader>Empreendimento</Table.ColHeader>
                               <Table.ColHeader>Criado por</Table.ColHeader>
                               <Table.ColHeader>Status</Table.ColHeader>
+                              <Table.ColHeader>Município</Table.ColHeader>
                               <Table.ColHeader>Criado em</Table.ColHeader>
-                              <Table.ColHeader>
-                                Últ. atualização
-                              </Table.ColHeader>
                               <Table.ColHeader />
                             </Table.Row>
                           </Table.Header>
                           <Table.Body>
                             {data.processos.map((processo, index) => (
                               <Table.Row key={index}>
-                                <Table.Col>{processo.id}</Table.Col>
+                                <Table.Col>
+                                  {processo.id}
+                                  {" / "}
+                                  {Moment(processo.created_at).format("YYYY")}
+                                </Table.Col>
                                 <Table.Col>{processo.name}</Table.Col>
                                 <Table.Col>{processo.user.name}</Table.Col>
                                 <Table.Col>
@@ -96,9 +98,7 @@ class ListaProcessos extends Component {
                                     {processo.status.name}
                                   </Badge>
                                 </Table.Col>
-                                <Table.Col>
-                                  <DataPorExtenso data={processo.created_at} />
-                                </Table.Col>
+                                <Table.Col>{processo.municipio.name}</Table.Col>
                                 <Table.Col>
                                   <DataPorExtenso data={processo.created_at} />
                                 </Table.Col>
