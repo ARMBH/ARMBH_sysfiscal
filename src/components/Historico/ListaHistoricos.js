@@ -63,7 +63,16 @@ class ListaHistoricos extends Component {
                       {data.historicos.map((documento, index) => (
                         <Table.Row key={index}>
                           <Table.Col>{index + 1}</Table.Col>
-                          <Table.Col>{documento.title}</Table.Col>
+                          <Table.Col>
+                            {documento.title.split("\n").map((item, key) => {
+                              return (
+                                <span key={key}>
+                                  {item}
+                                  <br />
+                                </span>
+                              );
+                            })}
+                          </Table.Col>
                           <Table.Col>
                             <Badge color="info">{documento.tipo}</Badge>
                           </Table.Col>

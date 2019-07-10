@@ -56,7 +56,10 @@ class ProcessoForm extends Component {
             this.props.history.push("/processo/todos");
             return false;
           } else {
-            this.setState(data.data.processos[0]);
+            this.setState({
+              ...data.data.processos[0],
+              oldState: data.data.processos[0]
+            });
           }
         }
       }
@@ -82,15 +85,44 @@ class ProcessoForm extends Component {
   };
 
   handleChange = e => {
-    console.log(e.target.name + e.target.value);
+    //console.log(e.target.name + e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
   handleCompleted = data => {
     if (this.state.id) {
-      let message = "Processo " + this.state.id + " editado com sucesso";
-      toast.success(message);
-      logar.logar(this.props.client, this.state.id, "Processo", message);
+      let alterado = false;
+      let message = "Processo " + this.state.id + " editado:";
+
+      if (this.state.name !== this.state.oldState.name) {
+        alterado = true;
+        message = message + "\n- Empreendimento alterado ";
+      }
+
+      if (this.state.origem_id !== this.state.oldState.origem_id) {
+        alterado = true;
+        message = message + "\n- Origem alterada ";
+      }
+
+      if (this.state.demandante_id !== this.state.oldState.demandante_id) {
+        alterado = true;
+        message = message + "\n- Demandante alterado ";
+      }
+
+      if (this.state.municipio_id !== this.state.oldState.municipio_id) {
+        alterado = true;
+        message = message + "\n- Município alterado ";
+      }
+
+      if (this.state.description !== this.state.oldState.description) {
+        alterado = true;
+        message = message + "\n- Descrição Alterada ";
+      }
+
+      toast.success(message.substring(0, message.length - 1));
+      this.getProcesso(this.state.id);
+      if (alterado)
+        logar.logar(this.props.client, this.state.id, "Processo", message);
     } else {
       toast.success(
         data.insert_processos.returning[0].name + " criado com sucesso"
