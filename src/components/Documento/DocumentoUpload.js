@@ -95,7 +95,7 @@ class DocumentoUpload extends Component {
         this.state.files.name +
         " adicionado com sucesso ao processo " +
         this.state.id +
-        "!";
+        "";
       toast.success(message);
       logar.logar(this.props.client, this.state.id, "Documento", message);
       this.props.history.push(

@@ -65,6 +65,7 @@ class ProcessoForm extends Component {
       );
     }
   }
+
   handleChangeData = e => {
     this.setState({ data_prazo: e });
   };
@@ -125,7 +126,7 @@ class ProcessoForm extends Component {
 
     //Altera o título de acordo com o Edição/Adição de Processo
     let contentTitle = "Novo Processo";
-    if (id) contentTitle = "Editar Processo nº " + id;
+    if (id) contentTitle = "Processo nº " + id;
 
     let cardTitle = "Cadastro de Novo Processo";
     if (id) cardTitle = title + "";
