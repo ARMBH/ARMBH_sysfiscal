@@ -17,7 +17,7 @@ class ListaProcessos extends Component {
     this.props.history.push("/processo/" + id);
   }
   render() {
-    const { id, title } = this.state;
+    const { id, name } = this.state;
     let { auth } = this.props;
     const userLogado = auth.getSub();
 
@@ -25,7 +25,7 @@ class ListaProcessos extends Component {
     if (id) contentTitle = "Editar Processo nº " + id;
 
     let cardTitle = "Nenhum processo encontrado";
-    if (id) cardTitle = title + "";
+    if (id) cardTitle = name + "";
 
     return (
       <SiteWrapper {...this.props}>
@@ -81,7 +81,7 @@ class ListaProcessos extends Component {
                             {data.processos.map((processo, index) => (
                               <Table.Row key={index}>
                                 <Table.Col>{processo.id}</Table.Col>
-                                <Table.Col>{processo.title}</Table.Col>
+                                <Table.Col>{processo.name}</Table.Col>
                                 <Table.Col>{processo.user.name}</Table.Col>
                                 <Table.Col>
                                   {Moment().diff(processo.created_at, "hours") <
@@ -98,7 +98,7 @@ class ListaProcessos extends Component {
                                   <DataPorExtenso data={processo.created_at} />
                                 </Table.Col>
                                 <Table.Col>
-                                  <DataPorExtenso data={processo.updated_at} />
+                                  <DataPorExtenso data={processo.created_at} />
                                 </Table.Col>
                                 <Table.Col>
                                   {userLogado === processo.user.id ? (

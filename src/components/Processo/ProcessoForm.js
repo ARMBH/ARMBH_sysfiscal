@@ -227,6 +227,7 @@ class ProcessoForm extends Component {
                           </Form.Group>
                           <Form.Group label="Origem">
                             <Form.Select
+                              disabled={disableForm}
                               name="origem_id"
                               value={origem_id}
                               onChange={this.handleChange}
@@ -254,6 +255,7 @@ class ProcessoForm extends Component {
                           </Form.Group>
                           <Form.Group label="Demandante">
                             <Form.Select
+                              disabled={disableForm}
                               name="demandante_id"
                               value={demandante_id}
                               onChange={this.handleChange}
@@ -278,6 +280,7 @@ class ProcessoForm extends Component {
                           </Form.Group>
                           <Form.Group label="Município">
                             <Form.Select
+                              disabled={disableForm}
                               name="municipio_id"
                               value={municipio_id}
                               onChange={this.handleChange}

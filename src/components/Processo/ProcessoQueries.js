@@ -81,12 +81,11 @@ const QUERY_PROCESSO = gql`
 const QUERY_PROCESSOS = gql`
   {
     processos(order_by: { id: desc }) {
-      updated_at
       created_at
       id
-      title
-      status
-      data_prazo
+      name
+      status_id
+      due_date
       user {
         name
         id

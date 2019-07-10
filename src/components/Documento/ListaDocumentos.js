@@ -51,7 +51,7 @@ class ListaDocumentos extends Component {
               " documento";
             if (data.documentos.length > 1) cardTitle = cardTitle + "s";
             cardTitle = cardTitle + ")";
-            console.log(data.documentos);
+            //console.log(data.documentos);
           } else cardTitle = "Sem documentos";
           //console.log(cardTitle);
           return (
@@ -99,7 +99,11 @@ class ListaDocumentos extends Component {
                           <Table.Col>
                             <DocumentoDownload id={documento.id} />{" "}
                             {documento.description ? (
-                              <span data-tip={documento.description}>
+                              <span
+                                data-for={document.name}
+                                data-tip={documento.description}
+                              >
+                                <ReactTooltip id={document.name} />
                                 <Button color="secondary">
                                   <Icon name="help-circle" />
                                 </Button>
@@ -117,7 +121,6 @@ class ListaDocumentos extends Component {
                 )}
               </Card>
               <Button.List align="right">{this.tituloTabela()}</Button.List>
-              <ReactTooltip />
             </React.Fragment>
           );
         }}
