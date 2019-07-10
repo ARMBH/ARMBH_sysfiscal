@@ -92,7 +92,9 @@ class ListaProcessos extends Component {
                                   ) : (
                                     ""
                                   )}
-                                  <Badge color="info">{processo.status}</Badge>
+                                  <Badge color={processo.status.type}>
+                                    {processo.status.name}
+                                  </Badge>
                                 </Table.Col>
                                 <Table.Col>
                                   <DataPorExtenso data={processo.created_at} />

@@ -85,6 +85,10 @@ const QUERY_PROCESSOS = gql`
       id
       name
       status_id
+      status {
+        name
+        type
+      }
       due_date
       user {
         name
