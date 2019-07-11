@@ -3,7 +3,7 @@ import Moment from "moment";
 
 import { Badge } from "tabler-react";
 import { Table, Card } from "tabler-react";
-import { QUERY_HISTORICOS } from "./HistoricoQueries";
+import { QUERY_HISTORICOS, QUERY_HISTORICOS_TIPO } from "./HistoricoQueries";
 //import { toast } from 'react-toastify';
 import { Query } from "react-apollo";
 import DataPorExtenso from "../Utils/DataPorExtenso";
@@ -15,15 +15,19 @@ class ListaHistoricos extends Component {
   }
 
   render() {
-    let { id, title } = this.props;
+    let { id, title, type } = this.props;
     if (!title) title = "";
     let cardTitle = "";
+    let mutation = QUERY_HISTORICOS;
+    let variables = { processoId: id };
+
+    if (type) {
+      mutation = QUERY_HISTORICOS_TIPO;
+      variables.historico_tipo = type;
+    }
+
     return (
-      <Query
-        pollInterval={500}
-        query={QUERY_HISTORICOS}
-        variables={{ processoId: id }}
-      >
+      <Query pollInterval={500} query={mutation} variables={variables}>
         {({ loading, error, data }) => {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;
@@ -64,7 +68,7 @@ class ListaHistoricos extends Component {
                         <Table.Row key={index}>
                           <Table.Col>{index + 1}</Table.Col>
                           <Table.Col>
-                            {documento.title.split("\n").map((item, key) => {
+                            {documento.name.split("\n").map((item, key) => {
                               return (
                                 <span key={key}>
                                   {item}
@@ -74,11 +78,13 @@ class ListaHistoricos extends Component {
                             })}
                           </Table.Col>
                           <Table.Col>
-                            <Badge color="info">{documento.tipo}</Badge>
+                            <Badge color={documento.historico_tipo.type}>
+                              {documento.historico_tipo.name}
+                            </Badge>
                           </Table.Col>
                           <Table.Col>{documento.user.name}</Table.Col>
                           <Table.Col>
-                            {Moment().diff(documento.updated_at, "hours") <
+                            {Moment().diff(documento.created_at, "hours") <
                             24 ? (
                               <React.Fragment>
                                 <Badge color="success">Recente</Badge>{" "}
@@ -86,14 +92,14 @@ class ListaHistoricos extends Component {
                             ) : (
                               ""
                             )}
-                            <DataPorExtenso data={documento.updated_at} />
+                            <DataPorExtenso data={documento.created_at} />
                           </Table.Col>
                         </Table.Row>
                       ))}
                     </Table.Body>
                   </Table>
                 ) : (
-                  <Card.Body>Nenhum documento encontrado.</Card.Body>
+                  <Card.Body>Nenhum registro encontrado.</Card.Body>
                 )}
               </Card>
             </React.Fragment>

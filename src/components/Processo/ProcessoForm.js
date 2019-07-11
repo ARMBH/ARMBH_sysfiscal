@@ -9,17 +9,17 @@ import {
   QUERY_ORIGEMS,
   QUERY_DEMANDANTES,
   QUERY_MUNICIPIOS,
-  QUERY_STATUS,
-  QUERY_STATUS_UNICO
+  QUERY_STATUS
 } from "./ProcessoQueries";
 import logar from "../Historico/HistoricoLog";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import ListaDocumentos from "../Documento/ListaDocumentos";
 import ListaHistoricos from "../Historico/ListaHistoricos";
+import HistoricoAdiciona from "../Historico/HistoricoAdiciona";
 import DataPorExtenso from "../Utils/DataPorExtenso";
 //Componentes de Terceiros
-import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
+import { Form, Button, Page, Grid, Alert, Tag, Icon } from "tabler-react";
 import { toast } from "react-toastify";
 // Relativos à data:
 import MomentPure from "moment";
@@ -35,7 +35,8 @@ class ProcessoForm extends Component {
     this.state = {
       name: "",
       description: "",
-      due_date: ""
+      due_date: "",
+      comment: ""
     };
   }
 
@@ -121,8 +122,7 @@ class ProcessoForm extends Component {
 
       toast.success(message.substring(0, message.length - 1));
       this.getProcesso(this.state.id);
-      if (alterado)
-        logar.logar(this.props.client, this.state.id, "Processo", message);
+      if (alterado) logar.logar(this.props.client, this.state.id, 1, message);
     } else {
       toast.success(
         data.insert_processos.returning[0].name + " criado com sucesso"
@@ -135,7 +135,7 @@ class ProcessoForm extends Component {
           logar.logar(
             this.props.client,
             data.insert_processos.returning[0].id,
-            "Processo",
+            1,
             "Criação do Processo"
           );
           this.props.history.push(
@@ -158,7 +158,8 @@ class ProcessoForm extends Component {
       user,
       status_id,
       municipio_id,
-      demandante_id
+      demandante_id,
+      comment
     } = this.state;
     let { auth } = this.props;
 
@@ -492,6 +493,15 @@ class ProcessoForm extends Component {
                   </Page.Card>
                   {id ? ( //Início da parte de Baixo quando o Processo já existe
                     <React.Fragment>
+                      <Page.Card>
+                        <Form.Group label="Comentários">
+                          <ListaHistoricos id={id} title={name} type={3} />
+                        </Form.Group>
+                        <HistoricoAdiciona
+                          client={this.props.client}
+                          processo_id={id}
+                        />
+                      </Page.Card>
                       <Page.Card>
                         <Form.Group label="Documentos">
                           <ListaDocumentos id={id} title={name} />

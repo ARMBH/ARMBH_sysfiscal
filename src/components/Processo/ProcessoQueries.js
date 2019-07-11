@@ -143,16 +143,6 @@ const QUERY_STATUS = gql`
   }
 `;
 
-const QUERY_STATUS_UNICO = gql`
-  query getStatus($id: Int!) {
-    status(order_by: { name: asc }, where: { id: { _eq: $id } }) {
-      id
-      name
-      type
-    }
-  }
-`;
-
 const SUBSCRIPTION_TOTAL_PROCESSOS = gql`
   subscription getProcessos {
     processos_aggregate {
@@ -172,6 +162,5 @@ export {
   QUERY_DEMANDANTES,
   QUERY_MUNICIPIOS,
   QUERY_STATUS,
-  QUERY_STATUS_UNICO,
   SUBSCRIPTION_TOTAL_PROCESSOS
 };
