@@ -7,6 +7,7 @@ import auth from "./components/Auth/Auth";
 import LandingPage from "./components/LandingPage/LandingPage";
 import BlogPage from "./components/BlogPage/BlogPage";
 import ProcessoForm from "./components/Processo/ProcessoForm";
+import EnderecoForm from "./components/Endereco/EnderecoForm";
 import DocumentoUpload from "./components/Documento/DocumentoUpload";
 import ListaProcessos from "./components/Processo/ListaProcessos";
 import history from "./utils/history";
@@ -90,6 +91,11 @@ export const makeMainRoutes = () => {
           exact
           path="/processo/:param"
           render={props => provideClient(ProcessoForm, props)}
+        />
+        <Route
+          exact
+          path="/endereco/:param"
+          render={props => provideClient(EnderecoForm, props)}
         />
         <Route
           exact
