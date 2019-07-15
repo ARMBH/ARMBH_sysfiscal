@@ -34,7 +34,11 @@ class EnderecoForm extends Component {
       bairro: "",
       area: "",
       disableForm: false,
-      processo_name: ""
+      processo_name: "",
+      oldState: {
+        cep: "",
+        area: ""
+      }
     };
   }
 
@@ -135,7 +139,8 @@ class EnderecoForm extends Component {
           } else {
             //console.log(data.data.enderecos[0]);
             this.setState({
-              ...data.data.enderecos[0]
+              ...data.data.enderecos[0],
+              oldState: data.data.enderecos[0]
             });
           }
         }
@@ -149,9 +154,18 @@ class EnderecoForm extends Component {
       "Endereço do Processo " +
       this.state.processo_id +
       " alterado com sucesso";
-    toast.success(message);
 
-    logar.logar(this.props.client, this.state.processo_id, 1, message);
+    //console.log(this.state.oldState);
+    //Object.keys(this.state.oldState).map(i => console.log(this.state.oldState[i]));
+    if (
+      this.state.oldState.cep !== this.state.cep ||
+      this.state.oldState.area !== this.state.area
+    ) {
+      logar.logar(this.props.client, this.state.processo_id, 1, message);
+      //console.log('Alterado');
+      message = message + "!";
+    }
+    toast.success(message);
     this.props.history.push("/processo/" + this.state.processo_id);
   };
 

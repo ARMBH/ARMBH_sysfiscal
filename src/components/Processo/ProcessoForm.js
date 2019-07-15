@@ -16,6 +16,7 @@ import logar from "../Historico/HistoricoLog";
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import ListaDocumentos from "../Documento/ListaDocumentos";
 import ListaHistoricos from "../Historico/ListaHistoricos";
+import ListaEnderecos from "../Endereco/ListaEnderecos";
 import HistoricoAdiciona from "../Historico/HistoricoAdiciona";
 import DataPorExtenso from "../Utils/DataPorExtenso";
 //Componentes de Terceiros
@@ -493,6 +494,11 @@ class ProcessoForm extends Component {
                   </Page.Card>
                   {id ? ( //Início da parte de Baixo quando o Processo já existe
                     <React.Fragment>
+                      <Page.Card>
+                        <Form.Group label="Endereço">
+                          <ListaEnderecos id={id} title={name} />
+                        </Form.Group>
+                      </Page.Card>
                       <Page.Card>
                         <Form.Group label="Comentários">
                           <ListaHistoricos id={id} title={name} type={3} />
