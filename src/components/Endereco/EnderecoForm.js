@@ -54,6 +54,12 @@ class EnderecoForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleChangeArea = e => {
+    console.log(e.target.name + e.target.value);
+    let valor = e.target.value;
+    this.setState({ [e.target.name]: valor });
+  };
+
   handleChangeCep = e => {
     console.log(e.target.value.replace(/[-_+()\s]/g, "").length);
     this.setState({ [e.target.name]: e.target.value });
@@ -98,17 +104,42 @@ class EnderecoForm extends Component {
           <Page.Card title={cardTitle}>
             <Grid.Row cards deck>
               <Grid.Col>
-                <Form.Group label="CEP">
-                  <Form.MaskedInput
-                    disabled={disableForm}
-                    value={cep}
-                    name="cep"
-                    placeholder="Digite um CEP..."
-                    onChange={this.handleChangeCep}
-                    type="text"
-                    mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
-                  />
-                </Form.Group>
+                <Grid.Row>
+                  <Grid.Col width={3}>
+                    <Form.Group label="CEP">
+                      <Form.MaskedInput
+                        disabled={disableForm}
+                        value={cep}
+                        name="cep"
+                        placeholder="Digite um CEP..."
+                        onChange={this.handleChangeCep}
+                        type="text"
+                        mask={[
+                          /\d/,
+                          /\d/,
+                          /\d/,
+                          /\d/,
+                          /\d/,
+                          "-",
+                          /\d/,
+                          /\d/,
+                          /\d/
+                        ]}
+                      />
+                    </Form.Group>
+                  </Grid.Col>
+                  <Grid.Col width={9}>
+                    <Form.Group label="Bairro">
+                      <Form.Input
+                        disabled={disableForm}
+                        value={bairro}
+                        name="bairro"
+                        placeholder="Digite um título..."
+                        onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                  </Grid.Col>
+                </Grid.Row>
                 <Grid.Row>
                   <Grid.Col width={9}>
                     <Form.Group label="Logradouro">
@@ -129,6 +160,44 @@ class EnderecoForm extends Component {
                         name="complemento"
                         placeholder="Digite um título..."
                         onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                  </Grid.Col>
+                </Grid.Row>
+                <Grid.Row>
+                  <Grid.Col width={9}>
+                    <Form.Group label="Município">
+                      <Form.Input
+                        disabled={disableForm}
+                        value={localidade}
+                        name="localidade"
+                        placeholder="Digite um título..."
+                        onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                  </Grid.Col>
+                  <Grid.Col width={3}>
+                    <Form.Group label="UF">
+                      <Form.Input
+                        disabled={disableForm}
+                        value={uf}
+                        name="uf"
+                        placeholder="Digite um título..."
+                        onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                  </Grid.Col>
+                </Grid.Row>
+                <Grid.Row>
+                  <Grid.Col width={12}>
+                    <Form.Group label="Área">
+                      <Form.Input
+                        disabled={disableForm}
+                        value={area}
+                        name="area"
+                        placeholder="Digite um título..."
+                        onChange={this.handleChangeArea}
+                        type="number"
                       />
                     </Form.Group>
                   </Grid.Col>
