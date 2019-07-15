@@ -47,7 +47,6 @@ class EnderecoForm extends Component {
         },
         () => {
           this.getProcesso(param);
-          this.getEndereco(param);
         }
       );
     } else {
@@ -108,10 +107,13 @@ class EnderecoForm extends Component {
             this.props.history.push("/listaprocessos");
             return false;
           } else {
-            this.setState({
-              processo_id: data.data.processos[0].id,
-              processo_name: data.data.processos[0].name
-            });
+            this.setState(
+              {
+                processo_id: data.data.processos[0].id,
+                processo_name: data.data.processos[0].name
+              },
+              this.getEndereco(processoId)
+            );
           }
         }
       }
@@ -124,14 +126,14 @@ class EnderecoForm extends Component {
       variables: { processoId: processoId },
       update: (cache, data) => {
         if (data) {
-          console.log(data.data);
+          //console.log(data.data);
           if (!data.data.enderecos[0]) {
             toast.info(
               "Endereço não encontrado, cadastre um novo endereço para este processo."
             );
             return false;
           } else {
-            console.log(data.data.enderecos[0]);
+            //console.log(data.data.enderecos[0]);
             this.setState({
               ...data.data.enderecos[0]
             });
