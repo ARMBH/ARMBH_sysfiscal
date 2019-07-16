@@ -69,7 +69,15 @@ class ProcessoForm extends Component {
   }
 
   componentDidMount() {
+    //Parametros do Routes.js
     const { param } = this.props.match.params;
+    //Parametros da URL (após o ?)
+    const paramsUrl = new URLSearchParams(this.props.location.search);
+
+    //Caso haja demanda
+    const demanda = paramsUrl.get("demanda");
+    if (demanda) console.log(demanda);
+
     if (parseInt(param, 10) > 0) {
       this.setState(
         {
