@@ -510,7 +510,11 @@ class ProcessoForm extends Component {
                       </Page.Card>
                       <Page.Card>
                         <Form.Group label="Documentos">
-                          <ListaDocumentos id={id} title={name} />
+                          <ListaDocumentos
+                            id={id}
+                            title={name}
+                            {...this.props}
+                          />
                         </Form.Group>
                       </Page.Card>
                       <Page.Card>

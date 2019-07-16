@@ -30,6 +30,7 @@ const QUERY_DOCUMENTOS = gql`
       type
       description
       user {
+        id
         name
       }
       processo {
@@ -70,4 +71,19 @@ const ADD_DOCUMENTO = gql`
   }
 `;
 
-export { QUERY_DOCUMENTO, QUERY_DOCUMENTOS, ADD_DOCUMENTO };
+const DELETE_DOCUMENTO = gql`
+  mutation($id: Int!) {
+    delete_documentos(where: { id: { _eq: $id } }) {
+      affected_rows
+      returning {
+        name
+        processo_id
+        user {
+          name
+        }
+      }
+    }
+  }
+`;
+
+export { QUERY_DOCUMENTO, QUERY_DOCUMENTOS, ADD_DOCUMENTO, DELETE_DOCUMENTO };
