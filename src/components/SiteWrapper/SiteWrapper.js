@@ -14,7 +14,7 @@ import {
 import "tabler-react/dist/Tabler.css";
 import type { NotificationProps } from "tabler-react";
 import auth from "../Auth/Auth";
-
+import "./SiteWrapper.css";
 import { QUERY_USER, UPDATE_LASTSEEN_MUTATION } from "./SiteWrapperQueries";
 const authLogo = require("../../images/auth.png");
 
