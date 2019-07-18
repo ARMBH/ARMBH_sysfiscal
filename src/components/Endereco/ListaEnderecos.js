@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-import Moment from "moment";
-
-import { Badge, Icon, Button } from "tabler-react";
-import { Table, Card, Grid, Form } from "tabler-react";
+import { Icon, Button } from "tabler-react";
+import { Card, Grid, Form } from "tabler-react";
 import { QUERY_ENDERECO } from "./EnderecoQueries";
 //import { toast } from 'react-toastify';
 import { Query } from "react-apollo";
-import DataPorExtenso from "../Utils/DataPorExtenso";
-import DocumentoDownload from "../Documento/DocumentoDownload";
 import { Link } from "react-router-dom";
-import ReactTooltip from "react-tooltip";
 
 class ListaEnderecos extends Component {
   constructor() {

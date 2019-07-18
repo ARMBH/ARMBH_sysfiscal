@@ -20,10 +20,9 @@ import ListaEnderecos from "../Endereco/ListaEnderecos";
 import HistoricoAdiciona from "../Historico/HistoricoAdiciona";
 import DataPorExtenso from "../Utils/DataPorExtenso";
 //Componentes de Terceiros
-import { Form, Button, Page, Grid, Alert, Tag, Icon } from "tabler-react";
+import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
 import { toast } from "react-toastify";
 // Relativos à data:
-import MomentPure from "moment";
 import Moment from "react-moment";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptBR from "date-fns/locale/pt-BR";
@@ -36,8 +35,7 @@ class ProcessoForm extends Component {
     this.state = {
       name: "",
       description: "",
-      due_date: "",
-      comment: ""
+      due_date: ""
     };
   }
 
@@ -77,7 +75,6 @@ class ProcessoForm extends Component {
     //Caso haja demanda
     const demanda = paramsUrl.get("demanda");
     if (demanda) console.log(demanda);
-
     if (parseInt(param, 10) > 0) {
       this.setState(
         {
@@ -167,8 +164,7 @@ class ProcessoForm extends Component {
       user,
       status_id,
       municipio_id,
-      demandante_id,
-      comment
+      demandante_id
     } = this.state;
     let { auth } = this.props;
 

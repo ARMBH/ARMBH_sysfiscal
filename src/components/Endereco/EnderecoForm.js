@@ -1,23 +1,15 @@
 import React, { Component } from "react";
 //Mutations
 import { Mutation } from "react-apollo";
-import { Query } from "react-apollo";
 import axios from "axios";
 import { QUERY_ENDERECO, ADD_ENDERECO, EDIT_ENDERECO } from "./EnderecoQueries";
 import { QUERY_PROCESSO } from "../Processo/ProcessoQueries";
 import logar from "../Historico/HistoricoLog";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import ListaDocumentos from "../Documento/ListaDocumentos";
-import ListaHistoricos from "../Historico/ListaHistoricos";
-import HistoricoAdiciona from "../Historico/HistoricoAdiciona";
-import DataPorExtenso from "../Utils/DataPorExtenso";
 //Componentes de Terceiros
-import { Form, Button, Page, Grid, Alert, Tag, Icon } from "tabler-react";
+import { Form, Button, Page, Grid } from "tabler-react";
 import { toast } from "react-toastify";
-// Relativos à data:
-import MomentPure from "moment";
-import Moment from "react-moment";
 
 class EnderecoForm extends Component {
   constructor() {
@@ -198,7 +190,7 @@ class EnderecoForm extends Component {
     }
 
     let contentTitle = modo + " endereço " + processo_id;
-    let cardTitle = modo + ":" + " " + processo_name;
+    let cardTitle = modo + ": " + processo_name;
 
     return (
       <React.Fragment>

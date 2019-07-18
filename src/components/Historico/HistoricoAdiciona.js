@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Badge, Icon, Button } from "tabler-react";
+import { Form, Icon, Button } from "tabler-react";
 import { toast } from "react-toastify";
 import logar from "../Historico/HistoricoLog";
 
@@ -37,7 +37,7 @@ class HistoricoAdiciona extends Component {
   };
 
   render() {
-    let { name, disableForm } = this.state;
+    let { name } = this.state;
     //console.log(name.trim().length);
     return (
       <React.Fragment>
