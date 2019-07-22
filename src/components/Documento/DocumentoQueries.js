@@ -11,6 +11,7 @@ const QUERY_DOCUMENTO = gql`
       base64
       description
       user {
+        id
         name
       }
     }
