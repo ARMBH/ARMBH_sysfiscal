@@ -16,8 +16,7 @@ class ListaEnderecos extends Component {
     const link = "/endereco/" + this.props.id;
     return (
       <Link className="btn btn-primary ml-auto" to={link}>
-        <Icon name="plus-circle" />
-        Editar Endereço
+        <Icon name="edit" /> Editar Endereço
       </Link>
     );
   }

@@ -15,14 +15,16 @@ import logar from "../Historico/HistoricoLog";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import ListaDocumentos from "../Documento/ListaDocumentos";
+import ListaStatus from "../Status/ListaStatus";
 import StatusForm from "../Status/StatusForm";
 import ListaHistoricos from "../Historico/ListaHistoricos";
 import ListaEnderecos from "../Endereco/ListaEnderecos";
 import HistoricoAdiciona from "../Historico/HistoricoAdiciona";
 import DataPorExtenso from "../Utils/DataPorExtenso";
 //Componentes de Terceiros
-import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
+import { Form, Button, Page, Grid, Alert, Tag, Icon } from "tabler-react";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 // Relativos à data:
 import Moment from "react-moment";
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -374,21 +376,6 @@ class ProcessoForm extends Component {
                                   <Moment fromNow>{created_at}</Moment>
                                 </Tag>
                               </Form.Group>
-                              <Form.Group label="Prazo">
-                                <DataPorExtenso data={due_date} />{" "}
-                                <Tag color="success">
-                                  <Moment fromNow>{due_date}</Moment>
-                                </Tag>
-                              </Form.Group>
-                              <Form.Group label="Status">
-                                {this.state.status ? (
-                                  <Tag color={this.state.status.type}>
-                                    {this.state.status.name}
-                                  </Tag>
-                                ) : (
-                                  "Carregando..."
-                                )}
-                              </Form.Group>
                             </React.Fragment>
                           ) : (
                             ""
@@ -455,16 +442,21 @@ class ProcessoForm extends Component {
                     <React.Fragment>
                       <Page.Card>
                         <Form.Group label="Status">
-                          <StatusForm
-                            client={this.props.client}
-                            processo_id={id}
-                            title={name}
-                          />
+                          <ListaStatus id={id} title={name} {...this.props} />
                         </Form.Group>
                       </Page.Card>
                       <Page.Card>
                         <Form.Group label="Endereço">
                           <ListaEnderecos id={id} title={name} />
+                        </Form.Group>
+                      </Page.Card>
+                      <Page.Card>
+                        <Form.Group label="Documentos">
+                          <ListaDocumentos
+                            id={id}
+                            title={name}
+                            {...this.props}
+                          />
                         </Form.Group>
                       </Page.Card>
                       <Page.Card>
@@ -475,15 +467,6 @@ class ProcessoForm extends Component {
                           client={this.props.client}
                           processo_id={id}
                         />
-                      </Page.Card>
-                      <Page.Card>
-                        <Form.Group label="Documentos">
-                          <ListaDocumentos
-                            id={id}
-                            title={name}
-                            {...this.props}
-                          />
-                        </Form.Group>
                       </Page.Card>
                       <Page.Card>
                         <Form.Group label="Histórico">
