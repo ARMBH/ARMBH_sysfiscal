@@ -48,7 +48,7 @@ class ListaStatus extends Component {
   }
 
   handleDelete(documento) {
-    const { id, name, status, due_date } = documento;
+    const { id, name, status, due_date, processo_id } = documento;
     const due_date_tratado = Moment(due_date).format("DD/MM/YYYY");
     if (
       window.confirm(
@@ -65,7 +65,9 @@ class ListaStatus extends Component {
         variables: { id: id },
         update: (cache, data) => {
           let message =
-            "Status " +
+            "Processo " +
+            processo_id +
+            " Status " +
             status.name +
             " de " +
             due_date_tratado +
@@ -78,6 +80,24 @@ class ListaStatus extends Component {
     } else {
       toast.error("Status não será deletado.");
     }
+  }
+
+  isToday(due_date) {
+    //Se está no futuro
+    if (Moment().diff(due_date, "hours") < 24) {
+      //Se falta mais de 2 dias
+      if (Moment().diff(due_date, "hours") < -48) return "success";
+
+      //Se falta menos de 2 dias
+      return "danger";
+    }
+
+    if (Moment().diff(due_date, "hours") > 24) {
+      //Em breve
+      return "secondary";
+    }
+
+    return "secondary";
   }
 
   render() {
@@ -106,8 +126,8 @@ class ListaStatus extends Component {
               title +
               " (" +
               data.processos_status.length +
-              " documento";
-            if (data.processos_status.length > 1) cardTitle = cardTitle + "s";
+              " status";
+            if (data.processos_status.length > 1) cardTitle = cardTitle + "";
             cardTitle = cardTitle + ")";
             //console.log(data.processos_status);
           } else cardTitle = "Sem processos_status";
@@ -143,9 +163,11 @@ class ListaStatus extends Component {
                             {Moment(documento.due_date).format(
                               "DD/MM/YYYY"
                             )}{" "}
-                            <MomentComponent fromNow>
-                              {documento.due_date}
-                            </MomentComponent>
+                            <Tag color={this.isToday(documento.due_date)}>
+                              <MomentComponent fromNow>
+                                {documento.due_date}
+                              </MomentComponent>
+                            </Tag>
                           </Table.Col>
                           <Table.Col>{documento.user.name}</Table.Col>
                           <Table.Col>{documento.name}</Table.Col>
