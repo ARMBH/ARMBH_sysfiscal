@@ -8,7 +8,6 @@ const ADD_PROCESSO = gql`
     $status_id: Int!
     $demandante_id: Int!
     $municipio_id: Int!
-    $due_date: timestamptz
   ) {
     insert_processos(
       objects: {
@@ -18,7 +17,6 @@ const ADD_PROCESSO = gql`
         municipio_id: $municipio_id
         status_id: $status_id
         demandante_id: $demandante_id
-        due_date: $due_date
       }
     ) {
       affected_rows

@@ -27,7 +27,7 @@ class ListaHistoricos extends Component {
     }
 
     return (
-      <Query pollInterval={500} query={mutation} variables={variables}>
+      <Query pollInterval={3000} query={mutation} variables={variables}>
         {({ loading, error, data }) => {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;

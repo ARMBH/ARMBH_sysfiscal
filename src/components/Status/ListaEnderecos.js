@@ -30,6 +30,7 @@ class ListaEnderecos extends Component {
     return (
       <Query
         pollInterval={3000}
+        notifyOnNetworkStatusChange
         query={QUERY_ENDERECO}
         variables={{ processoId: id }}
       >

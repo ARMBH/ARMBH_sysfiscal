@@ -11,10 +11,17 @@ import DataPorExtenso from "../Utils/DataPorExtenso";
 class ListaProcessos extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      last_update: ""
+    };
   }
   gotoProcesso(id) {
     this.props.history.push("/processo/" + id);
+  }
+
+  componentDidMount() {
+    //console.log(Date());
+    this.setState({ last_update: Date() });
   }
   render() {
     const { id, name } = this.state;
@@ -46,7 +53,7 @@ class ListaProcessos extends Component {
             </Grid.Col>
           </Grid.Row>
           <Grid.Row cards deck>
-            <Query query={QUERY_PROCESSOS} pollInterval={500}>
+            <Query query={QUERY_PROCESSOS} pollInterval={5000}>
               {({ loading, error, data }) => {
                 if (loading) return "Carregando...";
                 if (error) return `Erro! ${error.message}`;

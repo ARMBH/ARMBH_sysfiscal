@@ -59,7 +59,7 @@ class ListaDocumentos extends Component {
 
     return (
       <Query
-        pollInterval={500}
+        pollInterval={3000}
         query={QUERY_DOCUMENTOS}
         variables={{ processoId: id }}
       >

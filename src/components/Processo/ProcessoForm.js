@@ -15,6 +15,7 @@ import logar from "../Historico/HistoricoLog";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import ListaDocumentos from "../Documento/ListaDocumentos";
+import StatusForm from "../Status/StatusForm";
 import ListaHistoricos from "../Historico/ListaHistoricos";
 import ListaEnderecos from "../Endereco/ListaEnderecos";
 import HistoricoAdiciona from "../Historico/HistoricoAdiciona";
@@ -141,7 +142,7 @@ class ProcessoForm extends Component {
           logar.logar(
             this.props.client,
             data.insert_processos.returning[0].id,
-            1,
+            5,
             "Criação do Processo"
           );
           this.props.history.push(
@@ -223,8 +224,7 @@ class ProcessoForm extends Component {
                                 ".000000+00:00";
                                */
                             } else {
-                              variables.status_id = status_id;
-                              variables.due_date = due_date;
+                              variables.status_id = 1;
                             }
 
                             mutationProcesso({
@@ -363,51 +363,6 @@ class ProcessoForm extends Component {
                               onChange={this.handleChange}
                             />
                           </Form.Group>
-                          {!id ? (
-                            <React.Fragment>
-                              <Form.Group label="Status">
-                                <Form.Select
-                                  name="status_id"
-                                  value={status_id}
-                                  onChange={this.handleChange}
-                                >
-                                  <option value=""> Selecione um status</option>
-                                  <Query query={QUERY_STATUS}>
-                                    {({ loading, error, data }) => {
-                                      if (loading) return "Carregando...";
-                                      if (error)
-                                        return `Erro! ${error.message}`;
-                                      return (
-                                        <React.Fragment>
-                                          {data.status.map((item, index) => (
-                                            <option
-                                              key={item.id}
-                                              value={item.id}
-                                            >
-                                              {item.name}
-                                            </option>
-                                          ))}
-                                        </React.Fragment>
-                                      );
-                                    }}
-                                  </Query>
-                                </Form.Select>
-                              </Form.Group>
-                              <Form.Group label="Defina um Prazo">
-                                <DatePicker
-                                  locale="pt-BR"
-                                  className="form-control"
-                                  selected={this.state.due_date}
-                                  name="due_date"
-                                  onChange={this.handleChangeData}
-                                  placeholderText="Escolha um prazo..."
-                                  dateFormat="dd/MM/yyyy"
-                                />
-                              </Form.Group>
-                            </React.Fragment>
-                          ) : (
-                            ""
-                          )}
                           {id ? (
                             <React.Fragment>
                               <Form.Group label="Criado por">
@@ -498,6 +453,15 @@ class ProcessoForm extends Component {
                   </Page.Card>
                   {id ? ( //Início da parte de Baixo quando o Processo já existe
                     <React.Fragment>
+                      <Page.Card>
+                        <Form.Group label="Status">
+                          <StatusForm
+                            client={this.props.client}
+                            processo_id={id}
+                            title={name}
+                          />
+                        </Form.Group>
+                      </Page.Card>
                       <Page.Card>
                         <Form.Group label="Endereço">
                           <ListaEnderecos id={id} title={name} />
