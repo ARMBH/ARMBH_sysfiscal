@@ -11,6 +11,7 @@ import {
   QUERY_MUNICIPIOS,
   QUERY_STATUS
 } from "./ProcessoQueries";
+import { ADD_STATUS } from "../Status/StatusQueries";
 import logar from "../Historico/HistoricoLog";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
@@ -27,6 +28,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 // Relativos à data:
 import Moment from "react-moment";
+import MomentPure from "moment";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptBR from "date-fns/locale/pt-BR";
 import "react-datepicker/dist/react-datepicker.css";
@@ -64,6 +66,27 @@ class ProcessoForm extends Component {
               oldState: data.data.processos[0]
             });
           }
+        }
+      }
+    });
+  }
+
+  setStatus(processoId) {
+    const due_date =
+      MomentPure()
+        .utc()
+        .format("YYYY-MM-DD[T]HH:mm:ss") + ".000000+00:00";
+    this.props.client.mutate({
+      mutation: ADD_STATUS,
+      variables: {
+        processo_id: processoId,
+        status_id: 1,
+        name: "Abertura de Processo",
+        due_date: due_date
+      },
+      update: (cache, data) => {
+        if (data) {
+          console.log("Setado Status");
         }
       }
     });
@@ -147,6 +170,7 @@ class ProcessoForm extends Component {
             5,
             "Criação do Processo"
           );
+          this.setStatus(data.insert_processos.returning[0].id);
           this.props.history.push(
             "/processo/" + data.insert_processos.returning[0].id
           );

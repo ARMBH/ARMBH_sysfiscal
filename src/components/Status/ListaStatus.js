@@ -130,7 +130,7 @@ class ListaStatus extends Component {
             if (data.processos_status.length > 1) cardTitle = cardTitle + "";
             cardTitle = cardTitle + ")";
             //console.log(data.processos_status);
-          } else cardTitle = "Sem processos_status";
+          } else cardTitle = "Sem status";
           return (
             <React.Fragment>
               <Card title={cardTitle}>
