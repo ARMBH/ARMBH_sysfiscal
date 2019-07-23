@@ -65,75 +65,85 @@ class ListaProcessos extends Component {
                   <React.Fragment>
                     <Card title={cardTitle}>
                       {data.processos.length > 0 ? (
-                        <Table
-                          cards={true}
-                          striped={true}
-                          responsive={true}
-                          className="table-vcenter"
-                        >
-                          <Table.Header>
-                            <Table.Row>
-                              <Table.ColHeader>Nº</Table.ColHeader>
-                              <Table.ColHeader>Empreendimento</Table.ColHeader>
-                              <Table.ColHeader>Criado por</Table.ColHeader>
-                              <Table.ColHeader>Status</Table.ColHeader>
-                              <Table.ColHeader>Município</Table.ColHeader>
-                              <Table.ColHeader>Criado em</Table.ColHeader>
-                              <Table.ColHeader />
-                            </Table.Row>
-                          </Table.Header>
-                          <Table.Body>
-                            {data.processos.map((processo, index) => (
-                              <Table.Row key={index}>
-                                <Table.Col>
-                                  {processo.id}
-                                  {" / "}
-                                  {Moment(processo.created_at).format("YYYY")}
-                                </Table.Col>
-                                <Table.Col>{processo.name}</Table.Col>
-                                <Table.Col>{processo.user.name}</Table.Col>
-                                <Table.Col>
-                                  {Moment().diff(processo.created_at, "hours") <
-                                  24 ? (
-                                    <React.Fragment>
-                                      <Badge color="success">Recente</Badge>{" "}
-                                    </React.Fragment>
-                                  ) : (
-                                    ""
-                                  )}
-                                  <Badge color={processo.status.type}>
-                                    {processo.status.name}
-                                  </Badge>
-                                </Table.Col>
-                                <Table.Col>{processo.municipio.name}</Table.Col>
-                                <Table.Col>
-                                  <DataPorExtenso data={processo.created_at} />
-                                </Table.Col>
-                                <Table.Col>
-                                  {userLogado === processo.user.id ? (
-                                    <Button
-                                      size="sm"
-                                      color="primary"
-                                      icon="edit"
-                                      onClick={() =>
-                                        this.gotoProcesso(processo.id)
-                                      }
-                                    />
-                                  ) : (
-                                    <Button
-                                      size="sm"
-                                      color="secondary"
-                                      icon="eye"
-                                      onClick={() =>
-                                        this.gotoProcesso(processo.id)
-                                      }
-                                    />
-                                  )}
-                                </Table.Col>
+                        <React.Fragment>
+                          <Table
+                            cards={true}
+                            striped={true}
+                            responsive={true}
+                            className="table-vcenter"
+                          >
+                            <Table.Header>
+                              <Table.Row>
+                                <Table.ColHeader>Nº</Table.ColHeader>
+                                <Table.ColHeader>
+                                  Empreendimento
+                                </Table.ColHeader>
+                                <Table.ColHeader>Criado por</Table.ColHeader>
+                                <Table.ColHeader>Status</Table.ColHeader>
+                                <Table.ColHeader>Município</Table.ColHeader>
+                                <Table.ColHeader>Criado em</Table.ColHeader>
+                                <Table.ColHeader />
                               </Table.Row>
-                            ))}
-                          </Table.Body>
-                        </Table>
+                            </Table.Header>
+                            <Table.Body>
+                              {data.processos.map((processo, index) => (
+                                <Table.Row key={index}>
+                                  <Table.Col>
+                                    {processo.id}
+                                    {" / "}
+                                    {Moment(processo.created_at).format("YYYY")}
+                                  </Table.Col>
+                                  <Table.Col>{processo.name}</Table.Col>
+                                  <Table.Col>{processo.user.name}</Table.Col>
+                                  <Table.Col>
+                                    {Moment().diff(
+                                      processo.created_at,
+                                      "hours"
+                                    ) < 24 ? (
+                                      <React.Fragment>
+                                        <Badge color="success">Recente</Badge>{" "}
+                                      </React.Fragment>
+                                    ) : (
+                                      ""
+                                    )}
+                                    <Badge color={processo.status.type}>
+                                      {processo.status.name}
+                                    </Badge>
+                                  </Table.Col>
+                                  <Table.Col>
+                                    {processo.municipio.name}
+                                  </Table.Col>
+                                  <Table.Col>
+                                    <DataPorExtenso
+                                      data={processo.created_at}
+                                    />
+                                  </Table.Col>
+                                  <Table.Col>
+                                    {userLogado === processo.user.id ? (
+                                      <Button
+                                        size="sm"
+                                        color="primary"
+                                        icon="edit"
+                                        onClick={() =>
+                                          this.gotoProcesso(processo.id)
+                                        }
+                                      />
+                                    ) : (
+                                      <Button
+                                        size="sm"
+                                        color="secondary"
+                                        icon="eye"
+                                        onClick={() =>
+                                          this.gotoProcesso(processo.id)
+                                        }
+                                      />
+                                    )}
+                                  </Table.Col>
+                                </Table.Row>
+                              ))}
+                            </Table.Body>
+                          </Table>
+                        </React.Fragment>
                       ) : (
                         <Card.Body>Nenhum processo encontrado.</Card.Body>
                       )}
