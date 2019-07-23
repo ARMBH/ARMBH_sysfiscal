@@ -7,6 +7,7 @@ import { QUERY_PROCESSOS } from "./ProcessoQueries";
 //import { toast } from 'react-toastify';
 import { Query } from "react-apollo";
 import DataPorExtenso from "../Utils/DataPorExtenso";
+import TabelaProcessos from "./TabelaProcessos";
 
 class ListaProcessos extends Component {
   constructor() {
@@ -15,16 +16,18 @@ class ListaProcessos extends Component {
       last_update: ""
     };
   }
-  gotoProcesso(id) {
-    this.props.history.push("/processo/" + id);
-  }
 
   componentDidMount() {
     //console.log(Date());
     this.setState({ last_update: Date() });
   }
+
+  atualizaLength(valor) {
+    this.setState({ data_length: valor });
+  }
+
   render() {
-    const { id, name } = this.state;
+    const { id, name, data_length } = this.state;
     let { auth } = this.props;
     const userLogado = auth.getSub();
 
@@ -38,116 +41,19 @@ class ListaProcessos extends Component {
       <SiteWrapper {...this.props}>
         <Page.Content title={contentTitle}>
           <Grid.Row cards deck>
-            <Grid.Col>
-              <div style={{ padding: "1rem" }}>
-                <Button.List align="right">
-                  <Button
-                    color="success"
-                    icon="file-plus"
-                    onClick={() => this.props.history.push("/novoprocesso/")}
-                  >
-                    Adicionar Novo processo
-                  </Button>
-                </Button.List>
-              </div>
-            </Grid.Col>
-          </Grid.Row>
-          <Grid.Row cards deck>
             <Query query={QUERY_PROCESSOS} pollInterval={5000}>
               {({ loading, error, data }) => {
                 if (loading) return "Carregando...";
                 if (error) return `Erro! ${error.message}`;
-                if (data.processos.length > 0)
-                  cardTitle =
-                    "Mostrando " + data.processos.length + " processos";
-                else cardTitle = "Nenhum processo encontrado";
+
                 return (
                   <React.Fragment>
-                    <Card title={cardTitle}>
-                      {data.processos.length > 0 ? (
-                        <React.Fragment>
-                          <Table
-                            cards={true}
-                            striped={true}
-                            responsive={true}
-                            className="table-vcenter"
-                          >
-                            <Table.Header>
-                              <Table.Row>
-                                <Table.ColHeader>Nº</Table.ColHeader>
-                                <Table.ColHeader>
-                                  Empreendimento
-                                </Table.ColHeader>
-                                <Table.ColHeader>Criado por</Table.ColHeader>
-                                <Table.ColHeader>Status</Table.ColHeader>
-                                <Table.ColHeader>Município</Table.ColHeader>
-                                <Table.ColHeader>Criado em</Table.ColHeader>
-                                <Table.ColHeader />
-                              </Table.Row>
-                            </Table.Header>
-                            <Table.Body>
-                              {data.processos.map((processo, index) => (
-                                <Table.Row key={index}>
-                                  <Table.Col>
-                                    {processo.id}
-                                    {" / "}
-                                    {Moment(processo.created_at).format("YYYY")}
-                                  </Table.Col>
-                                  <Table.Col>{processo.name}</Table.Col>
-                                  <Table.Col>{processo.user.name}</Table.Col>
-                                  <Table.Col>
-                                    {Moment().diff(
-                                      processo.created_at,
-                                      "hours"
-                                    ) < 24 ? (
-                                      <React.Fragment>
-                                        <Badge color="success">Recente</Badge>{" "}
-                                      </React.Fragment>
-                                    ) : (
-                                      ""
-                                    )}
-                                    <Badge color={processo.status.type}>
-                                      {processo.status.name}
-                                    </Badge>
-                                  </Table.Col>
-                                  <Table.Col>
-                                    {processo.municipio.name}
-                                  </Table.Col>
-                                  <Table.Col>
-                                    <DataPorExtenso
-                                      data={processo.created_at}
-                                    />
-                                  </Table.Col>
-                                  <Table.Col>
-                                    {userLogado === processo.user.id ? (
-                                      <Button
-                                        size="sm"
-                                        color="primary"
-                                        icon="edit"
-                                        onClick={() =>
-                                          this.gotoProcesso(processo.id)
-                                        }
-                                      />
-                                    ) : (
-                                      <Button
-                                        size="sm"
-                                        color="secondary"
-                                        icon="eye"
-                                        onClick={() =>
-                                          this.gotoProcesso(processo.id)
-                                        }
-                                      />
-                                    )}
-                                  </Table.Col>
-                                </Table.Row>
-                              ))}
-                            </Table.Body>
-                          </Table>
-                        </React.Fragment>
-                      ) : (
-                        <Card.Body>Nenhum processo encontrado.</Card.Body>
-                      )}
-                    </Card>
+                    <TabelaProcessos
+                      {...this.props}
+                      size={data.processos.length}
+                      data={data.processos}
+                      userLogado={userLogado}
+                    />
                   </React.Fragment>
                 );
               }}
