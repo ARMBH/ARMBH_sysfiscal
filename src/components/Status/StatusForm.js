@@ -98,7 +98,6 @@ class StatusForm extends Component {
       id,
       status_id,
       processo_id,
-      created_at,
       due_date,
       name,
       processo_name

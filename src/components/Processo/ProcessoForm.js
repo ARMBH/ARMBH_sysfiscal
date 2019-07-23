@@ -8,8 +8,7 @@ import {
   ADD_PROCESSO,
   QUERY_ORIGEMS,
   QUERY_DEMANDANTES,
-  QUERY_MUNICIPIOS,
-  QUERY_STATUS
+  QUERY_MUNICIPIOS
 } from "./ProcessoQueries";
 import { ADD_STATUS } from "../Status/StatusQueries";
 import logar from "../Historico/HistoricoLog";
@@ -17,19 +16,18 @@ import logar from "../Historico/HistoricoLog";
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import ListaDocumentos from "../Documento/ListaDocumentos";
 import ListaStatus from "../Status/ListaStatus";
-import StatusForm from "../Status/StatusForm";
 import ListaHistoricos from "../Historico/ListaHistoricos";
 import ListaEnderecos from "../Endereco/ListaEnderecos";
 import HistoricoAdiciona from "../Historico/HistoricoAdiciona";
 import DataPorExtenso from "../Utils/DataPorExtenso";
 //Componentes de Terceiros
-import { Form, Button, Page, Grid, Alert, Tag, Icon } from "tabler-react";
+import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 // Relativos à data:
 import Moment from "react-moment";
 import MomentPure from "moment";
-import DatePicker, { registerLocale } from "react-datepicker";
+import { registerLocale } from "react-datepicker";
 import ptBR from "date-fns/locale/pt-BR";
 import "react-datepicker/dist/react-datepicker.css";
 registerLocale("pt-BR", ptBR);
@@ -187,9 +185,7 @@ class ProcessoForm extends Component {
       origem_id,
       description,
       created_at,
-      due_date,
       user,
-      status_id,
       municipio_id,
       demandante_id
     } = this.state;

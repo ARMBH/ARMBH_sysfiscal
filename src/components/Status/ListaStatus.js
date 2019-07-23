@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import Moment from "moment";
 import MomentComponent from "react-moment";
-import { Badge, Icon, Button, Tag } from "tabler-react";
+import { Icon, Button, Tag } from "tabler-react";
 import { Table, Card } from "tabler-react";
 import { QUERY_PROCESSOS_STATUS, DELETE_STATUS } from "./StatusQueries";
 import { toast } from "react-toastify";
 import { Query } from "react-apollo";
-import DataPorExtenso from "../Utils/DataPorExtenso";
-import DocumentoDownload from "../Documento/DocumentoDownload";
+//import DataPorExtenso from "../Utils/DataPorExtenso";
 import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 
@@ -48,7 +47,7 @@ class ListaStatus extends Component {
   }
 
   handleDelete(documento) {
-    const { id, name, status, due_date, processo_id } = documento;
+    const { id, status, due_date, processo_id } = documento;
     const due_date_tratado = Moment(due_date).format("DD/MM/YYYY");
     if (
       window.confirm(
