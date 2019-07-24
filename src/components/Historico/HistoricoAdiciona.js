@@ -6,7 +6,7 @@ import logar from "../Historico/HistoricoLog";
 class HistoricoAdiciona extends Component {
   constructor(props) {
     super();
-    console.log(props);
+    //console.log(props);
     this.state = {
       name: "",
       disableForm: true

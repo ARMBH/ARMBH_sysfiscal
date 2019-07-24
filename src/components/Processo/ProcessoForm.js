@@ -84,7 +84,7 @@ class ProcessoForm extends Component {
       },
       update: (cache, data) => {
         if (data) {
-          console.log("Setado Status");
+          //console.log("Setado Status");
         }
       }
     });

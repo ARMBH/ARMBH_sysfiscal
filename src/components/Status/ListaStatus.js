@@ -6,7 +6,6 @@ import { Table, Card } from "tabler-react";
 import { QUERY_PROCESSOS_STATUS, DELETE_STATUS } from "./StatusQueries";
 import { toast } from "react-toastify";
 import { Query } from "react-apollo";
-//import DataPorExtenso from "../Utils/DataPorExtenso";
 import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 
@@ -185,21 +184,11 @@ class ListaStatus extends Component {
                               ""
                             )}
                             {userLogado === documento.user.id &&
-                            documento.status.id !== 1 &&
-                            Moment().diff(documento.created_at, "hours") <
-                              24 ? (
+                            documento.status.id !== 1 ? (
                               <React.Fragment>
-                                {" "}
                                 <span
                                   data-for={documento.user.id}
-                                  data-tip={
-                                    "Este status pode ser deletado em até 24 horas. Já se passaram " +
-                                    Moment().diff(
-                                      documento.created_at,
-                                      "hours"
-                                    ) +
-                                    " horas desde sua criação."
-                                  }
+                                  data-tip={"Excluir status."}
                                 >
                                   <ReactTooltip id={documento.user.id} />
 

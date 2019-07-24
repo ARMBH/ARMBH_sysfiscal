@@ -78,7 +78,7 @@ class EnderecoForm extends Component {
           //console.log(data);
           toast.success("Endereço encontrado!");
           this.setState({ ...data }, () => {
-            console.log("Preenche endereço.");
+            //console.log("Preenche endereço.");
           });
         }
         this.setState({ disableForm: false });

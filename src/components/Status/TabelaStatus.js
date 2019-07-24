@@ -1,19 +1,7 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import Modal from "react-modal";
 import MomentComponent from "react-moment";
 import { QUERY_PROCESSOS_STATUS } from "./StatusQueries";
-import {
-  Table,
-  Tag,
-  Button,
-  Page,
-  Grid,
-  Badge,
-  Form,
-  Icon,
-  Card
-} from "tabler-react";
+import { Table, Tag, Card, Text } from "tabler-react";
 import Moment from "moment";
 import { Query } from "react-apollo";
 
@@ -46,21 +34,11 @@ class ModalStatus extends Component {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;
           if (data.processos_status.length > 0) {
-            cardTitle =
-              "Processo " +
-              id +
-              " - " +
-              title +
-              " (" +
-              data.processos_status.length +
-              " status";
-            if (data.processos_status.length > 1) cardTitle = cardTitle + "";
-            cardTitle = cardTitle + ")";
-            //console.log(data.processos_status);
-          } else cardTitle = "Sem status";
+            cardTitle = "(" + data.processos_status.length + " status)";
+          } else cardTitle = "Sem status para " + title;
           return (
             <React.Fragment>
-              <Card title={cardTitle}>
+              <Card>
                 {data.processos_status.length > 0 ? (
                   <Table
                     cards={true}
@@ -104,6 +82,9 @@ class ModalStatus extends Component {
                 ) : (
                   <Card.Body>Nenhum status encontrado.</Card.Body>
                 )}
+                <Card.Footer>
+                  <Text.Small>{cardTitle}</Text.Small>
+                </Card.Footer>
               </Card>
             </React.Fragment>
           );

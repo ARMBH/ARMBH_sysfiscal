@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import Moment from "moment";
-import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import { Button, Page, Grid, Badge, Form, Icon } from "tabler-react";
+import { Button, Badge, Form, Icon } from "tabler-react";
 import { Table, Card } from "tabler-react";
-import { QUERY_PROCESSOS } from "./ProcessoQueries";
-//import { toast } from 'react-toastify';
-import { Query } from "react-apollo";
-import DataPorExtenso from "../Utils/DataPorExtenso";
 import ModalStatus from "../Status/ModalStatus";
+import "./Processos.css";
 
+var Highlight = require("react-highlighter");
 class TabelaProcessos extends Component {
   constructor(props) {
     super(props);
@@ -64,19 +61,12 @@ class TabelaProcessos extends Component {
   gotoProcesso(id) {
     this.props.history.push("/processo/" + id);
   }
-  componentDidMount() {
-    console.log("Montou size: " + this.props.size);
-  }
   componentWillUnmount() {
-    console.log("DESTROi");
-    this.setState(
-      { updatedList: [] },
-      console.log(this.state.updatedList.length)
-    );
+    this.setState({ updatedList: [] });
   }
   render() {
     const { updatedList, value } = this.state;
-    const { userLogado, size, data } = this.props;
+    const { userLogado, data } = this.props;
 
     let cardTitle = "Nenhum processo encontrado";
     if (updatedList.length > 0)
@@ -145,7 +135,11 @@ class TabelaProcessos extends Component {
                         {" / "}
                         {Moment(processo.processo.created_at).format("YYYY")}
                       </Table.Col>
-                      <Table.Col>{processo.processo.name}</Table.Col>
+                      <Table.Col>
+                        <Highlight matchClass="highlightNovo" search={value}>
+                          {processo.processo.name}
+                        </Highlight>
+                      </Table.Col>
                       <Table.Col>{processo.processo.user.name}</Table.Col>
                       <Table.Col>
                         {Moment().diff(processo.processo.due_date, "hours") <

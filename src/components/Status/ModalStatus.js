@@ -1,19 +1,7 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import Modal from "react-modal";
-import {
-  Table,
-  Tag,
-  Button,
-  Page,
-  Grid,
-  Badge,
-  Form,
-  Icon,
-  Card
-} from "tabler-react";
+import { Button, Icon, Card } from "tabler-react";
 import TabelaStatus from "./TabelaStatus";
-import { Query } from "react-apollo";
 
 const customStyles = {
   content: {
@@ -64,7 +52,7 @@ class ModalStatus extends Component {
         </Button>
       );
 
-    let cardTitle = "Status do Processo " + processo_id;
+    let cardTitle = "Status do Processo " + processo_id + " - " + title;
     //Caso queira estilizar um elemento ao abrir Modal
     //<h2 ref={subtitle => (this.subtitle = subtitle)}>Status do Processo {processo_id}</h2>
 
