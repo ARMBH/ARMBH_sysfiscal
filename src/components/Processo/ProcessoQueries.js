@@ -103,6 +103,37 @@ const QUERY_PROCESSOS = gql`
   }
 `;
 
+const QUERY_PROCESSOS_STATUS = gql`
+  {
+    processos_status(
+      distinct_on: processo_id
+      order_by: { processo_id: desc, due_date: desc }
+    ) {
+      id
+      name
+      due_date
+      processo {
+        id
+        name
+        created_at
+        user {
+          id
+          name
+        }
+        municipio {
+          id
+          name
+        }
+      }
+      status {
+        name
+        type
+        id
+      }
+    }
+  }
+`;
+
 const QUERY_ORIGEMS = gql`
   {
     origems(order_by: { name: asc }) {
@@ -160,5 +191,6 @@ export {
   QUERY_DEMANDANTES,
   QUERY_MUNICIPIOS,
   QUERY_STATUS,
-  SUBSCRIPTION_TOTAL_PROCESSOS
+  SUBSCRIPTION_TOTAL_PROCESSOS,
+  QUERY_PROCESSOS_STATUS
 };

@@ -185,6 +185,7 @@ class ListaStatus extends Component {
                               ""
                             )}
                             {userLogado === documento.user.id &&
+                            documento.status.id !== 1 &&
                             Moment().diff(documento.created_at, "hours") <
                               24 ? (
                               <React.Fragment>

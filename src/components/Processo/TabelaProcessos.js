@@ -28,11 +28,11 @@ class TabelaProcessos extends Component {
       //Filtro deve ser personalizado por causa da resposta da Query;
       updatedList = updatedList.filter(item => {
         if (
-          item.name
+          item.processo.name
             .toLowerCase()
             .toString()
             .search(searchValue) !== -1 ||
-          item.municipio.name
+          item.processo.municipio.name
             .toLowerCase()
             .toString()
             .search(searchValue) !== -1 ||
@@ -40,7 +40,7 @@ class TabelaProcessos extends Component {
             .toLowerCase()
             .toString()
             .search(searchValue) !== -1 ||
-          item.user.name
+          item.processo.user.name
             .toLowerCase()
             .toString()
             .search(searchValue) !== -1 ||
@@ -48,7 +48,7 @@ class TabelaProcessos extends Component {
             .toLowerCase()
             .toString()
             .search(searchValue) !== -1 ||
-          item.id
+          item.processo.id
             //.toLowerCase()
             .toString()
             .search(searchValue) !== -1
@@ -132,7 +132,7 @@ class TabelaProcessos extends Component {
                     <Table.ColHeader>Criado por</Table.ColHeader>
                     <Table.ColHeader>Status</Table.ColHeader>
                     <Table.ColHeader>Município</Table.ColHeader>
-                    <Table.ColHeader>Criado em</Table.ColHeader>
+                    <Table.ColHeader>Prazo</Table.ColHeader>
                     <Table.ColHeader />
                   </Table.Row>
                 </Table.Header>
@@ -140,14 +140,15 @@ class TabelaProcessos extends Component {
                   {updatedList.map((processo, index) => (
                     <Table.Row key={index}>
                       <Table.Col>
-                        {processo.id}
+                        {processo.processo.id}
                         {" / "}
-                        {Moment(processo.created_at).format("YYYY")}
+                        {Moment(processo.processo.created_at).format("YYYY")}
                       </Table.Col>
-                      <Table.Col>{processo.name}</Table.Col>
-                      <Table.Col>{processo.user.name}</Table.Col>
+                      <Table.Col>{processo.processo.name}</Table.Col>
+                      <Table.Col>{processo.processo.user.name}</Table.Col>
                       <Table.Col>
-                        {Moment().diff(processo.created_at, "hours") < 24 ? (
+                        {Moment().diff(processo.processo.due_date, "hours") <
+                        24 ? (
                           <React.Fragment>
                             <Badge color="success">Recente</Badge>{" "}
                           </React.Fragment>
@@ -158,24 +159,28 @@ class TabelaProcessos extends Component {
                           {processo.status.name}
                         </Badge>
                       </Table.Col>
-                      <Table.Col>{processo.municipio.name}</Table.Col>
+                      <Table.Col>{processo.processo.municipio.name}</Table.Col>
                       <Table.Col>
-                        <DataPorExtenso data={processo.created_at} />
+                        {Moment(processo.due_date).format("DD/MM/YYYY")}
                       </Table.Col>
                       <Table.Col>
-                        {userLogado === processo.user.id ? (
+                        {userLogado === processo.processo.user.id ? (
                           <Button
                             size="sm"
                             color="primary"
                             icon="edit"
-                            onClick={() => this.gotoProcesso(processo.id)}
+                            onClick={() =>
+                              this.gotoProcesso(processo.processo.id)
+                            }
                           />
                         ) : (
                           <Button
                             size="sm"
                             color="secondary"
                             icon="eye"
-                            onClick={() => this.gotoProcesso(processo.id)}
+                            onClick={() =>
+                              this.gotoProcesso(processo.processo.id)
+                            }
                           />
                         )}
                       </Table.Col>
