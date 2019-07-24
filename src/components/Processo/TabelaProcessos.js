@@ -7,6 +7,7 @@ import { QUERY_PROCESSOS } from "./ProcessoQueries";
 //import { toast } from 'react-toastify';
 import { Query } from "react-apollo";
 import DataPorExtenso from "../Utils/DataPorExtenso";
+import ModalStatus from "../Status/ModalStatus";
 
 class TabelaProcessos extends Component {
   constructor(props) {
@@ -164,6 +165,10 @@ class TabelaProcessos extends Component {
                         {Moment(processo.due_date).format("DD/MM/YYYY")}
                       </Table.Col>
                       <Table.Col>
+                        <ModalStatus
+                          title={processo.processo.name}
+                          processo_id={processo.processo.id}
+                        />{" "}
                         {userLogado === processo.processo.user.id ? (
                           <Button
                             size="sm"

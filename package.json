@@ -31,6 +31,7 @@
     "react-dom": "^16.5.1",
     "react-file-base64": "^1.0.3",
     "react-loading": "^2.0.3",
+    "react-modal": "^3.9.1",
     "react-moment": "^0.9.2",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
