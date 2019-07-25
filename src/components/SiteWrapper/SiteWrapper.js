@@ -69,65 +69,38 @@ const navBarItems: Array<navItem> = [
     ]
   },
   {
-    value: "Components",
+    value: "Calendário",
     icon: "calendar",
     subItems: [
-      { value: "Maps", to: "/maps", LinkComponent: NavLink },
-      { value: "Icons", to: "/icons", LinkComponent: NavLink },
-      { value: "Store", to: "/store", LinkComponent: NavLink },
-      { value: "Blog", to: "/blog", LinkComponent: NavLink }
+      { value: "Calendário Mensal", to: "/calendario", LinkComponent: NavLink },
+      {
+        value: "Calendário Semanal",
+        to: "/calendario/semanal",
+        LinkComponent: NavLink
+      },
+      { value: "Meu Calendário", to: "/calendario", LinkComponent: NavLink }
     ]
   },
   {
-    value: "Pages",
-    icon: "file",
-    subItems: [
-      { value: "Profile", to: "/profile", LinkComponent: NavLink },
-      { value: "Login", to: "/login", LinkComponent: NavLink },
-      {
-        value: "Register",
-        to: "/register",
-        LinkComponent: NavLink
-      },
-      {
-        value: "Forgot password",
-        to: "/forgot-password",
-        LinkComponent: NavLink
-      },
-      { value: "400 error", to: "/400", LinkComponent: NavLink },
-      { value: "401 error", to: "/401", LinkComponent: NavLink },
-      { value: "403 error", to: "/403", LinkComponent: NavLink },
-      { value: "404 error", to: "/404", LinkComponent: NavLink },
-      { value: "500 error", to: "/500", LinkComponent: NavLink },
-      { value: "503 error", to: "/503", LinkComponent: NavLink },
-      { value: "Email", to: "/email", LinkComponent: NavLink },
-      {
-        value: "Empty page",
-        to: "/empty-page",
-        LinkComponent: NavLink
-      },
-      { value: "RTL", to: "/rtl", LinkComponent: NavLink }
-    ]
-  },
-  {
-    value: "Forms",
-    to: "/form-elements",
-    icon: "check-square",
-    LinkComponent: NavLink
-  },
-  {
-    value: "Gallery",
-    to: "/gallery",
-    icon: "image",
-    LinkComponent: NavLink
-  },
-  {
+    value: "Documentação",
     icon: "file-text",
-    value: "Documentation",
-    to:
-      process.env.NODE_ENV === "production"
-        ? "https://tabler.github.io/tabler-react/documentation"
-        : "/documentation"
+    subItems: [
+      {
+        value: "Documentation",
+        to:
+          process.env.NODE_ENV === "production"
+            ? "https://tabler.github.io/tabler-react/documentation"
+            : "https://tabler.github.io/tabler-react/documentation"
+      },
+      {
+        value: "Código Fonte",
+        to: "https://github.com/tabler/tabler-react"
+      },
+      {
+        value: "Demo",
+        to: "http://tabler-react.com/"
+      }
+    ]
   }
 ];
 const avatarURL = require("../../images/right-img.png");
@@ -317,21 +290,20 @@ class SiteWrapper extends React.Component<Props, State> {
             <a>Seventh Link</a>,
             <a>Eigth Link</a>
           ],
-          note:
-            "Premium and Open Source dashboard template with responsive and high quality UI. For Free!",
+          note: "Sistema de Fiscalização Digital",
           copyright: (
             <React.Fragment>
               Copyright © 2019
-              <a href="."> Tabler-react</a>. Theme by
+              <a href="."> Sistema de Fiscalização</a>. Visite o site da
               <a
-                href="https://codecalm.net"
+                href="http://www.agenciarmbh.mg.gov.br/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 {" "}
-                codecalm.net
+                ARMBH
               </a>{" "}
-              All rights reserved.
+              Todos os direitos reservados.
             </React.Fragment>
           ),
           nav: (

@@ -11,6 +11,8 @@ import EnderecoForm from "./components/Endereco/EnderecoForm";
 import StatusForm from "./components/Status/StatusForm";
 import DocumentoUpload from "./components/Documento/DocumentoUpload";
 import ListaProcessos from "./components/Processo/ListaProcessos";
+import Calendario from "./components/Calendario/Calendario";
+
 import history from "./utils/history";
 
 import { ApolloProvider } from "react-apollo";
@@ -87,6 +89,16 @@ export const makeMainRoutes = () => {
           exact
           path="/listaprocessos/"
           render={props => provideClient(ListaProcessos, props)}
+        />
+        <Route
+          exact
+          path="/calendario/"
+          render={props => provideClient(Calendario, props)}
+        />
+        <Route
+          exact
+          path="/calendario/semanal/"
+          render={props => provideClient(Calendario, props)}
         />
         <Route
           exact
