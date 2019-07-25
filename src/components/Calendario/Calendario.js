@@ -3,6 +3,7 @@ import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import { Page, Grid, Card, Button } from "tabler-react";
 import { QUERY_PROCESSOS_STATUS } from "./CalendarioQueries";
 import { toast } from "react-toastify";
+import ModalStatus from "../Status/ModalStatus";
 
 //Calendario
 import { Calendar, momentLocalizer } from "react-big-calendar";
@@ -196,8 +197,12 @@ class Calendario extends Component {
     };
   };
 
+  modalAbrir(e) {
+    this.setState({ eventAbrir: e });
+  }
+
   render() {
-    const { userLogado, meucalendario } = this.state;
+    const { userLogado, meucalendario, eventAbrir } = this.state;
 
     let contentTitle = "Calendário de Status";
     let cardTitle = "Consulta ao Calendário";
@@ -214,7 +219,19 @@ class Calendario extends Component {
             <React.Fragment>
               <Card>
                 <Card.Header>
-                  <Card.Title>{cardTitle}</Card.Title>
+                  <Card.Title>
+                    {eventAbrir ? (
+                      <React.Fragment>
+                        <ModalStatus
+                          title={eventAbrir.title}
+                          processo_id={eventAbrir.processo_id}
+                        />{" "}
+                        <strong>Informações:</strong> {eventAbrir.title}{" "}
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>{cardTitle}</React.Fragment>
+                    )}
+                  </Card.Title>
                   <Card.Options>
                     <Button.List align="right">
                       {meucalendario ? (
@@ -254,7 +271,7 @@ class Calendario extends Component {
                       endAccessor="end"
                       messages={defaultMessages}
                       onNavigate={e => this.atualizaData(e)}
-                      onSelectEvent={event => alert(event.desc)}
+                      onSelectEvent={event => this.modalAbrir(event)}
                       eventPropGetter={this.eventPropGetter}
                     />
                   ) : (
