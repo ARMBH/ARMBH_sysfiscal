@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import { Page, Grid, Card, Button, Icon } from "tabler-react";
+import { Page, Grid, Card, Button } from "tabler-react";
 import { QUERY_PROCESSOS_STATUS } from "./CalendarioQueries";
-import { Query } from "react-apollo";
 import { toast } from "react-toastify";
 
 //Calendario
@@ -41,15 +40,7 @@ class Calendario extends Component {
     this.state = {
       meucalendario: false,
       hoje: hoje,
-      myEvents: [
-        {
-          id: 0,
-          title: "Hoje",
-          start: new Date(new Date().setHours(new Date().getHours() - 3)),
-          end: new Date(new Date().setHours(new Date().getHours() + 3)),
-          desc: "Hoje!"
-        }
-      ]
+      myEvents: []
     };
 
     if (this.props.match.path === "/meucalendario")
@@ -152,8 +143,19 @@ class Calendario extends Component {
         if (!isMine) delete myEvents[index];
         //Apenas Adiciona os eventos que sao do usuario
       }
+
+      return null;
     });
 
+    const novoId = myEvents.length + 1;
+    myEvents.push({
+      id: novoId,
+      title: "Hoje",
+      allDay: true,
+      start: new Date(new Date().setHours(new Date().getHours() - 3)),
+      end: new Date(new Date().setHours(new Date().getHours() + 3)),
+      desc: "Hoje!"
+    });
     this.setState({ myEvents: myEvents });
     //console.log(myEvents);
   }
@@ -195,13 +197,15 @@ class Calendario extends Component {
   };
 
   render() {
-    let { auth } = this.props;
-    const { startDate, endDate, userLogado, meucalendario } = this.state;
+    const { userLogado, meucalendario } = this.state;
+
     let contentTitle = "Calendário de Status";
+    let cardTitle = "Consulta ao Calendário";
+
     if (meucalendario) {
       contentTitle = "Meu Calendário";
+      cardTitle = "Consulta ao meu Calendário";
     }
-    const cardTitle = "Consulta ao Calendário";
 
     return (
       <SiteWrapper {...this.props}>
@@ -212,13 +216,33 @@ class Calendario extends Component {
                 <Card.Header>
                   <Card.Title>{cardTitle}</Card.Title>
                   <Card.Options>
-                    <Button
-                      onClick={() => alert("Opa")}
-                      color="primary"
-                      size="sm"
-                    >
-                      <Icon name="refresh-cw" />
-                    </Button>
+                    <Button.List align="right">
+                      {meucalendario ? (
+                        <Button
+                          icon="calendar"
+                          //type="submit"
+                          color="warning"
+                          className="ml-auto"
+                          onClick={() =>
+                            this.props.history.push("/calendario/")
+                          }
+                        >
+                          Ir para o Calendário Geral
+                        </Button>
+                      ) : (
+                        <Button
+                          icon="calendar"
+                          //type="submit"
+                          color="primary"
+                          className="ml-auto"
+                          onClick={() =>
+                            this.props.history.push("/meucalendario/")
+                          }
+                        >
+                          Ir para o Meu Calendário
+                        </Button>
+                      )}
+                    </Button.List>
                   </Card.Options>
                 </Card.Header>
                 <Card.Body className="calendario">
