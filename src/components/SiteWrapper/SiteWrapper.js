@@ -72,13 +72,8 @@ const navBarItems: Array<navItem> = [
     value: "Calendário",
     icon: "calendar",
     subItems: [
-      { value: "Calendário Mensal", to: "/calendario", LinkComponent: NavLink },
-      {
-        value: "Calendário Semanal",
-        to: "/calendario/semanal",
-        LinkComponent: NavLink
-      },
-      { value: "Meu Calendário", to: "/calendario", LinkComponent: NavLink }
+      { value: "Calendário Geral", to: "/calendario", LinkComponent: NavLink },
+      { value: "Meu Calendário", to: "/meucalendario", LinkComponent: NavLink }
     ]
   },
   {

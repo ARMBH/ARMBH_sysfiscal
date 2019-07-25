@@ -97,7 +97,7 @@ export const makeMainRoutes = () => {
         />
         <Route
           exact
-          path="/calendario/semanal/"
+          path="/meucalendario"
           render={props => provideClient(Calendario, props)}
         />
         <Route

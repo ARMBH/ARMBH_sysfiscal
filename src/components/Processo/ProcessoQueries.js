@@ -92,6 +92,7 @@ const QUERY_PROCESSOS = gql`
         type
       }
       municipio {
+        id
         name
       }
       due_date
