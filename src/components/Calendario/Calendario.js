@@ -151,6 +151,7 @@ class Calendario extends Component {
     const novoId = myEvents.length + 1;
     myEvents.push({
       id: novoId,
+      processo_id: 0,
       title: "Hoje",
       allDay: true,
       start: new Date(new Date().setHours(new Date().getHours() - 3)),
@@ -220,7 +221,7 @@ class Calendario extends Component {
               <Card>
                 <Card.Header>
                   <Card.Title>
-                    {eventAbrir ? (
+                    {eventAbrir && eventAbrir.processo_id !== 0 ? (
                       <React.Fragment>
                         <ModalStatus
                           title={eventAbrir.title}
