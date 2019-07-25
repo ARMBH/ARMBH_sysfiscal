@@ -205,7 +205,7 @@ class Calendario extends Component {
   render() {
     const { userLogado, meucalendario, eventAbrir } = this.state;
 
-    let contentTitle = "Calendário de Status";
+    let contentTitle = "Consulta ao Calendário de Status";
     let cardTitle = "Consulta ao Calendário";
 
     if (meucalendario) {
