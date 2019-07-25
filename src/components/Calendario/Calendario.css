@@ -1,3 +1,7 @@
 .rbc-calendar {
   min-height: 800px;
 }
+
+.calendario {
+  z-index: 0;
+}
