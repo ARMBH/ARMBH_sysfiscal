@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Subscription } from "react-apollo";
 import gql from "graphql-tag";
 import { Grid, StampCard, ProgressCard } from "tabler-react";
+import auth from "../Auth/Auth";
 
 const SUBSCRIPTION_ONLINE_USERS = gql`
   subscription getOnlineUsers {
@@ -39,6 +40,7 @@ class OnlineUsers extends Component {
               </React.Fragment>
             );
           } else {
+            const role = auth.getRoles();
             return (
               <React.Fragment>
                 {data.online_users.map((user, index) => {
@@ -48,7 +50,7 @@ class OnlineUsers extends Component {
                         color="blue"
                         icon="user-plus"
                         header={<span>{user.user.name}</span>}
-                        footer={"Role"}
+                        footer={<span>{role}</span>}
                       />
                     </Grid.Col>
                   );

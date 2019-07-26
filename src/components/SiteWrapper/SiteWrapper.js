@@ -142,11 +142,8 @@ class SiteWrapper extends React.Component<Props, State> {
                 "auth0:id_token:picture"
               );
             accountDropdownProps.name = data.data.users[0].name;
-            accountDropdownProps.description =
-              auth
-                .getRoles()
-                .charAt(0)
-                .toUpperCase() + auth.getRoles().slice(1);
+            accountDropdownProps.description = auth.getRoles();
+
             this.setState({ name: data.data.users[0].name });
           }
         }
