@@ -142,6 +142,11 @@ class SiteWrapper extends React.Component<Props, State> {
                 "auth0:id_token:picture"
               );
             accountDropdownProps.name = data.data.users[0].name;
+            accountDropdownProps.description =
+              auth
+                .getRoles()
+                .charAt(0)
+                .toUpperCase() + auth.getRoles().slice(1);
             this.setState({ name: data.data.users[0].name });
           }
         }
@@ -162,6 +167,7 @@ class SiteWrapper extends React.Component<Props, State> {
 
   componentDidMount() {
     const { renewSession } = auth;
+
     if (localStorage.getItem("isLoggedIn") === "true") {
       // eslint-disable-next-line
       const lastSeenMutation = setInterval(

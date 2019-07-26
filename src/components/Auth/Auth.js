@@ -57,14 +57,15 @@ class Auth {
     this.expiresAt = expiresAt;
     this.sub = authResult.idTokenPayload.sub;
     this.picture = authResult.idTokenPayload.picture;
-
-    //console.log(authResult);
+    this.roles =
+      authResult.idTokenPayload["https://hasura.io/jwt/claims/roles"];
 
     localStorage.setItem("auth0:access_token", this.accessToken);
     localStorage.setItem("auth0:id_token", this.idToken);
     localStorage.setItem("auth0:expires_at", this.expiresAt);
     localStorage.setItem("auth0:id_token:sub", this.sub);
     localStorage.setItem("auth0:id_token:picture", this.picture);
+    localStorage.setItem("roles", this.roles);
     // navigate to the home route
     if (redireciona) history.replace("/home");
     // window.location.href="/home";
@@ -76,6 +77,11 @@ class Auth {
 
   getIdToken() {
     return this.idToken;
+  }
+
+  getRoles() {
+    if (localStorage.getItem("roles")) return localStorage.getItem("roles");
+    return this.roles;
   }
 
   getSub() {
