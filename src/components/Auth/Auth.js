@@ -83,8 +83,8 @@ class Auth {
     let role = "";
     if (localStorage.getItem("roles")) role = localStorage.getItem("roles");
     else role = this.roles;
-
-    role = role.charAt(0).toUpperCase() + role.slice(1);
+    if (role) role = role.charAt(0).toUpperCase() + role.slice(1);
+    else role = "Usuário";
 
     return role;
   }
