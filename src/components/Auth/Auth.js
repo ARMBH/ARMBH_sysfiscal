@@ -79,7 +79,7 @@ class Auth {
     return this.idToken;
   }
 
-  //Serve para mostrar - a role já se encontra no header
+  //Serve para mostrar a role do próprio usuário já se encontra no header
   getRoles() {
     let role = "";
     if (localStorage.getItem("roles")) role = localStorage.getItem("roles");

@@ -40,17 +40,16 @@ class OnlineUsers extends Component {
               </React.Fragment>
             );
           } else {
-            const role = auth.getRoles();
             return (
               <React.Fragment>
                 {data.online_users.map((user, index) => {
                   return (
-                    <Grid.Col sm={6} lg={3} key={user.user.name}>
+                    <Grid.Col sm={6} lg={3} key={index}>
                       <StampCard
                         color="blue"
                         icon="user-plus"
                         header={<span>{user.user.name}</span>}
-                        footer={<span>{role}</span>}
+                        footer={<span>Ordem: {index + 1}</span>}
                       />
                     </Grid.Col>
                   );
