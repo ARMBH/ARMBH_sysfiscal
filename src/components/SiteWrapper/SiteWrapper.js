@@ -137,6 +137,10 @@ class SiteWrapper extends React.Component<Props, State> {
           if (data) {
             //Configurar o preenchimento do AvatarURL
             accountDropdownProps.avatarURL = require("../../images/user-icon.png");
+            if (localStorage.getItem("auth0:id_token:picture"))
+              accountDropdownProps.avatarURL = localStorage.getItem(
+                "auth0:id_token:picture"
+              );
             accountDropdownProps.name = data.data.users[0].name;
             this.setState({ name: data.data.users[0].name });
           }
