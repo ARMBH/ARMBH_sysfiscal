@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Subscription } from "react-apollo";
 import gql from "graphql-tag";
 import { Grid, StampCard, ProgressCard } from "tabler-react";
-import auth from "../Auth/Auth";
+//import auth from "../Auth/Auth";
 
 const SUBSCRIPTION_ONLINE_USERS = gql`
   subscription getOnlineUsers {

@@ -47,6 +47,7 @@ class Auth {
   };
 
   setSession(authResult, redireciona = true) {
+    //console.log(authResult)
     // Set isLoggedIn flag in localStorage
     localStorage.setItem("isLoggedIn", "true");
 
