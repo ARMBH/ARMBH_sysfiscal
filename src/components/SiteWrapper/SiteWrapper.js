@@ -292,7 +292,24 @@ class SiteWrapper extends React.Component<Props, State> {
             <a>Seventh Link</a>,
             <a>Eigth Link</a>
           ],
-          note: "Sistema de Fiscalização Digital",
+          note: (
+            <React.Fragment>
+              Sistema de Fiscalização Digital
+              {process.env.NODE_ENV === "production" ? (
+                <span>
+                  {" "}
+                  <br /> Produção - {process.env.NODE_ENV}
+                </span>
+              ) : (
+                <span>
+                  <br />
+                  Ambiente: {process.env.NODE_ENV}
+                </span>
+              )}
+              <br />
+              Versão: 1.0.0 Alpha
+            </React.Fragment>
+          ),
           copyright: (
             <React.Fragment>
               Copyright © 2019

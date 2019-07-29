@@ -1,31 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 //import moment from 'moment';
-
-import TodoPublicWrapper from "../Todo/TodoPublicWrapper";
 import TodoPrivateWrapper from "../Todo/TodoPrivateWrapper";
 import OnlineUsers from "../OnlineUsers/OnlineUsers";
 import ProcessoWidget from "../Processo/ProcessoWidget";
+import ChartMunicipio from "../Charts/ChartMunicipio";
 //import Loading from '../Loading/Loading';
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import {
-  Page,
-  //Avatar,
-  //Icon,
-  Grid,
-  Card,
-  //Text,
-  //Table,
-  Alert,
-  //Progress,
-  //colors,
-  //Dropdown,
-  //Button,
-  //StampCard,
-  StatsCard,
-  ProgressCard
-  //Badge
-} from "tabler-react";
+import { Page, Grid, Card, StatsCard } from "tabler-react";
 
 //import auth from "../Auth/Auth";
 //import gql from 'graphql-tag';
@@ -80,14 +62,12 @@ class App extends Component {
                 label="Followers"
               />
             </Grid.Col>
-
             <ProcessoWidget total={true} />
-
             <OnlineUsers total={true} />
             <Grid.Col lg={6}>
               <Card>
                 <Card.Header>
-                  <Card.Title>Processos designados a você</Card.Title>
+                  <Card.Title>Tarefas Pessoais</Card.Title>
                 </Card.Header>
                 <TodoPrivateWrapper
                   client={this.props.client}
@@ -95,13 +75,32 @@ class App extends Component {
                 />
               </Card>
             </Grid.Col>
-
-            <Grid.Col md={6}>
-              <h1>Public todos</h1>
-              <TodoPublicWrapper
-                client={this.props.client}
-                userId={auth.getSub()}
-              />
+            <Grid.Col lg={6}>
+              <ChartMunicipio client={this.props.client} />
+            </Grid.Col>
+          </Grid.Row>
+          <Grid.Row cards={true}>
+            <Grid.Col lg={6}>
+              <Card>
+                <Card.Header>
+                  <Card.Title>Tarefas Pessoais</Card.Title>
+                </Card.Header>
+                <TodoPrivateWrapper
+                  client={this.props.client}
+                  userId={auth.getSub()}
+                />
+              </Card>
+            </Grid.Col>
+            <Grid.Col lg={6}>
+              <Card>
+                <Card.Header>
+                  <Card.Title>Tarefas Pessoais</Card.Title>
+                </Card.Header>
+                <TodoPrivateWrapper
+                  client={this.props.client}
+                  userId={auth.getSub()}
+                />
+              </Card>
             </Grid.Col>
           </Grid.Row>
           <Grid.Row>
@@ -109,64 +108,6 @@ class App extends Component {
           </Grid.Row>
           <Grid.Row>
             <OnlineUsers total={false} />
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Col md={6}>
-              <Alert type="primary">
-                <Alert.Link
-                  href={
-                    process.env.NODE_ENV === "production"
-                      ? "https://tabler.github.io/tabler-react/documentation"
-                      : "/documentation"
-                  }
-                >
-                  Read our documentation
-                </Alert.Link>{" "}
-                with code samples.
-              </Alert>
-              <Grid.Row>
-                <Grid.Col sm={6}>
-                  <Card>
-                    <Card.Header>
-                      <Card.Title>Chart title</Card.Title>
-                    </Card.Header>
-                    <Card.Body />
-                  </Card>
-                </Grid.Col>
-                <Grid.Col sm={6}>
-                  <Card>
-                    <Card.Header>
-                      <Card.Title>Chart title</Card.Title>
-                    </Card.Header>
-                    <Card.Body />
-                  </Card>
-                </Grid.Col>
-                <Grid.Col sm={6}>
-                  <ProgressCard
-                    header="New feedback"
-                    content="62"
-                    progressColor="red"
-                    progressWidth={28}
-                  />
-                </Grid.Col>
-                <Grid.Col sm={6}>
-                  <ProgressCard
-                    header="Today profit"
-                    content="$652"
-                    progressColor="green"
-                    progressWidth={84}
-                  />
-                </Grid.Col>
-                <Grid.Col sm={6}>
-                  <ProgressCard
-                    header="Users online"
-                    content="76"
-                    progressColor="yellow"
-                    progressWidth={34}
-                  />
-                </Grid.Col>
-              </Grid.Row>
-            </Grid.Col>
           </Grid.Row>
         </Page.Content>
       </SiteWrapper>

@@ -63,7 +63,7 @@ const TodoInput = ({ isPublic = false }) => {
                     ? "form-control is-valid"
                     : "form-control "
                 }
-                placeholder="Adicionar novo Processo?"
+                placeholder="Adicionar nova tarefa..."
                 value={todoInput}
                 onChange={e => setTodoInput(e.target.value)}
                 ref={n => (input = n)}
