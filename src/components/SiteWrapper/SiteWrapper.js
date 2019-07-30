@@ -75,28 +75,30 @@ const navBarItems: Array<navItem> = [
       { value: "Calendário Geral", to: "/calendario", LinkComponent: NavLink },
       { value: "Meu Calendário", to: "/meucalendario", LinkComponent: NavLink }
     ]
-  },
-  {
-    value: "Documentação",
-    icon: "file-text",
-    subItems: [
-      {
-        value: "Documentation",
-        to:
-          process.env.NODE_ENV === "production"
-            ? "https://tabler.github.io/tabler-react/documentation"
-            : "https://tabler.github.io/tabler-react/documentation"
-      },
-      {
-        value: "Código Fonte",
-        to: "https://github.com/tabler/tabler-react"
-      },
-      {
-        value: "Demo",
-        to: "http://tabler-react.com/"
-      }
-    ]
   }
+  /**
+	{
+		value: 'Documentação',
+		icon: 'file-text',
+		subItems: [
+			{
+				value: 'Documentation',
+				to:
+					process.env.NODE_ENV === 'production'
+						? 'https://tabler.github.io/tabler-react/documentation'
+						: 'https://tabler.github.io/tabler-react/documentation'
+			},
+			{
+				value: 'Código Fonte',
+				to: 'https://github.com/tabler/tabler-react'
+			},
+			{
+				value: 'Demo',
+				to: 'http://tabler-react.com/'
+			}
+		]
+	}
+   */
 ];
 const avatarURL = require("../../images/right-img.png");
 
@@ -106,11 +108,11 @@ const accountDropdownProps = {
   description: "Role",
   options: [
     { icon: "user", value: "Profile" },
-    { icon: "settings", value: "Settings" },
-    { icon: "mail", value: "Inbox", badge: "6" },
-    { icon: "send", value: "Message" },
+    //{ icon: "settings", value: "Settings" },
+    //{ icon: "mail", value: "Inbox", badge: "6" },
+    //{ icon: "send", value: "Message" },
     { isDivider: true },
-    { icon: "help-circle", value: "Need help?" },
+    //{ icon: "help-circle", value: "Need help?" },
     {
       icon: "log-out",
       value: "Sign out",
@@ -220,11 +222,10 @@ class SiteWrapper extends React.Component<Props, State> {
   };
 
   render(): React.Node {
+    /** 
     const notificationsObjects = this.state.notificationsObjects || [];
-    const unreadCount = this.state.notificationsObjects.reduce(
-      (a, v) => a || v.unread,
-      false
-    );
+		const unreadCount = this.state.notificationsObjects.reduce((a, v) => a || v.unread, false);
+    */
 
     const userId = auth.getSub();
     if (userId) this.getUser(userId);
@@ -237,46 +238,35 @@ class SiteWrapper extends React.Component<Props, State> {
           imageURL: authLogo,
           navItems: (
             <Nav.Item type="div" className="d-none d-md-flex">
-              <Button
-                href="https://github.com/tabler/tabler-react"
-                target="_blank"
-                outline
-                size="sm"
-                RootComponent="a"
-                color="primary"
-              >
-                Source code
-              </Button>
+              {/** Local do antigo botão SOURCE CODE */}
             </Nav.Item>
           ),
-          notificationsTray: {
-            notificationsObjects,
-            markAllAsRead: () =>
-              this.setState(
-                () => ({
-                  notificationsObjects: this.state.notificationsObjects.map(
-                    v => ({
-                      ...v,
-                      unread: false
-                    })
-                  )
-                }),
-                () =>
-                  setTimeout(
-                    () =>
-                      this.setState({
-                        notificationsObjects: this.state.notificationsObjects.map(
-                          v => ({
-                            ...v,
-                            unread: true
-                          })
-                        )
-                      }),
-                    5000
-                  )
-              ),
-            unread: unreadCount
-          },
+          /** NOTIFICACOES
+					notificationsTray: {
+						notificationsObjects,
+						markAllAsRead: () =>
+							this.setState(
+								() => ({
+									notificationsObjects: this.state.notificationsObjects.map(v => ({
+										...v,
+										unread: false
+									}))
+								}),
+								() =>
+									setTimeout(
+										() =>
+											this.setState({
+												notificationsObjects: this.state.notificationsObjects.map(v => ({
+													...v,
+													unread: true
+												}))
+											}),
+										5000
+									)
+							),
+						unread: unreadCount
+					},
+           */
           accountDropdown: accountDropdownProps
         }}
         navProps={{ itemsObjects: navBarItems }}
@@ -330,23 +320,39 @@ class SiteWrapper extends React.Component<Props, State> {
               <Grid.Col auto={true}>
                 <List className="list-inline list-inline-dots mb-0">
                   <List.Item className="list-inline-item">
-                    <a href="./docs/index.html">Documentation</a>
+                    <a
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      href="http://tabler-react.com/documentation/"
+                    >
+                      Documentação
+                    </a>
                   </List.Item>
                   <List.Item className="list-inline-item">
-                    <a href="./faq.html">FAQ</a>
+                    <a
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      href="http://tabler-react.com/"
+                    >
+                      Demo
+                    </a>
                   </List.Item>
                 </List>
               </Grid.Col>
               <Grid.Col auto={true}>
-                <Button
-                  href="https://github.com/tabler/tabler-react"
-                  size="sm"
-                  outline
-                  color="primary"
-                  RootComponent="a"
-                >
-                  Source code
-                </Button>
+                {
+                  <Button
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    href="https://github.com/tabler/tabler-react"
+                    size="sm"
+                    outline
+                    color="primary"
+                    RootComponent="a"
+                  >
+                    Código Fonte
+                  </Button>
+                }
               </Grid.Col>
             </React.Fragment>
           )
