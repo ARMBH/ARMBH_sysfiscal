@@ -19,8 +19,12 @@ class App extends Component {
 
   render() {
     let { auth } = this.props;
-
-    if (auth.getRolePayload()) console.log(auth.getRolePayload());
+    let role = auth.getRolePayload();
+    if (!role)
+      setTimeout(() => {
+        role = auth.getRolePayload();
+        this.setState({ last_update: new Date() });
+      }, 5000);
 
     const { param } = this.props.match.params;
     if (param === "logout") {
@@ -31,52 +35,58 @@ class App extends Component {
     return (
       <SiteWrapper {...this.props}>
         <Page.Content title="Página Inicial">
-          {/* <!-- INICIO ADMIN PERMISSAO widget -->*/}
-          <Grid.Row cards={true}>
-            <Grid.Col width={6} sm={4} lg={2}>
-              <StatsCard
-                layout={1}
-                movement={6}
-                total="43"
-                label="New Tickets"
-              />
-            </Grid.Col>
-            <Grid.Col width={6} sm={4} lg={2}>
-              <StatsCard
-                layout={1}
-                movement={-3}
-                total="17"
-                label="Closed Today"
-              />
-            </Grid.Col>
-            <Grid.Col width={6} sm={4} lg={2}>
-              <StatsCard
-                layout={1}
-                movement={9}
-                total="7"
-                label="New Replies"
-              />
-            </Grid.Col>
-            <Grid.Col width={6} sm={4} lg={2}>
-              <StatsCard
-                layout={1}
-                movement={3}
-                total="27.3k"
-                label="Followers"
-              />
-            </Grid.Col>
-            <ProcessoWidget total={true} />
-            <OnlineUsers total={true} />
-          </Grid.Row>
-          {/* <!-- ONLINE widget -->*/}
-          <Grid.Row>
-            <Grid.Col lg={12}>
-              <h4>Usuários Online</h4>
-            </Grid.Col>
-            <OnlineUsers total={false} />
-          </Grid.Row>
-          {/* <!-- FIM ONLINE widget -->*/}
-          {/* <!-- FIM ADMIN PERMISSAO widget -->*/}
+          {role && role[0] === "admin" ? (
+            <React.Fragment>
+              {/* <!-- INICIO ADMIN PERMISSAO widget -->*/}
+              <Grid.Row cards={true}>
+                <Grid.Col width={6} sm={4} lg={2}>
+                  <StatsCard
+                    layout={1}
+                    movement={6}
+                    total="43"
+                    label="New Tickets"
+                  />
+                </Grid.Col>
+                <Grid.Col width={6} sm={4} lg={2}>
+                  <StatsCard
+                    layout={1}
+                    movement={-3}
+                    total="17"
+                    label="Closed Today"
+                  />
+                </Grid.Col>
+                <Grid.Col width={6} sm={4} lg={2}>
+                  <StatsCard
+                    layout={1}
+                    movement={9}
+                    total="7"
+                    label="New Replies"
+                  />
+                </Grid.Col>
+                <Grid.Col width={6} sm={4} lg={2}>
+                  <StatsCard
+                    layout={1}
+                    movement={3}
+                    total="27.3k"
+                    label="Followers"
+                  />
+                </Grid.Col>
+                <ProcessoWidget total={true} />
+                <OnlineUsers total={true} />
+              </Grid.Row>
+              {/* <!-- ONLINE widget -->*/}
+              <Grid.Row>
+                <Grid.Col lg={12}>
+                  <h4>Usuários Online</h4>
+                </Grid.Col>
+                <OnlineUsers total={false} />
+              </Grid.Row>
+              {/* <!-- FIM ONLINE widget -->*/}
+              {/* <!-- FIM ADMIN PERMISSAO widget -->*/}
+            </React.Fragment>
+          ) : (
+            ""
+          )}
           <Grid.Row>
             <Grid.Col lg={6}>
               <Card>
