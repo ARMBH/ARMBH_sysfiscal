@@ -14,7 +14,6 @@ const QUERY_PROCESSOS = gql`
     municipios(
       order_by: { processos_aggregate: { count: desc }, name: asc }
       where: { processos: { municipio_id: { _gt: 0 } } }
-      limit: 6
     ) {
       processos_aggregate {
         aggregate {
