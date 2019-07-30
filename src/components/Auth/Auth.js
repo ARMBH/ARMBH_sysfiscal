@@ -80,6 +80,9 @@ class Auth {
     return this.idToken;
   }
 
+  getRolePayload() {
+    return this.roles;
+  }
   //Serve para mostrar a role do próprio usuário já se encontra no header
   getRoles() {
     let role = "";

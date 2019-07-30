@@ -62,7 +62,6 @@ class ChartMunicipios extends Component {
   }
 
   componentDidMount() {
-    console.log("set");
     this.setData();
   }
 

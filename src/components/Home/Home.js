@@ -20,6 +20,8 @@ class App extends Component {
   render() {
     let { auth } = this.props;
 
+    if (auth.getRolePayload()) console.log(auth.getRolePayload());
+
     const { param } = this.props.match.params;
     if (param === "logout") {
       this.logout();
@@ -29,6 +31,7 @@ class App extends Component {
     return (
       <SiteWrapper {...this.props}>
         <Page.Content title="Página Inicial">
+          {/* <!-- INICIO ADMIN PERMISSAO widget -->*/}
           <Grid.Row cards={true}>
             <Grid.Col width={6} sm={4} lg={2}>
               <StatsCard
@@ -64,6 +67,17 @@ class App extends Component {
             </Grid.Col>
             <ProcessoWidget total={true} />
             <OnlineUsers total={true} />
+          </Grid.Row>
+          {/* <!-- ONLINE widget -->*/}
+          <Grid.Row>
+            <Grid.Col lg={12}>
+              <h4>Usuários Online</h4>
+            </Grid.Col>
+            <OnlineUsers total={false} />
+          </Grid.Row>
+          {/* <!-- FIM ONLINE widget -->*/}
+          {/* <!-- FIM ADMIN PERMISSAO widget -->*/}
+          <Grid.Row>
             <Grid.Col lg={6}>
               <Card>
                 <Card.Header>
@@ -79,6 +93,7 @@ class App extends Component {
               <ChartMunicipio client={this.props.client} />
             </Grid.Col>
           </Grid.Row>
+
           <Grid.Row cards={true}>
             <Grid.Col lg={6}>
               <Card>
@@ -102,12 +117,6 @@ class App extends Component {
                 />
               </Card>
             </Grid.Col>
-          </Grid.Row>
-          <Grid.Row>
-            <h4>Usuários Online</h4>
-          </Grid.Row>
-          <Grid.Row>
-            <OnlineUsers total={false} />
           </Grid.Row>
         </Page.Content>
       </SiteWrapper>
