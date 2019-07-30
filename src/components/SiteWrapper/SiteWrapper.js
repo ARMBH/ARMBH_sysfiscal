@@ -146,7 +146,10 @@ class SiteWrapper extends React.Component<Props, State> {
             accountDropdownProps.name = data.data.users[0].name;
             accountDropdownProps.description = auth.getRoles();
 
-            this.setState({ name: data.data.users[0].name });
+            this.setState({
+              name: data.data.users[0].name,
+              role: data.data.users[0].role
+            });
           }
         }
       });
@@ -186,6 +189,7 @@ class SiteWrapper extends React.Component<Props, State> {
   }
 
   state = {
+    role: "user",
     notificationsObjects: [
       {
         unread: true,
@@ -230,6 +234,19 @@ class SiteWrapper extends React.Component<Props, State> {
     const userId = auth.getSub();
     if (userId) this.getUser(userId);
 
+    const { role } = this.state;
+    let navBarItemsNew = [...navBarItems];
+
+    let itemAdmin = {
+      value: "Admin",
+      to: "/admin",
+      icon: "settings",
+      LinkComponent: NavLink,
+      useExact: true
+    };
+    //Adiciona Item de administradores ao Menu
+    if (role === "admin") navBarItemsNew.push(itemAdmin);
+
     return (
       <Site.Wrapper
         headerProps={{
@@ -269,7 +286,7 @@ class SiteWrapper extends React.Component<Props, State> {
            */
           accountDropdown: accountDropdownProps
         }}
-        navProps={{ itemsObjects: navBarItems }}
+        navProps={{ itemsObjects: navBarItemsNew }}
         routerContextComponentType={withRouter(RouterContextProvider)}
         footerProps={{
           links: [

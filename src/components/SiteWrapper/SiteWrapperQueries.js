@@ -5,6 +5,7 @@ const QUERY_USER = gql`
     users(where: { id: { _eq: $userId } }) {
       id
       name
+      role
     }
   }
 `;
