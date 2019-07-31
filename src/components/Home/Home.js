@@ -5,6 +5,7 @@ import TodoPrivateWrapper from "../Todo/TodoPrivateWrapper";
 import OnlineUsers from "../OnlineUsers/OnlineUsers";
 import ProcessoWidget from "../Processo/ProcessoWidget";
 import ChartMunicipio from "../Charts/ChartMunicipio";
+import ChartStatus from "../Charts/ChartStatus";
 import WidgetProcessos from "../WidgetsProcessos/WidgetProcessos";
 //import Loading from '../Loading/Loading';
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
@@ -103,6 +104,7 @@ class App extends Component {
             </Grid.Col>
             <Grid.Col lg={6}>
               <ChartMunicipio client={this.props.client} />
+              <ChartStatus client={this.props.client} />
             </Grid.Col>
           </Grid.Row>
 

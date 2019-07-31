@@ -105,7 +105,6 @@ class ProcessoList extends Component {
     } else if (this.state.filter === "completed") {
       filteredTodos = todos.filter(todo => todo.is_completed === true);
     }
-    console.log(this.props.userId);
     const todoList = [];
     filteredTodos.forEach((todo, index) => {
       todoList.push(
