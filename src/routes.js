@@ -12,6 +12,7 @@ import StatusForm from "./components/Status/StatusForm";
 import DocumentoUpload from "./components/Documento/DocumentoUpload";
 import ListaProcessos from "./components/Processo/ListaProcessos";
 import Calendario from "./components/Calendario/Calendario";
+import DashboardAdmin from "./components/Admin/DashboardAdmin";
 
 import history from "./utils/history";
 
@@ -69,6 +70,13 @@ export const makeMainRoutes = () => {
           exact
           path="/home"
           render={props => provideClient(Home, props)}
+        />
+        <Route
+          exact
+          path="/admin"
+          render={props => {
+            return provideClient(DashboardAdmin, props);
+          }}
         />
         <Route
           exact
