@@ -93,7 +93,7 @@ class TodoPrivateList extends Component {
         >
           <Table.Header>
             <Table.Row>
-              <Table.ColHeader>Nº</Table.ColHeader>
+              <Table.ColHeader />
               <Table.ColHeader>Descrição</Table.ColHeader>
               <Table.ColHeader>Data</Table.ColHeader>
               <Table.ColHeader />

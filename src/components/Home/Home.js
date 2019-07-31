@@ -5,6 +5,7 @@ import TodoPrivateWrapper from "../Todo/TodoPrivateWrapper";
 import OnlineUsers from "../OnlineUsers/OnlineUsers";
 import ProcessoWidget from "../Processo/ProcessoWidget";
 import ChartMunicipio from "../Charts/ChartMunicipio";
+import WidgetProcessos from "../WidgetsProcessos/WidgetProcessos";
 //import Loading from '../Loading/Loading';
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import { Page, Grid, Card, StatsCard } from "tabler-react";
@@ -91,9 +92,10 @@ class App extends Component {
             <Grid.Col lg={6}>
               <Card>
                 <Card.Header>
-                  <Card.Title>Tarefas Pessoais</Card.Title>
+                  <Card.Title>Últimos Processos cadastrados</Card.Title>
                 </Card.Header>
-                <TodoPrivateWrapper
+                <WidgetProcessos
+                  isMine={false}
                   client={this.props.client}
                   userId={auth.getSub()}
                 />
@@ -108,9 +110,10 @@ class App extends Component {
             <Grid.Col lg={6}>
               <Card>
                 <Card.Header>
-                  <Card.Title>Tarefas Pessoais</Card.Title>
+                  <Card.Title>Meus Últimos Processos</Card.Title>
                 </Card.Header>
-                <TodoPrivateWrapper
+                <WidgetProcessos
+                  isMine={true}
                   client={this.props.client}
                   userId={auth.getSub()}
                 />

@@ -72,7 +72,11 @@ const TodoItem = ({ index, todo, client }) => {
   return (
     <Table.Row>
       <Table.Col>
-        <Avatar>{todo.id}</Avatar>
+        {todo.is_completed ? (
+          <Avatar color="green">OK</Avatar>
+        ) : (
+          <Avatar color="yellow">!</Avatar>
+        )}
       </Table.Col>
       <Table.Col>
         <span
