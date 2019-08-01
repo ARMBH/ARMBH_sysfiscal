@@ -75,6 +75,22 @@ const navBarItems: Array<navItem> = [
       { value: "Calendário Geral", to: "/calendario", LinkComponent: NavLink },
       { value: "Meu Calendário", to: "/meucalendario", LinkComponent: NavLink }
     ]
+  },
+  {
+    value: "Empreendedores",
+    icon: "user-check",
+    subItems: [
+      {
+        value: "Listar Todos os Empreendedores",
+        to: "/listaempreendedores/",
+        LinkComponent: NavLink
+      },
+      {
+        value: "Novo Empreendedor",
+        to: "/novoempreendedor/",
+        LinkComponent: NavLink
+      }
+    ]
   }
   /**
 	{
