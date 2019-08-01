@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 //Componentes de Terceiros
-import { Form, Button, Page, Grid, Card } from "tabler-react";
+import { Button, Page, Card } from "tabler-react";
 import { toast } from "react-toastify";
 import gql from "graphql-tag";
 
@@ -68,10 +68,11 @@ class DashboardAdmin extends Component {
     const { data } = this.state;
 
     let contentTitle = "Dashboard Administração";
-    let cardTitle = "Dashboard Administração";
+    //let cardTitle = 'Dashboard Administração';
 
     let { auth } = this.props;
     let role = auth.getRolePayload();
+    console.log(role);
 
     return (
       <SiteWrapper {...this.props}>

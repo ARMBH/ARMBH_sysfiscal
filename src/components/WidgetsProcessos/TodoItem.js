@@ -1,8 +1,6 @@
 import React from "react";
-import gql from "graphql-tag";
 import { withApollo } from "react-apollo";
-import { GET_MY_TODOS } from "./ProcessoList";
-import { Table, Avatar, Icon, Form, Badge, Button } from "tabler-react";
+import { Table, Icon, Badge } from "tabler-react";
 import Moment from "moment";
 import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
