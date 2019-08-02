@@ -34,6 +34,7 @@ const QUERY_HISTORICOS = gql`
       name
       created_at
       user {
+        id
         name
       }
     }
