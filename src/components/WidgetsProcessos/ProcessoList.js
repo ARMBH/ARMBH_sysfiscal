@@ -4,7 +4,7 @@ import TodoItem from "./TodoItem";
 //import TodoFilters from './TodoFilters';
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
-
+import moment from "moment";
 import { Table, Card } from "tabler-react";
 
 const GET_MY_TODOS = gql`
@@ -47,6 +47,39 @@ const GET_PROCESSOS_USER = gql`
       distinct_on: processo_id
       order_by: { processo_id: desc, due_date: desc }
       where: { processo: { user_id: { _eq: $userId } } }
+    ) {
+      id
+      name
+      processo_id
+      user {
+        id
+        name
+      }
+      processo {
+        id
+        name
+        created_at
+        user {
+          id
+          name
+        }
+      }
+      due_date
+      status {
+        id
+        name
+        type
+      }
+    }
+  }
+`;
+
+const GET_ULTIMOS_PROCESSOS_STATUS = gql`
+  query getStatusGeral($due_date: timestamptz) {
+    processos_status(
+      limit: 10
+      order_by: { due_date: asc }
+      where: { _not: { status_id: { _eq: 1 } }, due_date: { _gt: $due_date } }
     ) {
       id
       name
@@ -149,6 +182,14 @@ const ProcessoListQuery = props => {
     query = GET_PROCESSOS_USER;
     variables.userId = props.userId;
   }
+
+  if (props.proximosAVencer) {
+    query = GET_ULTIMOS_PROCESSOS_STATUS;
+    variables.due_date = moment()
+      .subtract(1, "days")
+      .format("YYYY-MM-DD");
+  }
+
   return (
     <Query query={query} variables={variables} pollInterval={3000}>
       {({ loading, error, data, client }) => {

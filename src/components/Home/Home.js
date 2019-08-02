@@ -93,10 +93,11 @@ class App extends Component {
             <Grid.Col lg={6}>
               <Card>
                 <Card.Header>
-                  <Card.Title>Últimos Processos cadastrados</Card.Title>
+                  <Card.Title>Próximos Prazos</Card.Title>
                 </Card.Header>
                 <WidgetProcessos
                   isMine={false}
+                  proximosAVencer={true}
                   client={this.props.client}
                   userId={auth.getSub()}
                 />

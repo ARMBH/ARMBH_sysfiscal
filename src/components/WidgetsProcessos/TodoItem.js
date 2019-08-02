@@ -24,7 +24,7 @@ const TodoItem = ({ index, todo, client, userId }) => {
         </span>
       </Table.Col>
       <Table.Col className="text-nowrap">
-        {Moment(todo.processo.created_at).format("DD/MM/YYYY")}
+        {Moment(todo.due_date).format("DD/MM/YYYY")}
       </Table.Col>
       <Table.Col>
         <Badge color={todo.status.type}>{todo.status.name} </Badge>{" "}
