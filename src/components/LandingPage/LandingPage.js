@@ -20,7 +20,7 @@ class LandingPage extends Component {
         <div>
           <div className="headerWrapper">
             <div className="headerDescription">
-              <span className="titulo">Sysfiscal App</span>
+              <span className="titulo">Fiscalização Digital</span>
             </div>
             <div className="loginBtn">
               {!isAuthenticated() && (
