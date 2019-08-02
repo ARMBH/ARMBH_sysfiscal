@@ -7,6 +7,7 @@ import ProcessoWidget from "../Processo/ProcessoWidget";
 import ChartMunicipio from "../Charts/ChartMunicipio";
 import ChartStatus from "../Charts/ChartStatus";
 import WidgetProcessos from "../WidgetsProcessos/WidgetProcessos";
+import WidgetHistoricos from "../WidgetsHistoricos/WidgetHistoricos";
 //import Loading from '../Loading/Loading';
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import { Page, Grid, Card, StatsCard } from "tabler-react";
@@ -113,9 +114,9 @@ class App extends Component {
             <Grid.Col lg={6}>
               <Card>
                 <Card.Header>
-                  <Card.Title>Meus Últimos Processos</Card.Title>
+                  <Card.Title>Últimos históricos</Card.Title>
                 </Card.Header>
-                <WidgetProcessos
+                <WidgetHistoricos
                   isMine={true}
                   client={this.props.client}
                   userId={auth.getSub()}
