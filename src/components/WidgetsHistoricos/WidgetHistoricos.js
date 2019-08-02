@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ProcessoList from "./ProcessoList";
+import HistoricoList from "./HistoricoList";
 
 class WidgetHistoricos extends Component {
   /**
@@ -12,7 +12,7 @@ class WidgetHistoricos extends Component {
   render() {
     return (
       <React.Fragment>
-        <ProcessoList {...this.props} />
+        <HistoricoList {...this.props} />
       </React.Fragment>
     );
   }

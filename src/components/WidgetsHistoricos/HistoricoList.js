@@ -36,7 +36,7 @@ const GET_HISTORICOS = gql`
   }
 `;
 
-class ProcessoList extends Component {
+class HistoricoList extends Component {
   constructor(props) {
     super(props);
 
@@ -103,7 +103,7 @@ class ProcessoList extends Component {
   }
 }
 
-const ProcessoListQuery = props => {
+const HistoricoListQuery = props => {
   let query = GET_HISTORICOS;
   let variables = {};
 
@@ -118,7 +118,7 @@ const ProcessoListQuery = props => {
           return <div>Error!</div>;
         }
         return (
-          <ProcessoList
+          <HistoricoList
             userId={props.userId}
             client={client}
             todos={data.historicos}
@@ -129,5 +129,5 @@ const ProcessoListQuery = props => {
   );
 };
 
-export default ProcessoListQuery;
+export default HistoricoListQuery;
 export { GET_HISTORICOS };
