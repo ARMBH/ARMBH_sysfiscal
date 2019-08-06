@@ -10,3 +10,4 @@ export const REALTIME_GRAPHQL_URL = `${scheme('ws')}://${HASURA_GRAPHQL_ENGINE_H
 export const authClientId = 'EDITE_AQUI'; //Localizado em Auth0.com
 export const authDomain = 'EDITE_AQUI.auth0.com';
 export const callbackUrl = `${scheme('http')}://${REACT_APOLLO_FRONTEND}/callback`;
+export const telegramBotToken = "EDITAQUI" //Token do BOT do Telegram para envio de notificações
