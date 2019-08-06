@@ -36,6 +36,7 @@ class _TodoPublicList extends Component {
           title
           created_at
           user {
+            id
             name
           }
         }
@@ -76,6 +77,7 @@ class _TodoPublicList extends Component {
           title
           created_at
           user {
+            id
             name
           }
         }

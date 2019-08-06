@@ -43,6 +43,7 @@ const DELETE_STATUS = gql`
         name
         processo_id
         user {
+          id
           name
         }
       }

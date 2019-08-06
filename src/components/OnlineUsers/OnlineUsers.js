@@ -9,6 +9,7 @@ const SUBSCRIPTION_ONLINE_USERS = gql`
     online_users(order_by: { user: { name: asc } }) {
       id
       user {
+        id
         name
       }
     }

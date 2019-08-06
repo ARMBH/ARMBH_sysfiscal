@@ -80,6 +80,7 @@ const DELETE_DOCUMENTO = gql`
         name
         processo_id
         user {
+          id
           name
         }
       }

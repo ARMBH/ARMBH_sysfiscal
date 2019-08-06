@@ -61,6 +61,7 @@ const QUERY_HISTORICOS_TIPO = gql`
       name
       created_at
       user {
+        id
         name
       }
     }
