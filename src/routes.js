@@ -1,7 +1,8 @@
 import React from "react";
-import { Route, Router } from "react-router-dom";
+import { Route, Router, Switch } from "react-router-dom";
 
 import Home from "./components/Home/Home";
+import Error404 from "./components/Home/Error404";
 import Callback from "./components/Callback/Callback";
 import auth from "./components/Auth/Auth";
 import LandingPage from "./components/LandingPage/LandingPage";
@@ -62,86 +63,89 @@ export const makeMainRoutes = () => {
   return (
     <Router history={history}>
       <div>
-        <Route
-          exact
-          path="/login"
-          render={props => provideClient(LandingPage, props)}
-        />
-        <Route exact path="/" render={props => provideClient(Home, props)} />
-        <Route
-          exact
-          path="/home"
-          render={props => provideClient(Home, props)}
-        />
-        <Route
-          exact
-          path="/admin"
-          render={props => {
-            return provideClient(DashboardAdmin, props);
-          }}
-        />
-        <Route
-          exact
-          path="/home/:param"
-          render={props => provideClient(Home, props)}
-        />
-        <Route
-          exact
-          path="/blog"
-          render={props => provideClient(BlogPage, props)}
-        />
-        <Route
-          exact
-          path="/novoprocesso/"
-          render={props => provideClient(ProcessoForm, props)}
-        />
-        <Route
-          exact
-          path="/listaprocessos/"
-          render={props => provideClient(ListaProcessos, props)}
-        />
-        <Route
-          exact
-          path="/calendario/"
-          render={props => provideClient(Calendario, props)}
-        />
-        <Route
-          exact
-          path="/meucalendario"
-          render={props => provideClient(Calendario, props)}
-        />
-        <Route
-          exact
-          path="/profile"
-          render={props => provideClient(ProfileForm, props)}
-        />
-        <Route
-          exact
-          path="/processo/:param"
-          render={props => provideClient(ProcessoForm, props)}
-        />
-        <Route
-          exact
-          path="/endereco/:param"
-          render={props => provideClient(EnderecoForm, props)}
-        />
-        <Route
-          exact
-          path="/adicionarstatus/:param"
-          render={props => provideClient(StatusForm, props)}
-        />
-        <Route
-          exact
-          path="/adicionardoc/:param"
-          render={props => provideClient(DocumentoUpload, props)}
-        />
-        <Route
-          path="/callback"
-          render={props => {
-            handleAuthentication(props);
-            return <Callback {...props} />;
-          }}
-        />
+        <Switch>
+          <Route
+            exact
+            path="/login"
+            render={props => provideClient(LandingPage, props)}
+          />
+          <Route exact path="/" render={props => provideClient(Home, props)} />
+          <Route
+            exact
+            path="/home"
+            render={props => provideClient(Home, props)}
+          />
+          <Route
+            exact
+            path="/admin"
+            render={props => {
+              return provideClient(DashboardAdmin, props);
+            }}
+          />
+          <Route
+            exact
+            path="/home/:param"
+            render={props => provideClient(Home, props)}
+          />
+          <Route
+            exact
+            path="/blog"
+            render={props => provideClient(BlogPage, props)}
+          />
+          <Route
+            exact
+            path="/novoprocesso/"
+            render={props => provideClient(ProcessoForm, props)}
+          />
+          <Route
+            exact
+            path="/listaprocessos/"
+            render={props => provideClient(ListaProcessos, props)}
+          />
+          <Route
+            exact
+            path="/calendario/"
+            render={props => provideClient(Calendario, props)}
+          />
+          <Route
+            exact
+            path="/meucalendario"
+            render={props => provideClient(Calendario, props)}
+          />
+          <Route
+            exact
+            path="/profile"
+            render={props => provideClient(ProfileForm, props)}
+          />
+          <Route
+            exact
+            path="/processo/:param"
+            render={props => provideClient(ProcessoForm, props)}
+          />
+          <Route
+            exact
+            path="/endereco/:param"
+            render={props => provideClient(EnderecoForm, props)}
+          />
+          <Route
+            exact
+            path="/adicionarstatus/:param"
+            render={props => provideClient(StatusForm, props)}
+          />
+          <Route
+            exact
+            path="/adicionardoc/:param"
+            render={props => provideClient(DocumentoUpload, props)}
+          />
+          <Route
+            path="/callback"
+            render={props => {
+              handleAuthentication(props);
+              return <Callback {...props} />;
+            }}
+          />
+          <Route exact={true} component={Error404} />
+        </Switch>
       </div>
     </Router>
   );
