@@ -8,6 +8,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import BlogPage from "./components/BlogPage/BlogPage";
 import ProcessoForm from "./components/Processo/ProcessoForm";
 import EnderecoForm from "./components/Endereco/EnderecoForm";
+import ProfileForm from "./components/Profile/ProfileForm";
 import StatusForm from "./components/Status/StatusForm";
 import DocumentoUpload from "./components/Documento/DocumentoUpload";
 import ListaProcessos from "./components/Processo/ListaProcessos";
@@ -108,6 +109,11 @@ export const makeMainRoutes = () => {
           exact
           path="/meucalendario"
           render={props => provideClient(Calendario, props)}
+        />
+        <Route
+          exact
+          path="/profile"
+          render={props => provideClient(ProfileForm, props)}
         />
         <Route
           exact

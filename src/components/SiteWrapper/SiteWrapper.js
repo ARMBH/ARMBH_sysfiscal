@@ -123,7 +123,7 @@ const accountDropdownProps = {
   name: "User",
   description: "Role",
   options: [
-    { icon: "user", value: "Profile" },
+    { icon: "user", value: "Profile", to: "/profile", RootComponent: NavLink },
     //{ icon: "settings", value: "Settings" },
     //{ icon: "mail", value: "Inbox", badge: "6" },
     //{ icon: "send", value: "Message" },
