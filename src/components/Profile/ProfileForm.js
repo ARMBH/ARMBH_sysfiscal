@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //Mutations
 import { Mutation } from "react-apollo";
-import axios from "axios";
+//import axios from "axios";
 import { QUERY_PROFILE, EDIT_PROFILE } from "./ProfileQueries";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
