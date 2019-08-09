@@ -124,6 +124,12 @@ const accountDropdownProps = {
   description: "Role",
   options: [
     { icon: "user", value: "Profile", to: "/profile", RootComponent: NavLink },
+    {
+      icon: "calendar",
+      value: "Meu Calendário",
+      to: "/meucalendario",
+      RootComponent: NavLink
+    },
     //{ icon: "settings", value: "Settings" },
     //{ icon: "mail", value: "Inbox", badge: "6" },
     //{ icon: "send", value: "Message" },
