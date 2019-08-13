@@ -95,6 +95,7 @@ export const makeMainRoutes = () => {
           <Route
             exact
             path="/novoprocesso/"
+            key={"novoprocesso"}
             render={props => provideClient(ProcessoForm, props)}
           />
           <Route
@@ -105,11 +106,13 @@ export const makeMainRoutes = () => {
           <Route
             exact
             path="/calendario/"
+            key={"calendario"}
             render={props => provideClient(Calendario, props)}
           />
           <Route
             exact
             path="/meucalendario"
+            key={"meucalendario"}
             render={props => provideClient(Calendario, props)}
           />
           <Route
@@ -120,6 +123,7 @@ export const makeMainRoutes = () => {
           <Route
             exact
             path="/processo/:param"
+            key={"processo"}
             render={props => provideClient(ProcessoForm, props)}
           />
           <Route
