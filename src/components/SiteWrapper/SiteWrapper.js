@@ -336,7 +336,7 @@ class SiteWrapper extends React.Component<Props, State> {
                 </span>
               )}
               <br />
-              Versão: 1.0.0 Alpha
+              Versão: 1.0.1 Alpha
             </React.Fragment>
           ),
           copyright: (
