@@ -52,7 +52,8 @@
     "prettier": "1.14.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "startdev": "react-scripts start",
+    "start": "serve -s build",
     "build": "react-scripts build",
     "test": "cypress run --spec 'cypress/integration/**/**/test.js'",
     "cypress": "cypress open",
