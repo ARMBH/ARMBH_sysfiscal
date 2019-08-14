@@ -1,5 +1,5 @@
 {
-  "name": "react-apollo-todo",
+  "name": "Sistema de Fiscalização ARMBH",
   "version": "0.1.0",
   "engines": {
     "node": "8.9.1"
@@ -52,7 +52,8 @@
     "prettier": "1.14.3"
   },
   "scripts": {
-    "startdev": "react-scripts start",
+    "heroku-prebuild": "npm install -g serve",
+    "devstart": "react-scripts start",
     "start": "serve -s build",
     "build": "react-scripts build",
     "test": "cypress run --spec 'cypress/integration/**/**/test.js'",
