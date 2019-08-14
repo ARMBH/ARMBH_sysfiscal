@@ -167,8 +167,12 @@ class SiteWrapper extends React.Component<Props, State> {
               );
             accountDropdownProps.name = data.data.users[0].name;
             accountDropdownProps.description = auth.getRoles();
-            if (!accountDropdownProps.name) {
-              this.props.history.push("/profile");
+            if (
+              !accountDropdownProps.name &&
+              this.props.match.path !== "/profile"
+            ) {
+              console.log(this.props.match);
+              //this.props.history.push('/profile');
             }
             this.setState({
               name: data.data.users[0].name,
