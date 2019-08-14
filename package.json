@@ -53,7 +53,7 @@
   },
   "scripts": {
     "heroku-prebuild": "npm install -g serve",
-    "devstart": "react-scripts start",
+    "dev": "react-scripts start",
     "start": "serve -s build",
     "build": "react-scripts build",
     "test": "cypress run --spec 'cypress/integration/**/**/test.js'",

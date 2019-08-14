@@ -36,7 +36,8 @@ class ProfileForm extends Component {
             let picture = require("../../images/user-icon.png");
             if (localStorage.getItem("auth0:id_token:picture"))
               picture = localStorage.getItem("auth0:id_token:picture");
-
+            if (!data.data.users[0].name)
+              toast.info("Por favor atualize seu Profile.");
             this.setState({
               id: id,
               name: data.data.users[0].name,
