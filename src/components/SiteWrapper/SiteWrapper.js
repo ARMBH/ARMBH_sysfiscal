@@ -348,7 +348,7 @@ class SiteWrapper extends React.Component<Props, State> {
           copyright: (
             <React.Fragment>
               Copyright © 2019
-              <a href="."> Sistema de Fiscalização</a>. Visite o site da
+              <a href="/"> Sistema de Fiscalização</a>. Visite o site da
               <a
                 href="http://www.agenciarmbh.mg.gov.br/"
                 target="_blank"
