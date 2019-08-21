@@ -67,6 +67,7 @@ class ProfileForm extends Component {
     if (data.update_users.affected_rows) {
       let message = "Usuário " + this.state.email + " alterado com sucesso";
       toast.success(message);
+      this.props.history.push("/");
     } else {
       toast.error("Erro ao editar usuário.");
     }
