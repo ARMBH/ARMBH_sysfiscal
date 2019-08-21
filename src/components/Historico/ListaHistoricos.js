@@ -7,6 +7,7 @@ import { QUERY_HISTORICOS, QUERY_HISTORICOS_TIPO } from "./HistoricoQueries";
 //import { toast } from 'react-toastify';
 import { Query } from "react-apollo";
 import DataPorExtenso from "../Utils/DataPorExtenso";
+var Highlight = require("react-highlighter");
 
 class ListaHistoricos extends Component {
   constructor() {
@@ -71,7 +72,12 @@ class ListaHistoricos extends Component {
                             {documento.name.split("\n").map((item, key) => {
                               return (
                                 <span key={key}>
-                                  {item}
+                                  <Highlight
+                                    matchClass="highlightNovo"
+                                    search={"/alterado|criação/g"}
+                                  >
+                                    {item}
+                                  </Highlight>
                                   <br />
                                 </span>
                               );
