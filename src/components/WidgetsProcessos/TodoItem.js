@@ -19,9 +19,11 @@ const TodoItem = ({ index, todo, client, userId }) => {
         {todo.processo_id}/{Moment(todo.processo.created_at).format("YYYY")}
       </Table.Col>
       <Table.Col>
-        <span className={userId === todo.processo.user.id ? "isMine" : ""}>
-          {todo.processo.name}
-        </span>
+        <Link to={"/processo/" + todo.processo_id}>
+          <span className={userId === todo.processo.user.id ? "isMine" : ""}>
+            {todo.processo.name}
+          </span>
+        </Link>
       </Table.Col>
       <Table.Col className="text-nowrap">
         {Moment(todo.due_date).format("DD/MM/YYYY")}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Moment from "moment";
 import { Button, Badge, Form, Icon } from "tabler-react";
+import { Link } from "react-router-dom";
 import { Table, Card } from "tabler-react";
 import ModalStatus from "../Status/ModalStatus";
 import "./Processos.css";
@@ -137,7 +138,9 @@ class TabelaProcessos extends Component {
                       </Table.Col>
                       <Table.Col>
                         <Highlight matchClass="highlightNovo" search={value}>
-                          {processo.processo.name}
+                          <Link to={"/processo/" + processo.processo.id}>
+                            {processo.processo.name}
+                          </Link>
                         </Highlight>
                       </Table.Col>
                       <Table.Col>{processo.processo.user.name}</Table.Col>
