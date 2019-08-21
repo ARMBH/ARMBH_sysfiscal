@@ -34,11 +34,13 @@ class DocumentoUpload extends Component {
           " tem mais de 10mb. Não é possível fazer upload. Selecione outro arquivo. "
       );
     } else {
+      /*
       toast.info(
         "O arquivo " +
           this.state.files.name +
           " está pronto para ser enviado ao servidor. "
       );
+      */
       this.setState({ disableForm: false });
     }
   }
