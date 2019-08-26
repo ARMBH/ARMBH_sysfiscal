@@ -32,6 +32,14 @@ Digite o comando abaixo para iniciar o frontend em modo desenvolvedor:
 
 ## Deploy em Homologação
 
+Faça login em seu app:
+
+```
+heroku git:remote -a NOMEDOAPP
+```
+
+Sempre que publicar uma nova versão:
+
 ```
 git push heroku master
 ```
