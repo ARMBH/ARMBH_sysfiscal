@@ -31,6 +31,8 @@ class StatusForm extends Component {
   }
 
   componentDidMount() {
+    //Envia para o Topo da página
+    window.scrollTo(0, 0);
     const { param } = this.props.match.params;
     if (parseInt(param, 10) > 0) {
       this.setState(
