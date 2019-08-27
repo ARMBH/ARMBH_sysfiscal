@@ -6,7 +6,6 @@ const ADD_PROCESSO = gql`
     $description: String!
     $origem_id: Int!
     $status_id: Int!
-    $demandante_id: Int!
     $municipio_id: Int!
   ) {
     insert_processos(
@@ -16,7 +15,6 @@ const ADD_PROCESSO = gql`
         origem_id: $origem_id
         municipio_id: $municipio_id
         status_id: $status_id
-        demandante_id: $demandante_id
       }
     ) {
       affected_rows
@@ -35,7 +33,6 @@ const EDIT_PROCESSO = gql`
     $description: String!
     $origem_id: Int!
     $municipio_id: Int!
-    $demandante_id: Int!
   ) {
     update_processos(
       where: { id: { _eq: $id } }
@@ -44,7 +41,6 @@ const EDIT_PROCESSO = gql`
         origem_id: $origem_id
         description: $description
         municipio_id: $municipio_id
-        demandante_id: $demandante_id
       }
     ) {
       affected_rows
@@ -74,7 +70,6 @@ const QUERY_PROCESSO = gql`
         type
       }
       municipio_id
-      demandante_id
       due_date
     }
   }
@@ -145,15 +140,6 @@ const QUERY_ORIGEMS = gql`
   }
 `;
 
-const QUERY_DEMANDANTES = gql`
-  {
-    demandantes(order_by: { name: asc }) {
-      id
-      name
-    }
-  }
-`;
-
 const QUERY_MUNICIPIOS = gql`
   {
     municipios(order_by: { name: asc }) {
@@ -190,7 +176,6 @@ export {
   ADD_PROCESSO,
   QUERY_PROCESSOS,
   QUERY_ORIGEMS,
-  QUERY_DEMANDANTES,
   QUERY_MUNICIPIOS,
   QUERY_STATUS,
   SUBSCRIPTION_TOTAL_PROCESSOS,

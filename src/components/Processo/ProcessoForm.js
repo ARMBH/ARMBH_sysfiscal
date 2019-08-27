@@ -7,7 +7,6 @@ import {
   EDIT_PROCESSO,
   ADD_PROCESSO,
   QUERY_ORIGEMS,
-  QUERY_DEMANDANTES,
   QUERY_MUNICIPIOS
 } from "./ProcessoQueries";
 import { ADD_STATUS } from "../Status/StatusQueries";
@@ -135,11 +134,6 @@ class ProcessoForm extends Component {
         message = message + "\n- Origem alterada ";
       }
 
-      if (this.state.demandante_id !== this.state.oldState.demandante_id) {
-        alterado = true;
-        message = message + "\n- Demandante alterado ";
-      }
-
       if (this.state.municipio_id !== this.state.oldState.municipio_id) {
         alterado = true;
         message = message + "\n- Município alterado ";
@@ -186,8 +180,7 @@ class ProcessoForm extends Component {
       description,
       created_at,
       user,
-      municipio_id,
-      demandante_id
+      municipio_id
     } = this.state;
     let { auth } = this.props;
 
@@ -231,7 +224,6 @@ class ProcessoForm extends Component {
                               name: name,
                               description: description,
                               origem_id: origem_id,
-                              demandante_id: demandante_id,
                               municipio_id: municipio_id
                             };
 
@@ -305,31 +297,6 @@ class ProcessoForm extends Component {
                                           value={origem.id}
                                         >
                                           {origem.name}
-                                        </option>
-                                      ))}
-                                    </React.Fragment>
-                                  );
-                                }}
-                              </Query>
-                            </Form.Select>
-                          </Form.Group>
-                          <Form.Group label="Demandante">
-                            <Form.Select
-                              disabled={disableForm}
-                              name="demandante_id"
-                              value={demandante_id}
-                              onChange={this.handleChange}
-                            >
-                              <option value="0">Selecione um demandante</option>
-                              <Query query={QUERY_DEMANDANTES}>
-                                {({ loading, error, data }) => {
-                                  if (loading) return "Carregando...";
-                                  if (error) return `Erro! ${error.message}`;
-                                  return (
-                                    <React.Fragment>
-                                      {data.demandantes.map((item, index) => (
-                                        <option key={item.id} value={item.id}>
-                                          {item.name}
                                         </option>
                                       ))}
                                     </React.Fragment>
