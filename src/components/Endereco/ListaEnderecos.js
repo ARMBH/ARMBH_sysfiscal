@@ -35,6 +35,7 @@ class ListaEnderecos extends Component {
         {({ loading, error, data }) => {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;
+          data.enderecos = data.processos[0].processos_enderecos;
           if (data.enderecos.length > 0) {
             cardTitle =
               "Processo " +
@@ -62,7 +63,7 @@ class ListaEnderecos extends Component {
                               <Form.Group label="CEP">
                                 <Form.MaskedInput
                                   disabled={disableForm}
-                                  value={endereco.cep}
+                                  value={endereco.endereco.cep}
                                   name="cep"
                                   placeholder="Digite um CEP..."
                                   type="text"
@@ -84,7 +85,7 @@ class ListaEnderecos extends Component {
                               <Form.Group label="Bairro">
                                 <Form.Input
                                   disabled={disableForm}
-                                  value={endereco.bairro}
+                                  value={endereco.endereco.bairro}
                                   name="bairro"
                                   placeholder="Digite o Bairro..."
                                 />
@@ -96,7 +97,7 @@ class ListaEnderecos extends Component {
                               <Form.Group label="Logradouro">
                                 <Form.Input
                                   disabled={disableForm}
-                                  value={endereco.logradouro}
+                                  value={endereco.endereco.logradouro}
                                   name="logradouro"
                                   placeholder="Digite um logradouro..."
                                 />
@@ -106,7 +107,7 @@ class ListaEnderecos extends Component {
                               <Form.Group label="Núm/Complemento">
                                 <Form.Input
                                   disabled={disableForm}
-                                  value={endereco.complemento}
+                                  value={endereco.endereco.complemento}
                                   name="complemento"
                                   placeholder="Digite um complemento..."
                                 />
@@ -118,7 +119,7 @@ class ListaEnderecos extends Component {
                               <Form.Group label="Município">
                                 <Form.Input
                                   disabled={disableForm}
-                                  value={endereco.localidade}
+                                  value={endereco.endereco.localidade}
                                   name="localidade"
                                   placeholder="Digite um Município..."
                                 />
@@ -128,7 +129,7 @@ class ListaEnderecos extends Component {
                               <Form.Group label="UF">
                                 <Form.Input
                                   disabled={disableForm}
-                                  value={endereco.uf}
+                                  value={endereco.endereco.uf}
                                   name="uf"
                                   placeholder="Digite um UF..."
                                 />
@@ -140,7 +141,7 @@ class ListaEnderecos extends Component {
                               <Form.Group label="Área (m²)">
                                 <Form.Input
                                   disabled={disableForm}
-                                  value={endereco.area || ""}
+                                  value={endereco.endereco.area || ""}
                                   name="area"
                                   placeholder="Área não cadastrada"
                                   type="float"

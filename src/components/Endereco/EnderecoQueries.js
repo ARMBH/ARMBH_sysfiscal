@@ -1,22 +1,26 @@
 import gql from "graphql-tag";
-
 const QUERY_ENDERECO = gql`
   query getEndereco($processoId: Int!) {
-    enderecos(where: { processo_id: { _eq: $processoId } }) {
+    processos(where: { id: { _eq: $processoId } }) {
       id
-      area
-      bairro
-      cep
-      complemento
-      ibge
-      localidade
-      logradouro
-      processo_id
-      uf
+      processos_enderecos {
+        id
+        endereco {
+          id
+          area
+          bairro
+          cep
+          complemento
+          created_at
+          ibge
+          localidade
+          logradouro
+          uf
+        }
+      }
     }
   }
 `;
-
 const ADD_ENDERECO = gql`
   mutation(
     $area: float8
@@ -29,22 +33,26 @@ const ADD_ENDERECO = gql`
     $processo_id: Int!
     $uf: String!
   ) {
-    insert_enderecos(
+    insert_processos_enderecos(
       objects: {
-        area: $area
-        bairro: $bairro
-        cep: $cep
-        complemento: $complemento
-        ibge: $ibge
-        localidade: $localidade
-        logradouro: $logradouro
+        endereco: {
+          data: {
+            area: $area
+            bairro: $bairro
+            cep: $cep
+            complemento: $complemento
+            ibge: $ibge
+            localidade: $localidade
+            logradouro: $logradouro
+            uf: $uf
+          }
+        }
         processo_id: $processo_id
-        uf: $uf
       }
     ) {
-      affected_rows
       returning {
         id
+        endereco_id
         processo_id
       }
     }
@@ -60,11 +68,11 @@ const EDIT_ENDERECO = gql`
     $ibge: String!
     $localidade: String!
     $logradouro: String!
-    $processo_id: Int!
+    $id: Int!
     $uf: String!
   ) {
     update_enderecos(
-      where: { processo_id: { _eq: $processo_id } }
+      where: { id: { _eq: $id } }
       _set: {
         area: $area
         bairro: $bairro
@@ -79,7 +87,6 @@ const EDIT_ENDERECO = gql`
       affected_rows
       returning {
         id
-        processo_id
       }
     }
   }

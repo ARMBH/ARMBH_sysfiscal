@@ -124,17 +124,17 @@ class EnderecoForm extends Component {
       variables: { processoId: processoId },
       update: (cache, data) => {
         if (data) {
-          //console.log(data.data);
-          if (!data.data.enderecos[0]) {
+          //console.log(data.data.processos[0].processos_enderecos);
+          if (data.data.processos[0].processos_enderecos.length === 0) {
             toast.info(
               "Endereço não encontrado, cadastre um novo endereço para este processo."
             );
             return false;
           } else {
-            //console.log(data.data.enderecos[0]);
+            //console.log(data.data.processos[0].processos_enderecos[0].endereco);
             this.setState({
-              ...data.data.enderecos[0],
-              oldState: data.data.enderecos[0]
+              ...data.data.processos[0].processos_enderecos[0].endereco,
+              oldState: data.data.processos[0].processos_enderecos[0].endereco
             });
           }
         }
@@ -223,9 +223,11 @@ class EnderecoForm extends Component {
                         ibge,
                         localidade,
                         logradouro,
-                        processo_id,
                         uf
                       };
+                      if (modo === "Adicionar")
+                        variables.processo_id = processo_id;
+                      if (modo === "Editar") variables.id = id;
 
                       mutationEndereco({
                         variables: variables
