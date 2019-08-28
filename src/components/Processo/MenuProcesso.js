@@ -39,10 +39,6 @@ class MenuProcesso extends Component {
     const { id, total_historicos } = this.state;
     //console.log(this.props);
 
-    if (!id) {
-      return "Carregando Menu...";
-    }
-
     return (
       <Grid.Col md={3}>
         <Page.Title className="mb-5">Processo nº {id}</Page.Title>
@@ -50,7 +46,7 @@ class MenuProcesso extends Component {
           <List.Group transparent={true}>
             <List.GroupItem
               className="d-flex align-items-center"
-              to="/adicionarstatus/4"
+              to={"/processo/" + id}
               icon="inbox"
               RootComponent={NavLink}
               active={match.path.includes("processo")}
@@ -59,7 +55,7 @@ class MenuProcesso extends Component {
             </List.GroupItem>
             <List.GroupItem
               className="d-flex align-items-center"
-              to="/adicionarstatus/4"
+              to={"/interessados/" + id}
               icon="users"
               RootComponent={NavLink}
               active={match.path.includes("interessados")}
@@ -81,12 +77,14 @@ class MenuProcesso extends Component {
               Vistorias
             </List.GroupItem>
             <List.GroupItem
-              to="/email"
+              to={"/historico/" + id}
               className="d-flex align-items-center"
               icon="monitor"
+              RootComponent={NavLink}
+              active={match.path.includes("historico")}
             >
               Histórico{" "}
-              <Badge className="ml-auto badge badge-secondary">
+              <Badge className="ml-auto badge badge-primary">
                 {total_historicos}
               </Badge>
             </List.GroupItem>

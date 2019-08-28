@@ -26,6 +26,7 @@ import makeApolloClient from "./apollo";
 import "tabler-react/dist/Tabler.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProcessoFormHistorico from "./components/Processo/ProcessoFormHistorico";
 
 // Call it once in your app. At the root of your app is the best place
 toast.configure({
@@ -129,6 +130,12 @@ export const makeMainRoutes = () => {
             path="/processo/:param"
             key={"processo"}
             render={props => provideClient(ProcessoForm, props)}
+          />
+          <Route
+            exact
+            path="/historico/:param"
+            key={"processo"}
+            render={props => provideClient(ProcessoFormHistorico, props)}
           />
           <Route
             exact
