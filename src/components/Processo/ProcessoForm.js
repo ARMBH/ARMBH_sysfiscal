@@ -56,7 +56,7 @@ class ProcessoForm extends Component {
               "Processo não encontrado ou você não possui permissão para visualizar este processo."
             );
             this.setState({ id: "" });
-            this.props.history.push("/processo/todos");
+            this.props.history.push("/listaprocessos");
             return false;
           } else {
             this.setState({

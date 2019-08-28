@@ -35,6 +35,9 @@ class ListaEnderecos extends Component {
         {({ loading, error, data }) => {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;
+          if (typeof data.processos[0] === "undefined") {
+            return "ERRO!";
+          }
           data.enderecos = data.processos[0].processos_enderecos;
           if (data.enderecos.length > 0) {
             cardTitle =

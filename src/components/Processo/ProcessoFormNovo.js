@@ -31,7 +31,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import "react-datepicker/dist/react-datepicker.css";
 registerLocale("pt-BR", ptBR);
 
-class ProcessoNovoForm extends Component {
+class ProcessoFormNovo extends Component {
   constructor() {
     super();
     this.state = {
@@ -480,4 +480,4 @@ class ProcessoNovoForm extends Component {
   }
 }
 
-export default ProcessoNovoForm;
+export default ProcessoFormNovo;

@@ -8,7 +8,7 @@ import auth from "./components/Auth/Auth";
 import LandingPage from "./components/LandingPage/LandingPage";
 import BlogPage from "./components/BlogPage/BlogPage";
 import ProcessoForm from "./components/Processo/ProcessoForm";
-import ProcessoNovoForm from "./components/Processo/ProcessoNovoForm";
+import ProcessoFormNovo from "./components/Processo/ProcessoFormNovo";
 import EnderecoForm from "./components/Endereco/EnderecoForm";
 import ProfileForm from "./components/Profile/ProfileForm";
 import StatusForm from "./components/Status/StatusForm";
@@ -100,7 +100,7 @@ export const makeMainRoutes = () => {
             exact
             path="/novoprocesso/"
             key={"novoprocesso"}
-            render={props => provideClient(ProcessoNovoForm, props)}
+            render={props => provideClient(ProcessoFormNovo, props)}
           />
           <Route
             exact
