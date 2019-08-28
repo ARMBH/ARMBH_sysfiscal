@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Page, Grid, List, Badge } from "tabler-react";
 import { QUERY_TOTAL_HISTORICOS } from "./ProcessoQueries";
+import { toast } from "react-toastify";
 
 class MenuProcesso extends Component {
   constructor(props) {
@@ -10,12 +11,30 @@ class MenuProcesso extends Component {
       total_historicos: 0
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    //Parametros do Routes.js
+    const { param } = this.props.match.params;
+    //Parametros da URL (após o ?)
+    const paramsUrl = new URLSearchParams(this.props.location.search);
 
-  componentWillReceiveProps() {
-    this.setState({ id: this.props.id }, () =>
-      this.getHistoricos(this.props.id)
-    );
+    //Caso haja demanda
+    const demanda = paramsUrl.get("demanda");
+    if (demanda) console.log(demanda);
+    if (parseInt(param, 10) > 0) {
+      this.setState(
+        {
+          id: param
+        },
+        () => {
+          this.getHistoricos(param);
+        }
+      );
+    } else {
+      this.props.history.push("/listaprocessos");
+      toast.error(
+        "Processo não encontrado ou você não possui permissão para visualizar este processo."
+      );
+    }
   }
 
   getHistoricos(id) {
@@ -51,7 +70,7 @@ class MenuProcesso extends Component {
               RootComponent={NavLink}
               active={match.path.includes("processo")}
             >
-              Cadastro
+              Informações básicas
             </List.GroupItem>
             <List.GroupItem
               className="d-flex align-items-center"
