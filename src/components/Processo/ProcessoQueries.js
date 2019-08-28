@@ -170,6 +170,16 @@ const SUBSCRIPTION_TOTAL_PROCESSOS = gql`
   }
 `;
 
+const QUERY_TOTAL_HISTORICOS = gql`
+  query totalHistoricos($processo_id: Int!) {
+    historicos_aggregate(where: { processo_id: { _eq: $processo_id } }) {
+      aggregate {
+        count
+      }
+    }
+  }
+`;
+
 export {
   QUERY_PROCESSO,
   EDIT_PROCESSO,
@@ -179,5 +189,6 @@ export {
   QUERY_MUNICIPIOS,
   QUERY_STATUS,
   SUBSCRIPTION_TOTAL_PROCESSOS,
-  QUERY_PROCESSOS_STATUS
+  QUERY_PROCESSOS_STATUS,
+  QUERY_TOTAL_HISTORICOS
 };

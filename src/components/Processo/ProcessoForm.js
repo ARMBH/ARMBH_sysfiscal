@@ -19,8 +19,9 @@ import ListaHistoricos from "../Historico/ListaHistoricos";
 import ListaEnderecos from "../Endereco/ListaEnderecos";
 import HistoricoAdiciona from "../Historico/HistoricoAdiciona";
 import DataPorExtenso from "../Utils/DataPorExtenso";
+import MenuProcesso from "./MenuProcesso";
 //Componentes de Terceiros
-import { Form, Button, Page, Grid, Alert, Tag } from "tabler-react";
+import { Form, Button, Page, Grid, Alert, Tag, Container } from "tabler-react";
 import { toast } from "react-toastify";
 //import { Link } from "react-router-dom";
 // Relativos à data:
@@ -192,8 +193,10 @@ class ProcessoForm extends Component {
     else disableForm = true;
 
     //Altera o título de acordo com o Edição/Adição de Processo
+    /*
     let contentTitle = "Novo Processo";
     if (id) contentTitle = "Processo nº " + id;
+    */
 
     let cardTitle = "Cadastro de Novo Processo";
     if (id) cardTitle = name + "";
@@ -213,23 +216,28 @@ class ProcessoForm extends Component {
           {(mutationProcesso, { loading, error }) => {
             return (
               <SiteWrapper {...this.props}>
-                <Page.Content title={contentTitle}>
-                  <Page.Card title={cardTitle}>
-                    <Grid.Row cards deck>
-                      <Grid.Col>
-                        <Form
-                          onSubmit={e => {
-                            e.preventDefault();
-                            let variables = {
-                              name: name,
-                              description: description,
-                              origem_id: origem_id,
-                              municipio_id: municipio_id
-                            };
+                <div className="my-3 my-md-5">
+                  <Container>
+                    <Grid.Row>
+                      <MenuProcesso id={id} {...this.props} />
+                      <Grid.Col md={9}>
+                        <Page.Content>
+                          <Page.Card title={cardTitle}>
+                            <Grid.Row cards deck>
+                              <Grid.Col>
+                                <Form
+                                  onSubmit={e => {
+                                    e.preventDefault();
+                                    let variables = {
+                                      name: name,
+                                      description: description,
+                                      origem_id: origem_id,
+                                      municipio_id: municipio_id
+                                    };
 
-                            if (id) {
-                              variables.id = id;
-                              /**
+                                    if (id) {
+                                      variables.id = id;
+                                      /**
                               $updated_at: timestamptz
                               variables.updated_at =
                                 MomentPure()
@@ -237,240 +245,263 @@ class ProcessoForm extends Component {
                                   .format("YYYY-MM-DD[T]HH:mm:ss") +
                                 ".000000+00:00";
                                */
-                            } else {
-                              variables.status_id = 1;
-                            }
+                                    } else {
+                                      variables.status_id = 1;
+                                    }
 
-                            mutationProcesso({
-                              variables: variables
-                            })
-                              .then(res => {
-                                //console.log(res);
-                                if (!res.errors) {
-                                  if (mutationType === "edit") {
-                                    /**
+                                    mutationProcesso({
+                                      variables: variables
+                                    })
+                                      .then(res => {
+                                        //console.log(res);
+                                        if (!res.errors) {
+                                          if (mutationType === "edit") {
+                                            /**
                                     this.setState({
                                       updated_at: variables.updated_at
                                     });
                                      */
-                                  }
-                                  //onCompleted é chamado caso entre aqui
-                                } else {
-                                  // Erros code 200
-                                  toast.error("Erro 200: " + res);
-                                  console.log("Erro 200: " + res);
-                                }
-                              })
-                              .catch(e => {
-                                //Erro de GraphQL
-                                toast.error("Erro GraphQL: " + e);
-                                //console.log("Erro GraphQL: " + e);
-                              });
-                          }}
-                        >
-                          <Form.Group label="Empreendimento">
-                            <Form.Input
-                              disabled={disableForm}
-                              value={name}
-                              name="name"
-                              placeholder="Digite um título..."
-                              onChange={this.handleChange}
-                            />
-                          </Form.Group>
-                          <Form.Group label="Origem">
-                            <Form.Select
-                              disabled={disableForm}
-                              name="origem_id"
-                              value={origem_id}
-                              onChange={this.handleChange}
-                            >
-                              <option value="0">Selecione uma origem</option>
-                              <Query query={QUERY_ORIGEMS}>
-                                {({ loading, error, data }) => {
-                                  if (loading) return "Carregando...";
-                                  if (error) return `Erro! ${error.message}`;
-                                  return (
-                                    <React.Fragment>
-                                      {data.origems.map((origem, index) => (
-                                        <option
-                                          key={origem.id}
-                                          value={origem.id}
-                                        >
-                                          {origem.name}
-                                        </option>
-                                      ))}
-                                    </React.Fragment>
-                                  );
-                                }}
-                              </Query>
-                            </Form.Select>
-                          </Form.Group>
-                          <Form.Group label="Município">
-                            <Form.Select
-                              disabled={disableForm}
-                              name="municipio_id"
-                              value={municipio_id}
-                              onChange={this.handleChange}
-                            >
-                              <option value="0">Selecione um município</option>
-                              <Query query={QUERY_MUNICIPIOS}>
-                                {({ loading, error, data }) => {
-                                  if (loading) return "Carregando...";
-                                  if (error) return `Erro! ${error.message}`;
-                                  return (
-                                    <React.Fragment>
-                                      {data.municipios.map((item, index) => (
-                                        <option key={item.id} value={item.id}>
-                                          {item.name}
-                                        </option>
-                                      ))}
-                                    </React.Fragment>
-                                  );
-                                }}
-                              </Query>
-                            </Form.Select>
-                          </Form.Group>
-                          <Form.Group
-                            label={
-                              <Form.Label
-                                aside={
-                                  description
-                                    ? description.length + "/1000"
-                                    : "0/1000"
-                                }
-                              >
-                                Descrição
-                              </Form.Label>
-                            }
-                          >
-                            <Form.Textarea
-                              disabled={disableForm}
-                              name="description"
-                              value={description}
-                              placeholder="Descreva este processo (opcional)"
-                              rows={6}
-                              onChange={this.handleChange}
-                            />
-                          </Form.Group>
-                          {id ? (
-                            <React.Fragment>
-                              <Form.Group label="Criado por">
-                                {user ? user.name : "Carregando..."}
-                              </Form.Group>
-                              <Form.Group label="Criado em">
-                                <DataPorExtenso data={created_at} />{" "}
-                                <Tag color="info">
-                                  <Moment fromNow>{created_at}</Moment>
-                                </Tag>
-                              </Form.Group>
-                            </React.Fragment>
-                          ) : (
-                            ""
-                          )}
-                          {error && (
-                            <Alert type="danger">
-                              Erro ao salvar Processo.
-                            </Alert>
-                          )}
-                          {id ? (
-                            <React.Fragment>
-                              <Button.List align="right">
-                                {!disableForm ? (
-                                  <React.Fragment>
-                                    <Button
-                                      outline
-                                      color="warning"
-                                      icon="chevrons-left"
-                                      onClick={() =>
-                                        this.props.history.push(
-                                          "/listaprocessos/"
-                                        )
-                                      }
+                                          }
+                                          //onCompleted é chamado caso entre aqui
+                                        } else {
+                                          // Erros code 200
+                                          toast.error("Erro 200: " + res);
+                                          console.log("Erro 200: " + res);
+                                        }
+                                      })
+                                      .catch(e => {
+                                        //Erro de GraphQL
+                                        toast.error("Erro GraphQL: " + e);
+                                        //console.log("Erro GraphQL: " + e);
+                                      });
+                                  }}
+                                >
+                                  <Form.Group label="Empreendimento">
+                                    <Form.Input
+                                      disabled={disableForm}
+                                      value={name}
+                                      name="name"
+                                      placeholder="Digite um título..."
+                                      onChange={this.handleChange}
+                                    />
+                                  </Form.Group>
+                                  <Form.Group label="Origem">
+                                    <Form.Select
+                                      disabled={disableForm}
+                                      name="origem_id"
+                                      value={origem_id}
+                                      onChange={this.handleChange}
                                     >
-                                      Cancelar
-                                    </Button>
+                                      <option value="0">
+                                        Selecione uma origem
+                                      </option>
+                                      <Query query={QUERY_ORIGEMS}>
+                                        {({ loading, error, data }) => {
+                                          if (loading) return "Carregando...";
+                                          if (error)
+                                            return `Erro! ${error.message}`;
+                                          return (
+                                            <React.Fragment>
+                                              {data.origems.map(origem => (
+                                                <option
+                                                  key={origem.id}
+                                                  value={origem.id}
+                                                >
+                                                  {origem.name}
+                                                </option>
+                                              ))}
+                                            </React.Fragment>
+                                          );
+                                        }}
+                                      </Query>
+                                    </Form.Select>
+                                  </Form.Group>
+                                  <Form.Group label="Município">
+                                    <Form.Select
+                                      disabled={disableForm}
+                                      name="municipio_id"
+                                      value={municipio_id}
+                                      onChange={this.handleChange}
+                                    >
+                                      <option value="0">
+                                        Selecione um município
+                                      </option>
+                                      <Query query={QUERY_MUNICIPIOS}>
+                                        {({ loading, error, data }) => {
+                                          if (loading) return "Carregando...";
+                                          if (error)
+                                            return `Erro! ${error.message}`;
+                                          return (
+                                            <React.Fragment>
+                                              {data.municipios.map(item => (
+                                                <option
+                                                  key={item.id}
+                                                  value={item.id}
+                                                >
+                                                  {item.name}
+                                                </option>
+                                              ))}
+                                            </React.Fragment>
+                                          );
+                                        }}
+                                      </Query>
+                                    </Form.Select>
+                                  </Form.Group>
+                                  <Form.Group
+                                    label={
+                                      <Form.Label
+                                        aside={
+                                          description
+                                            ? description.length + "/1000"
+                                            : "0/1000"
+                                        }
+                                      >
+                                        Descrição
+                                      </Form.Label>
+                                    }
+                                  >
+                                    <Form.Textarea
+                                      disabled={disableForm}
+                                      name="description"
+                                      value={description}
+                                      placeholder="Descreva este processo (opcional)"
+                                      rows={6}
+                                      onChange={this.handleChange}
+                                    />
+                                  </Form.Group>
+                                  {id ? (
+                                    <React.Fragment>
+                                      <Form.Group label="Criado por">
+                                        {user ? user.name : "Carregando..."}
+                                      </Form.Group>
+                                      <Form.Group label="Criado em">
+                                        <DataPorExtenso data={created_at} />{" "}
+                                        <Tag color="info">
+                                          <Moment fromNow>{created_at}</Moment>
+                                        </Tag>
+                                      </Form.Group>
+                                    </React.Fragment>
+                                  ) : (
+                                    ""
+                                  )}
+                                  {error && (
+                                    <Alert type="danger">
+                                      Erro ao salvar Processo.
+                                    </Alert>
+                                  )}
+                                  {id ? (
+                                    <React.Fragment>
+                                      <Button.List align="right">
+                                        {!disableForm ? (
+                                          <React.Fragment>
+                                            <Button
+                                              outline
+                                              color="warning"
+                                              icon="chevrons-left"
+                                              onClick={() =>
+                                                this.props.history.push(
+                                                  "/listaprocessos/"
+                                                )
+                                              }
+                                            >
+                                              Cancelar
+                                            </Button>
+                                            <Button
+                                              icon="edit"
+                                              type="submit"
+                                              color="primary"
+                                              className="ml-auto"
+                                            >
+                                              {loading
+                                                ? "Carregando..."
+                                                : "Editar Processo"}
+                                            </Button>
+                                          </React.Fragment>
+                                        ) : (
+                                          <Tag color="secondary">
+                                            {loading
+                                              ? "Carregando..."
+                                              : "Apenas Visualização"}
+                                          </Tag>
+                                        )}
+                                      </Button.List>
+                                    </React.Fragment>
+                                  ) : (
                                     <Button
-                                      icon="edit"
+                                      icon="check"
                                       type="submit"
-                                      color="primary"
+                                      color="success"
                                       className="ml-auto"
                                     >
                                       {loading
                                         ? "Carregando..."
-                                        : "Editar Processo"}
+                                        : "Adicionar Novo Processo"}
                                     </Button>
-                                  </React.Fragment>
-                                ) : (
-                                  <Tag color="secondary">
-                                    {loading
-                                      ? "Carregando..."
-                                      : "Apenas Visualização"}
-                                  </Tag>
-                                )}
-                              </Button.List>
+                                  )}
+                                </Form>
+                              </Grid.Col>
+                            </Grid.Row>
+                          </Page.Card>
+                          {id ? ( //Início da parte de Baixo quando o Processo já existe
+                            <React.Fragment>
+                              <Page.Card>
+                                <Form.Group label="Status">
+                                  <ListaStatus
+                                    id={id}
+                                    title={name}
+                                    {...this.props}
+                                  />
+                                </Form.Group>
+                              </Page.Card>
+                              <Page.Card>
+                                <Form.Group label="Endereço">
+                                  <ListaEnderecos id={id} title={name} />
+                                </Form.Group>
+                              </Page.Card>
+                              <Page.Card>
+                                <Form.Group label="Documentos">
+                                  <ListaDocumentos
+                                    id={id}
+                                    title={name}
+                                    {...this.props}
+                                  />
+                                </Form.Group>
+                              </Page.Card>
+                              <Page.Card>
+                                <Form.Group label="Comentários">
+                                  <ListaHistoricos
+                                    id={id}
+                                    title={name}
+                                    type={3}
+                                  />
+                                </Form.Group>
+                                <HistoricoAdiciona
+                                  client={this.props.client}
+                                  processo_id={id}
+                                />
+                              </Page.Card>
+                              <Page.Card>
+                                <Form.Group label="Histórico">
+                                  <ListaHistoricos id={id} title={name} />
+                                </Form.Group>
+                              </Page.Card>
                             </React.Fragment>
                           ) : (
-                            <Button
-                              icon="check"
-                              type="submit"
-                              color="success"
-                              className="ml-auto"
-                            >
-                              {loading
-                                ? "Carregando..."
-                                : "Adicionar Novo Processo"}
-                            </Button>
+                            ""
                           )}
-                        </Form>
+                          <Button
+                            icon="chevrons-left"
+                            onClick={() =>
+                              this.props.history.push("/listaprocessos/")
+                            }
+                          >
+                            Voltar para a lista
+                          </Button>
+                        </Page.Content>
                       </Grid.Col>
                     </Grid.Row>
-                  </Page.Card>
-                  {id ? ( //Início da parte de Baixo quando o Processo já existe
-                    <React.Fragment>
-                      <Page.Card>
-                        <Form.Group label="Status">
-                          <ListaStatus id={id} title={name} {...this.props} />
-                        </Form.Group>
-                      </Page.Card>
-                      <Page.Card>
-                        <Form.Group label="Endereço">
-                          <ListaEnderecos id={id} title={name} />
-                        </Form.Group>
-                      </Page.Card>
-                      <Page.Card>
-                        <Form.Group label="Documentos">
-                          <ListaDocumentos
-                            id={id}
-                            title={name}
-                            {...this.props}
-                          />
-                        </Form.Group>
-                      </Page.Card>
-                      <Page.Card>
-                        <Form.Group label="Comentários">
-                          <ListaHistoricos id={id} title={name} type={3} />
-                        </Form.Group>
-                        <HistoricoAdiciona
-                          client={this.props.client}
-                          processo_id={id}
-                        />
-                      </Page.Card>
-                      <Page.Card>
-                        <Form.Group label="Histórico">
-                          <ListaHistoricos id={id} title={name} />
-                        </Form.Group>
-                      </Page.Card>
-                    </React.Fragment>
-                  ) : (
-                    ""
-                  )}
-                  <Button
-                    icon="chevrons-left"
-                    onClick={() => this.props.history.push("/listaprocessos/")}
-                  >
-                    Voltar para a lista
-                  </Button>
-                </Page.Content>
+                  </Container>
+                </div>
               </SiteWrapper>
             );
           }}
