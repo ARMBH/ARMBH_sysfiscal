@@ -12,9 +12,9 @@ class MenuProcesso extends Component {
   constructor(props) {
     super();
     this.state = {
-      total_historicos: 0,
-      total_documentos: 0,
-      total_vistorias: 0
+      total_historicos: this.getLocalStorageFor("historicos"),
+      total_documentos: this.getLocalStorageFor("documentos"),
+      total_vistorias: this.getLocalStorageFor("vistorias")
     };
   }
   componentDidMount() {
@@ -58,6 +58,7 @@ class MenuProcesso extends Component {
             total_vistorias:
               data.data.processos_status_aggregate.aggregate.count
           });
+          this.setLocalStorageFor("vistorias", this.state.total_vistorias);
         }
       }
     });
@@ -74,6 +75,7 @@ class MenuProcesso extends Component {
           this.setState({
             total_documentos: data.data.documentos_aggregate.aggregate.count
           });
+          this.setLocalStorageFor("documentos", this.state.total_documentos);
         }
       }
     });
@@ -90,9 +92,18 @@ class MenuProcesso extends Component {
           this.setState({
             total_historicos: data.data.historicos_aggregate.aggregate.count
           });
+          this.setLocalStorageFor("historicos", this.state.total_historicos);
         }
       }
     });
+  }
+
+  getLocalStorageFor(nome) {
+    return localStorage.getItem(nome);
+  }
+
+  setLocalStorageFor(nome, valor) {
+    localStorage.setItem(nome, valor);
   }
 
   render() {
