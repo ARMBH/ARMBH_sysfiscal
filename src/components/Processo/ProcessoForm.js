@@ -13,7 +13,6 @@ import { ADD_STATUS } from "../Status/StatusQueries";
 import logar from "../Historico/HistoricoLog";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import ListaDocumentos from "../Documento/ListaDocumentos";
 import ListaStatus from "../Status/ListaStatus";
 import ListaHistoricos from "../Historico/ListaHistoricos";
 import ListaEnderecos from "../Endereco/ListaEnderecos";

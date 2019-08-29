@@ -3,7 +3,11 @@ import Moment from "moment";
 import MomentComponent from "react-moment";
 import { Icon, Button, Tag } from "tabler-react";
 import { Table, Card } from "tabler-react";
-import { QUERY_PROCESSOS_STATUS, DELETE_STATUS } from "./StatusQueries";
+import {
+  QUERY_PROCESSOS_STATUS,
+  QUERY_PROCESSOS_STATUS_ESPECIFICO,
+  DELETE_STATUS
+} from "./StatusQueries";
 import { toast } from "react-toastify";
 import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
@@ -99,20 +103,24 @@ class ListaStatus extends Component {
   }
 
   render() {
-    let { id, title } = this.props;
+    let { id, title, status_id } = this.props;
     if (!title) title = "";
     let cardTitle = "";
     const { auth } = this.props;
+
+    let mutation = QUERY_PROCESSOS_STATUS;
+    let variables = { processoId: id };
+
+    if (status_id) {
+      mutation = QUERY_PROCESSOS_STATUS_ESPECIFICO;
+      variables.status_id = status_id;
+    }
 
     //Adquire ID do user que está logado para verificar se ele pode editar o formulário
     const userLogado = auth.getSub();
 
     return (
-      <Query
-        pollInterval={3000}
-        query={QUERY_PROCESSOS_STATUS}
-        variables={{ processoId: id }}
-      >
+      <Query pollInterval={3000} query={mutation} variables={variables}>
         {({ loading, error, data }) => {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;
@@ -212,7 +220,11 @@ class ListaStatus extends Component {
                   <Card.Body>Nenhum status encontrado.</Card.Body>
                 )}
               </Card>
-              <Button.List align="right">{this.tituloTabela()}</Button.List>
+              {status_id ? (
+                ""
+              ) : (
+                <Button.List align="right">{this.tituloTabela()}</Button.List>
+              )}
             </React.Fragment>
           );
         }}

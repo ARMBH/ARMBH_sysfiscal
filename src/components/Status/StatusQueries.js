@@ -25,6 +25,34 @@ const QUERY_PROCESSOS_STATUS = gql`
   }
 `;
 
+const QUERY_PROCESSOS_STATUS_ESPECIFICO = gql`
+  query getProcessos_Status($processoId: Int!, $status_id: Int!) {
+    processos_status(
+      order_by: { due_date: desc }
+      where: {
+        processo_id: { _eq: $processoId }
+        status_id: { _eq: $status_id }
+      }
+    ) {
+      id
+      status_id
+      processo_id
+      created_at
+      due_date
+      name
+      status {
+        id
+        name
+        type
+      }
+      user {
+        id
+        name
+      }
+    }
+  }
+`;
+
 const QUERY_STATUS = gql`
   {
     status(order_by: { name: asc }) {
@@ -111,5 +139,6 @@ export {
   ADD_STATUS,
   DELETE_STATUS,
   EDIT_STATUS,
-  QUERY_PROCESSOS_STATUS
+  QUERY_PROCESSOS_STATUS,
+  QUERY_PROCESSOS_STATUS_ESPECIFICO
 };

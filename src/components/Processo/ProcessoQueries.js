@@ -189,6 +189,22 @@ const QUERY_TOTAL_DOCUMENTOS = gql`
     }
   }
 `;
+
+const QUERY_TOTAL_STATUS_ID = gql`
+  query getProcessos_Status($processo_id: Int!, $status_id: Int!) {
+    processos_status_aggregate(
+      where: {
+        processo_id: { _eq: $processo_id }
+        status_id: { _eq: $status_id }
+      }
+    ) {
+      aggregate {
+        count
+      }
+    }
+  }
+`;
+
 export {
   QUERY_PROCESSO,
   EDIT_PROCESSO,
@@ -200,5 +216,6 @@ export {
   SUBSCRIPTION_TOTAL_PROCESSOS,
   QUERY_PROCESSOS_STATUS,
   QUERY_TOTAL_HISTORICOS,
-  QUERY_TOTAL_DOCUMENTOS
+  QUERY_TOTAL_DOCUMENTOS,
+  QUERY_TOTAL_STATUS_ID
 };

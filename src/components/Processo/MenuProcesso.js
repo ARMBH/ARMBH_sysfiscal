@@ -3,7 +3,8 @@ import { NavLink } from "react-router-dom";
 import { Button, Page, Grid, List, Badge } from "tabler-react";
 import {
   QUERY_TOTAL_HISTORICOS,
-  QUERY_TOTAL_DOCUMENTOS
+  QUERY_TOTAL_DOCUMENTOS,
+  QUERY_TOTAL_STATUS_ID
 } from "./ProcessoQueries";
 import { toast } from "react-toastify";
 
@@ -12,7 +13,8 @@ class MenuProcesso extends Component {
     super();
     this.state = {
       total_historicos: 0,
-      total_documentos: 0
+      total_documentos: 0,
+      total_vistorias: 0
     };
   }
   componentDidMount() {
@@ -32,6 +34,7 @@ class MenuProcesso extends Component {
         () => {
           this.getTotalHistoricos(param);
           this.getTotalDocumentos(param);
+          this.getTotalVistorias(param);
         }
       );
     } else {
@@ -40,6 +43,24 @@ class MenuProcesso extends Component {
         "Processo não encontrado ou você não possui permissão para visualizar este processo."
       );
     }
+  }
+
+  getTotalVistorias(id) {
+    this.props.client.mutate({
+      mutation: QUERY_TOTAL_STATUS_ID,
+      variables: {
+        processo_id: id,
+        status_id: 6
+      },
+      update: (cache, data) => {
+        if (data) {
+          this.setState({
+            total_vistorias:
+              data.data.processos_status_aggregate.aggregate.count
+          });
+        }
+      }
+    });
   }
 
   getTotalDocumentos(id) {
@@ -75,8 +96,13 @@ class MenuProcesso extends Component {
   }
 
   render() {
-    const { match } = this.props;
-    const { id, total_historicos, total_documentos } = this.state;
+    //const { match } = this.props;
+    const {
+      id,
+      total_historicos,
+      total_documentos,
+      total_vistorias
+    } = this.state;
     //console.log(this.props);
 
     return (
@@ -89,16 +115,14 @@ class MenuProcesso extends Component {
               to={"/processo/" + id}
               icon="inbox"
               RootComponent={NavLink}
-              active={match.path.includes("processo")}
             >
               Informações básicas
             </List.GroupItem>
             <List.GroupItem
               className="d-flex align-items-center"
-              to={"/interessados/" + id}
+              to={"/processo/" + id}
               icon="users"
               RootComponent={NavLink}
-              active={match.path.includes("interessados")}
             >
               Interessados
             </List.GroupItem>
@@ -107,7 +131,6 @@ class MenuProcesso extends Component {
               className="d-flex align-items-center"
               icon="file"
               RootComponent={NavLink}
-              active={match.path.includes("documentos")}
             >
               Documentos{" "}
               <Badge className="ml-auto badge badge-primary">
@@ -115,18 +138,22 @@ class MenuProcesso extends Component {
               </Badge>
             </List.GroupItem>
             <List.GroupItem
-              to="/email"
+              to={"/vistorias/" + id}
               className="d-flex align-items-center"
               icon="tag"
+              RootComponent={NavLink}
             >
-              Vistorias
+              Vistorias{" "}
+              <Badge className="ml-auto badge badge-primary">
+                {" "}
+                {total_vistorias}
+              </Badge>
             </List.GroupItem>
             <List.GroupItem
               to={"/historico/" + id}
               className="d-flex align-items-center"
               icon="monitor"
               RootComponent={NavLink}
-              active={match.path.includes("historico")}
             >
               Histórico{" "}
               <Badge className="ml-auto badge badge-primary">
