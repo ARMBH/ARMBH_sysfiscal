@@ -163,6 +163,16 @@ export const makeMainRoutes = () => {
           />
           <Route
             exact
+            path="/adicionarvistoria/:param"
+            render={props => provideClient(StatusForm, props)}
+          />
+          <Route
+            exact
+            path="/encerrarprocesso/:param"
+            render={props => provideClient(StatusForm, props)}
+          />
+          <Route
+            exact
             path="/adicionardoc/:param"
             render={props => provideClient(DocumentoUpload, props)}
           />

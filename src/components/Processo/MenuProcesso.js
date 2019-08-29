@@ -174,19 +174,19 @@ class MenuProcesso extends Component {
           </List.Group>
           <div className="mt-6">
             <Button
-              RootComponent="a"
-              href="/email"
+              RootComponent={NavLink}
+              to={"/adicionarvistoria/" + id}
               block={true}
-              color="secondary"
+              color="success"
             >
               Agendar Vistoria
             </Button>
 
             <Button
-              RootComponent="a"
-              href="/email"
+              RootComponent={NavLink}
+              to={"/encerrarprocesso/" + id}
               block={true}
-              color="secondary"
+              color="danger"
             >
               Encerrar Processo
             </Button>

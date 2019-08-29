@@ -137,6 +137,10 @@ class StatusForm extends Component {
                         due_date,
                         name
                       };
+                      if (this.props.match.url.includes("vistoria"))
+                        variables.status_id = 6;
+                      if (this.props.match.url.includes("encerrarprocesso"))
+                        variables.status_id = 17;
 
                       mutationProcesso_Status({
                         variables: variables
@@ -196,6 +200,36 @@ class StatusForm extends Component {
                                         if (loading) return "Carregando...";
                                         if (error)
                                           return `Erro! ${error.message}`;
+                                        if (
+                                          this.props.match.url.includes(
+                                            "vistoria"
+                                          )
+                                        )
+                                          return (
+                                            <React.Fragment>
+                                              '{" "}
+                                              <option key={6} value={6}>
+                                                {" "}
+                                                Agendar Vistoria
+                                              </option>
+                                              '
+                                            </React.Fragment>
+                                          );
+                                        if (
+                                          this.props.match.url.includes(
+                                            "encerrarprocesso"
+                                          )
+                                        )
+                                          return (
+                                            <React.Fragment>
+                                              '{" "}
+                                              <option key={17} value={17}>
+                                                {" "}
+                                                Encerrar Processo
+                                              </option>
+                                              '
+                                            </React.Fragment>
+                                          );
                                         return (
                                           <React.Fragment>
                                             <option value="">
@@ -260,6 +294,14 @@ class StatusForm extends Component {
                       </Button.List>
                     </Page.Card>
                   </Form>
+                  <Button
+                    icon="chevrons-left"
+                    onClick={() =>
+                      this.props.history.push("/processo/" + processo_id)
+                    }
+                  >
+                    Voltar para o processo {processo_id}
+                  </Button>
                 </Page.Content>
               );
             }}
