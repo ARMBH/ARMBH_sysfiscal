@@ -55,7 +55,7 @@ const QUERY_PROCESSOS_STATUS_ESPECIFICO = gql`
 
 const QUERY_STATUS = gql`
   {
-    status(order_by: { name: asc }) {
+    status(order_by: { name: asc }, where: { _not: { id: { _eq: 1 } } }) {
       id
       name
       type
