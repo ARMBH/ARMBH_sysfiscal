@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Page, Grid, List, Badge } from "tabler-react";
-import { QUERY_TOTAL_HISTORICOS } from "./ProcessoQueries";
+import {
+  QUERY_TOTAL_HISTORICOS,
+  QUERY_TOTAL_DOCUMENTOS
+} from "./ProcessoQueries";
 import { toast } from "react-toastify";
 
 class MenuProcesso extends Component {
   constructor(props) {
     super();
     this.state = {
-      total_historicos: 0
+      total_historicos: 0,
+      total_documentos: 0
     };
   }
   componentDidMount() {
@@ -26,7 +30,8 @@ class MenuProcesso extends Component {
           id: param
         },
         () => {
-          this.getHistoricos(param);
+          this.getTotalHistoricos(param);
+          this.getTotalDocumentos(param);
         }
       );
     } else {
@@ -37,7 +42,23 @@ class MenuProcesso extends Component {
     }
   }
 
-  getHistoricos(id) {
+  getTotalDocumentos(id) {
+    this.props.client.mutate({
+      mutation: QUERY_TOTAL_DOCUMENTOS,
+      variables: {
+        processo_id: id
+      },
+      update: (cache, data) => {
+        if (data) {
+          this.setState({
+            total_documentos: data.data.documentos_aggregate.aggregate.count
+          });
+        }
+      }
+    });
+  }
+
+  getTotalHistoricos(id) {
     this.props.client.mutate({
       mutation: QUERY_TOTAL_HISTORICOS,
       variables: {
@@ -55,7 +76,7 @@ class MenuProcesso extends Component {
 
   render() {
     const { match } = this.props;
-    const { id, total_historicos } = this.state;
+    const { id, total_historicos, total_documentos } = this.state;
     //console.log(this.props);
 
     return (
@@ -82,11 +103,16 @@ class MenuProcesso extends Component {
               Interessados
             </List.GroupItem>
             <List.GroupItem
-              to="/email"
+              to={"/documentos/" + id}
               className="d-flex align-items-center"
               icon="file"
+              RootComponent={NavLink}
+              active={match.path.includes("documentos")}
             >
-              Documentos
+              Documentos{" "}
+              <Badge className="ml-auto badge badge-primary">
+                {total_documentos}
+              </Badge>
             </List.GroupItem>
             <List.GroupItem
               to="/email"

@@ -459,15 +459,6 @@ class ProcessoForm extends Component {
                                 </Form.Group>
                               </Page.Card>
                               <Page.Card>
-                                <Form.Group label="Documentos">
-                                  <ListaDocumentos
-                                    id={id}
-                                    title={name}
-                                    {...this.props}
-                                  />
-                                </Form.Group>
-                              </Page.Card>
-                              <Page.Card>
                                 <Form.Group label="Comentários">
                                   <ListaHistoricos
                                     id={id}
@@ -479,11 +470,6 @@ class ProcessoForm extends Component {
                                   client={this.props.client}
                                   processo_id={id}
                                 />
-                              </Page.Card>
-                              <Page.Card>
-                                <Form.Group label="Histórico">
-                                  <ListaHistoricos id={id} title={name} />
-                                </Form.Group>
                               </Page.Card>
                             </React.Fragment>
                           ) : (

@@ -3,8 +3,7 @@ import React, { Component } from "react";
 import { QUERY_PROCESSO } from "./ProcessoQueries";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import ListaHistoricos from "../Historico/ListaHistoricos";
-import HistoricoAdiciona from "../Historico/HistoricoAdiciona";
+import ListaDocumentos from "../Documento/ListaDocumentos";
 import MenuProcesso from "./MenuProcesso";
 //Componentes de Terceiros
 import { Form, Button, Page, Grid, Container } from "tabler-react";
@@ -16,7 +15,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import "react-datepicker/dist/react-datepicker.css";
 registerLocale("pt-BR", ptBR);
 
-class ProcessoFormHistorico extends Component {
+class ProcessoFormDocumentos extends Component {
   constructor() {
     super();
     this.state = {
@@ -99,18 +98,13 @@ class ProcessoFormHistorico extends Component {
                     {id ? ( //Início da parte de Baixo quando o Processo já existe
                       <React.Fragment>
                         <Page.Card>
-                          <Form.Group label="Histórico">
-                            <ListaHistoricos id={id} title={name} />
+                          <Form.Group label="Documentos">
+                            <ListaDocumentos
+                              id={id}
+                              title={name}
+                              {...this.props}
+                            />
                           </Form.Group>
-                        </Page.Card>
-                        <Page.Card>
-                          <Form.Group label="Comentários">
-                            <ListaHistoricos id={id} title={name} type={3} />
-                          </Form.Group>
-                          <HistoricoAdiciona
-                            client={this.props.client}
-                            processo_id={id}
-                          />
                         </Page.Card>
                       </React.Fragment>
                     ) : (
@@ -135,4 +129,4 @@ class ProcessoFormHistorico extends Component {
   }
 }
 
-export default ProcessoFormHistorico;
+export default ProcessoFormDocumentos;

@@ -180,6 +180,15 @@ const QUERY_TOTAL_HISTORICOS = gql`
   }
 `;
 
+const QUERY_TOTAL_DOCUMENTOS = gql`
+  query totalDocumentos($processo_id: Int!) {
+    documentos_aggregate(where: { processo_id: { _eq: $processo_id } }) {
+      aggregate {
+        count
+      }
+    }
+  }
+`;
 export {
   QUERY_PROCESSO,
   EDIT_PROCESSO,
@@ -190,5 +199,6 @@ export {
   QUERY_STATUS,
   SUBSCRIPTION_TOTAL_PROCESSOS,
   QUERY_PROCESSOS_STATUS,
-  QUERY_TOTAL_HISTORICOS
+  QUERY_TOTAL_HISTORICOS,
+  QUERY_TOTAL_DOCUMENTOS
 };
