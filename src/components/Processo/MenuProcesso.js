@@ -131,7 +131,7 @@ class MenuProcesso extends Component {
             </List.GroupItem>
             <List.GroupItem
               className="d-flex align-items-center"
-              to={"/processo/" + id}
+              to={"/processo/interessados/" + id}
               icon="users"
               RootComponent={NavLink}
             >
