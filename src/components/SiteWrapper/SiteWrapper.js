@@ -178,6 +178,10 @@ class SiteWrapper extends React.Component<Props, State> {
               name: data.data.users[0].name,
               role: data.data.users[0].role
             });
+            //Confere roles
+            if (localStorage.getItem("roles") !== data.data.users[0].role) {
+              this.props.history.push("/home/logout");
+            }
           }
         }
       });
@@ -262,7 +266,7 @@ class SiteWrapper extends React.Component<Props, State> {
     const userId = auth.getSub();
     if (userId) this.getUser(userId);
 
-    const { role } = this.state;
+    //const { role } = this.state;
     let navBarItemsNew = [...navBarItems];
 
     let itemAdmin = {
@@ -273,7 +277,8 @@ class SiteWrapper extends React.Component<Props, State> {
       useExact: true
     };
     //Adiciona Item de administradores ao Menu
-    if (role === "admin") navBarItemsNew.push(itemAdmin);
+    if (localStorage.getItem("roles") === "admin")
+      navBarItemsNew.push(itemAdmin);
 
     return (
       <Site.Wrapper

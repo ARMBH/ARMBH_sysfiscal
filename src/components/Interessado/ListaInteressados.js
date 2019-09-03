@@ -50,10 +50,10 @@ class ListaInteressados extends Component {
     let { id, title } = this.props;
     if (!title) title = "";
     let cardTitle = "";
-    const { auth } = this.props;
 
     //Adquire ID do user que está logado para verificar se ele pode editar o formulário
-    const userLogado = auth.getSub();
+    //const { auth } = this.props;
+    //const userLogado = auth.getSub();
 
     return (
       <Query
@@ -64,7 +64,7 @@ class ListaInteressados extends Component {
         {({ loading, error, data }) => {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;
-          console.log(data.processos_interessados);
+          //console.log(data.processos_interessados);
           if (data.processos_interessados.length > 0) {
             cardTitle =
               "Processo " +
@@ -114,13 +114,33 @@ class ListaInteressados extends Component {
                           </Table.Col>
                           <Table.Col>
                             {documento.interessado.endereco_id ? (
-                              <Button size="sm" color="success">
-                                Visualizar
-                              </Button>
+                              <React.Fragment>
+                                <span
+                                  data-for={documento.id + "vis"}
+                                  data-tip={
+                                    "Visualizar endereço do interessado."
+                                  }
+                                >
+                                  <ReactTooltip id={documento.id + "vis"} />
+                                  <Button size="sm" color="success">
+                                    Visualizar
+                                  </Button>
+                                </span>
+                              </React.Fragment>
                             ) : (
-                              <Button size="sm" color="secondary">
-                                Adicionar
-                              </Button>
+                              <React.Fragment>
+                                <span
+                                  data-for={documento.id + "add"}
+                                  data-tip={
+                                    "Cadastrar endereço do interessado."
+                                  }
+                                >
+                                  <ReactTooltip id={documento.id + "add"} />
+                                  <Button size="sm" color="secondary">
+                                    Adicionar
+                                  </Button>
+                                </span>
+                              </React.Fragment>
                             )}
                           </Table.Col>
                           <Table.Col>
