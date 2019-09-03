@@ -16,7 +16,7 @@ class ListaInteressados extends Component {
   }
 
   tituloTabela() {
-    const link = "/adicionarinteressado/" + this.props.id;
+    const link = "/interessado/?processo=" + this.props.id;
     return (
       <Link className="btn btn-primary ml-auto" to={link}>
         <Icon name="plus-circle" />

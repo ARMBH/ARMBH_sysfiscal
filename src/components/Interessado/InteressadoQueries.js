@@ -1,22 +1,5 @@
 import gql from "graphql-tag";
 
-const QUERY_DOCUMENTO = gql`
-  query getDocumento($id: Int!) {
-    documentos(where: { id: { _eq: $id } }) {
-      id
-      name
-      created_at
-      size
-      type
-      base64
-      description
-      user {
-        id
-        name
-      }
-    }
-  }
-`;
 const QUERY_INTERESSADOS = gql`
   query getInteressados($processo_id: Int!) {
     processos_interessados(
@@ -44,32 +27,76 @@ const QUERY_INTERESSADOS = gql`
   }
 `;
 
-const ADD_DOCUMENTO = gql`
+const QUERY_INTERESSADO = gql`
+  query getInteressados($id: Int!) {
+    interessados(where: { id: { _eq: $id } }) {
+      cpf
+      created_at
+      criado_por {
+        id
+        name
+      }
+      email
+      endereco_id
+      id
+      name
+      origem_id
+      tratamento
+      updated_at
+    }
+  }
+`;
+
+const UPDATE_INTERESSADO = gql`
   mutation(
+    $id: Int!
+    $cpf: String!
+    $email: String!
     $name: String!
-    $type: String!
-    $size: String!
-    $description: String!
-    $base64: String!
-    $user_id: String!
-    $processo_id: Int!
+    $tratamento: String!
+    $origem_id: Int!
   ) {
-    insert_documentos(
-      objects: {
+    update_interessados(
+      where: { id: { _eq: $id } }
+      _set: {
+        cpf: $cpf
+        email: $email
         name: $name
-        type: $type
-        size: $size
-        base64: $base64
-        user_id: $user_id
-        processo_id: $processo_id
-        description: $description
+        origem_id: $origem_id
+        tratamento: $tratamento
+      }
+    ) {
+      affected_rows
+      returning {
+        cpf
+        id
+      }
+    }
+  }
+`;
+
+const ADD_INTERESSADO = gql`
+  mutation(
+    $cpf: String!
+    $email: String!
+    $name: String!
+    $tratamento: String!
+    $origem_id: Int!
+  ) {
+    insert_interessados(
+      objects: {
+        cpf: $cpf
+        email: $email
+        name: $name
+        origem_id: $origem_id
+        tratamento: $tratamento
       }
     ) {
       affected_rows
       returning {
         id
+        cpf
         name
-        processo_id
       }
     }
   }
@@ -91,4 +118,10 @@ const DELETE_DOCUMENTO = gql`
   }
 `;
 
-export { QUERY_DOCUMENTO, QUERY_INTERESSADOS, ADD_DOCUMENTO, DELETE_DOCUMENTO };
+export {
+  QUERY_INTERESSADOS,
+  QUERY_INTERESSADO,
+  ADD_INTERESSADO,
+  UPDATE_INTERESSADO,
+  DELETE_DOCUMENTO
+};
