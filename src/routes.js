@@ -30,7 +30,7 @@ import ProcessoFormHistorico from "./components/Processo/ProcessoFormHistorico";
 import ProcessoFormDocumentos from "./components/Processo/ProcessoFormDocumentos";
 import ProcessoFormVistorias from "./components/Processo/ProcessoFormVistorias";
 import ProcessoFormInteressados from "./components/Processo/ProcessoFormInteressados";
-import InteressadoAdiciona from "./components/Interessado/InteressadoAdiciona";
+import InteressadoForm from "./components/Interessado/InteressadoForm";
 
 // Call it once in your app. At the root of your app is the best place
 toast.configure({
@@ -145,13 +145,13 @@ export const makeMainRoutes = () => {
             exact
             path="/interessado/"
             key={"interessado"}
-            render={props => provideClient(InteressadoAdiciona, props)}
+            render={props => provideClient(InteressadoForm, props)}
           />
           <Route
             exact
             path="/interessado/:param"
             key={"interessado"}
-            render={props => provideClient(InteressadoAdiciona, props)}
+            render={props => provideClient(InteressadoForm, props)}
           />
           <Route
             exact

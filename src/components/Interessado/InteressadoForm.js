@@ -16,7 +16,7 @@ import {
   UPDATE_INTERESSADO
 } from "./InteressadoQueries";
 
-class InteressadoAdiciona extends Component {
+class InteressadoForm extends Component {
   constructor() {
     super();
     this.state = {
@@ -46,7 +46,7 @@ class InteressadoAdiciona extends Component {
         }
       );
     } else {
-      toast.error("Interessado não encontrado.");
+      toast.success("Cadastrar novo interessado.");
       //this.props.history.push("/listaprocessos");
     }
 
@@ -54,6 +54,7 @@ class InteressadoAdiciona extends Component {
     const paramsUrl = new URLSearchParams(this.props.location.search);
     //Caso haja demanda
     const processo = paramsUrl.get("processo");
+    console.log(this.props.location.state.cpf);
     if (processo) {
       if (parseInt(processo, 10) > 0) {
         this.setState(
@@ -180,19 +181,19 @@ class InteressadoAdiciona extends Component {
       modo = "Adicionar";
     }
 
-    let contentTitle = modo + " interessado";
-    let cardTitle = modo + " interessado";
+    let contentTitle = modo + " interessado " + cpf;
+    let cardTitle = modo + " interessado " + cpf;
 
     if (processo_id !== "") {
       cardTitle = cardTitle + ": " + processo_name;
       contentTitle = contentTitle + " ao processo " + processo_id;
     }
     return (
-      <React.Fragment>
-        <Mutation mutation={mutation} onCompleted={this.handleCompleted}>
-          {(mutationInteressado, { loading, error }) => {
-            return (
-              <SiteWrapper {...this.props}>
+      <SiteWrapper {...this.props}>
+        <React.Fragment>
+          <Mutation mutation={mutation} onCompleted={this.handleCompleted}>
+            {(mutationInteressado, { loading, error }) => {
+              return (
                 <Page.Content title={contentTitle}>
                   <Form
                     onSubmit={e => {
@@ -360,22 +361,28 @@ class InteressadoAdiciona extends Component {
                       </Button.List>
                     </Page.Card>
                   </Form>
-                  <Button
-                    icon="chevrons-left"
-                    onClick={() =>
-                      this.props.history.push("/processo/" + processo_id)
-                    }
-                  >
-                    Voltar para o processo {processo_id}
-                  </Button>
+                  {processo_id !== "" ? (
+                    <Button
+                      icon="chevrons-left"
+                      onClick={() =>
+                        this.props.history.push(
+                          "/processo/interessados/" + processo_id
+                        )
+                      }
+                    >
+                      Voltar para o processo {processo_id}
+                    </Button>
+                  ) : (
+                    ""
+                  )}
                 </Page.Content>
-              </SiteWrapper>
-            );
-          }}
-        </Mutation>
-      </React.Fragment>
+              );
+            }}
+          </Mutation>
+        </React.Fragment>
+      </SiteWrapper>
     );
   }
 }
 
-export default InteressadoAdiciona;
+export default InteressadoForm;

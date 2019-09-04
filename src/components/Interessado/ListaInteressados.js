@@ -15,16 +15,6 @@ class ListaInteressados extends Component {
     this.state = {};
   }
 
-  tituloTabela() {
-    const link = "/interessado/?processo=" + this.props.id;
-    return (
-      <Link className="btn btn-primary ml-auto" to={link}>
-        <Icon name="plus-circle" />
-        Adicionar Novo Interessado
-      </Link>
-    );
-  }
-
   handleDelete(id, name) {
     if (
       window.confirm("Deseja realmente excluir o interessado " + name + "?")
@@ -161,7 +151,6 @@ class ListaInteressados extends Component {
                   <Card.Body>Nenhum interessado cadastrado.</Card.Body>
                 )}
               </Card>
-              <Button.List align="right">{this.tituloTabela()}</Button.List>
             </React.Fragment>
           );
         }}

@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { registerLocale } from "react-datepicker";
 import ptBR from "date-fns/locale/pt-BR";
 import "react-datepicker/dist/react-datepicker.css";
+import InteressadoBuscaProcesso from "../Interessado/IntreressadoBuscaProcesso";
 registerLocale("pt-BR", ptBR);
 
 class ProcessoFormInteressados extends Component {
@@ -103,6 +104,15 @@ class ProcessoFormInteressados extends Component {
                               id={id}
                               title={name}
                               {...this.props}
+                            />
+                          </Form.Group>
+                        </Page.Card>
+                        <Page.Card>
+                          <Form.Group label="Adicionar novo interessado">
+                            <InteressadoBuscaProcesso
+                              {...this.props}
+                              id={id}
+                              title={name}
                             />
                           </Form.Group>
                         </Page.Card>
