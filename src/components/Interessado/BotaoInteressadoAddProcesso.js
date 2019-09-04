@@ -1,17 +1,12 @@
 import React, { Component } from "react";
-import { Icon, Button } from "tabler-react";
-import { Table, Card } from "tabler-react";
+import { Button } from "tabler-react";
 import {
-  QUERY_INTERESSADOS,
   DELETE_DOCUMENTO,
   QUERY_PROCESSO_INTERESSADO,
   INSERT_PROCESSO_INTERESSADO,
   DELETE_PROCESSO_INTERESSADO
 } from "./InteressadoQueries";
 import { toast } from "react-toastify";
-import { Query } from "react-apollo";
-import { Link } from "react-router-dom";
-import ReactTooltip from "react-tooltip";
 import logar from "../Historico/HistoricoLog";
 
 class BotaoInteressadoAddProcesso extends Component {

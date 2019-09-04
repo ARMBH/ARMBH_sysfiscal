@@ -1,12 +1,8 @@
 import React, { Component } from "react";
-import { Icon, Button } from "tabler-react";
 import { Table, Card } from "tabler-react";
 import { QUERY_INTERESSADOS_CPF, DELETE_DOCUMENTO } from "./InteressadoQueries";
 import { toast } from "react-toastify";
 import { Query } from "react-apollo";
-import { Link } from "react-router-dom";
-import ReactTooltip from "react-tooltip";
-
 import logar from "../Historico/HistoricoLog";
 import InteressadoRow from "./InteressadoRow";
 

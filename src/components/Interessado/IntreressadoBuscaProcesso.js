@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import { Icon, Button } from "tabler-react";
-import { Table, Card, Grid, Form } from "tabler-react";
-import { QUERY_INTERESSADOS, DELETE_DOCUMENTO } from "./InteressadoQueries";
-import { toast } from "react-toastify";
-import { Query } from "react-apollo";
+import { Card, Grid, Form } from "tabler-react";
 import { Link } from "react-router-dom";
-import ReactTooltip from "react-tooltip";
-
-import logar from "../Historico/HistoricoLog";
-import ListaInteressados from "./ListaInteressados";
 import ListaInteressadosCPF from "./ListaInteressadosCPF";
 
 class InteressadoBuscaProcesso extends Component {
@@ -21,7 +14,6 @@ class InteressadoBuscaProcesso extends Component {
   }
 
   tituloTabela() {
-    const link = "/interessado/?processo=" + this.props.id;
     return (
       <Link
         to={{

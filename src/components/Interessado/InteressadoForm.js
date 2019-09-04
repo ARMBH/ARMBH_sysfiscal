@@ -2,9 +2,7 @@ import React, { Component } from "react";
 //Mutations
 import { Mutation } from "react-apollo";
 import { Query } from "react-apollo";
-import { QUERY_ENDERECO, ADD_ENDERECO, EDIT_ENDERECO } from "./EnderecoQueries";
 import { QUERY_PROCESSO, QUERY_ORIGEMS } from "../Processo/ProcessoQueries";
-import logar from "../Historico/HistoricoLog";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 //Componentes de Terceiros
@@ -143,6 +141,9 @@ class InteressadoForm extends Component {
         " cadastrado com sucesso!";
       this.setState({ id: data.insert_interessados.returning[0].id });
       toast.success(message);
+      if (this.state.processo_id !== "") {
+        //Add automaticamente ao processo
+      }
     }
 
     if (data.update_interessados) {

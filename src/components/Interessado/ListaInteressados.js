@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import { Icon, Button } from "tabler-react";
 import { Table, Card } from "tabler-react";
 import { QUERY_INTERESSADOS, DELETE_DOCUMENTO } from "./InteressadoQueries";
 import { toast } from "react-toastify";
 import { Query } from "react-apollo";
-import { Link } from "react-router-dom";
-import ReactTooltip from "react-tooltip";
 
 import logar from "../Historico/HistoricoLog";
 import InteressadoRow from "./InteressadoRow";
@@ -41,7 +38,7 @@ class ListaInteressados extends Component {
     let { id, title, cpf } = this.props;
     if (!title) title = "";
     let cardTitle = "";
-    console.log(cpf + "processo" + id);
+    //console.log(cpf + "processo" + id);
     //Adquire ID do user que está logado para verificar se ele pode editar o formulário
     //const { auth } = this.props;
     //const userLogado = auth.getSub();
@@ -103,7 +100,6 @@ class ListaInteressados extends Component {
                           key={index + "interes" + documento.interessado.cpf}
                           index={index}
                           documento={documento}
-                          index={index}
                           processo_id={id}
                           {...this.props}
                         />
