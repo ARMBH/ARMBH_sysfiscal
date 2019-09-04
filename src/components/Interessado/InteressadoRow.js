@@ -88,7 +88,15 @@ class InteressadoRow extends Component {
             ) : (
               ""
             )}
-            <Button size="sm" color="secondary">
+            <Button
+              size="sm"
+              color="secondary"
+              onClick={() =>
+                this.props.history.push(
+                  "/interessado/" + documento.interessado.id
+                )
+              }
+            >
               Editar
             </Button>
           </Button.List>

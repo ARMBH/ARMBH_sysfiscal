@@ -54,7 +54,9 @@ class InteressadoForm extends Component {
     const paramsUrl = new URLSearchParams(this.props.location.search);
     //Caso haja demanda
     const processo = paramsUrl.get("processo");
-    console.log(this.props.location.state.cpf);
+
+    console.log("CPF Props enviado");
+
     if (processo) {
       if (parseInt(processo, 10) > 0) {
         this.setState(
@@ -151,7 +153,7 @@ class InteressadoForm extends Component {
       this.setState({ id: data.update_interessados.returning[0].id });
       toast.success(message);
     }
-
+    this.props.history.goBack();
     //this.props.history.push("/processo/" + this.state.processo_id);
   };
 
