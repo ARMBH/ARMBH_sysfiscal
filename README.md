@@ -28,7 +28,7 @@ Dessa forma, será possível o acompanhamento online do andamento pelos interess
 ## Utilização
 
 Digite o comando abaixo para iniciar o frontend em modo desenvolvedor:
-`npm start`
+`npm run dev`
 
 ## Deploy em Homologação
 
