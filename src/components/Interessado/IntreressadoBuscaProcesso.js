@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 
 import logar from "../Historico/HistoricoLog";
+import ListaInteressados from "./ListaInteressados";
+import ListaInteressadosCPF from "./ListaInteressadosCPF";
 
 class InteressadoBuscaProcesso extends Component {
   constructor() {
@@ -46,6 +48,7 @@ class InteressadoBuscaProcesso extends Component {
     else cpf = cpf.replace(/[_+()\s]/g, "");
     if (cpf.length <= 5 && cpf.length > 0) cpf = cpf.slice(0, -2);
     if (cpf.length <= 8 && cpf.length > 5) cpf = cpf.slice(0, -1);
+    //console.log(cpf.length);
     return cpf;
   }
 
@@ -108,6 +111,16 @@ class InteressadoBuscaProcesso extends Component {
             </Grid.Row>
           </Card.Body>
         </Card>
+        {this.limpaCpf(cpf).length > 3 ? (
+          <ListaInteressadosCPF
+            cpf={"%" + this.limpaCpf(cpf) + "%"}
+            id={id}
+            title={title}
+            {...this.props}
+          />
+        ) : (
+          ""
+        )}
         <Button.List align="right">{this.tituloTabela()}</Button.List>
       </React.Fragment>
     );

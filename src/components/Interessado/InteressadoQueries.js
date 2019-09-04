@@ -1,5 +1,71 @@
 import gql from "graphql-tag";
 
+const QUERY_PROCESSO_INTERESSADO = gql`
+  query getProcesso_Interessado($processo_id: Int!, $interessado_id: Int!) {
+    processos_interessados(
+      where: {
+        processo_id: { _eq: $processo_id }
+        interessado_id: { _eq: $interessado_id }
+      }
+    ) {
+      id
+      processo_id
+      interessado_id
+      interessado {
+        cpf
+        id
+        name
+        origem {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+const INSERT_PROCESSO_INTERESSADO = gql`
+  mutation insertProcesso_Interessado(
+    $processo_id: Int!
+    $interessado_id: Int!
+  ) {
+    insert_processos_interessados(
+      objects: { interessado_id: $interessado_id, processo_id: $processo_id }
+    ) {
+      affected_rows
+      returning {
+        id
+        interessado_id
+        processo_id
+        interessado {
+          cpf
+          id
+          name
+          origem {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+const DELETE_PROCESSO_INTERESSADO = gql`
+  mutation deleteProcesso_Interessado(
+    $processo_id: Int!
+    $interessado_id: Int!
+  ) {
+    delete_processos_interessados(
+      where: {
+        processo_id: { _eq: $processo_id }
+        interessado_id: { _eq: $interessado_id }
+      }
+    ) {
+      affected_rows
+    }
+  }
+`;
+
 const QUERY_INTERESSADOS = gql`
   query getInteressados($processo_id: Int!) {
     processos_interessados(
@@ -23,6 +89,24 @@ const QUERY_INTERESSADOS = gql`
       }
       interessado_id
       processo_id
+    }
+  }
+`;
+
+const QUERY_INTERESSADOS_CPF = gql`
+  query getInteressados($cpf: String!) {
+    interessados(where: { cpf: { _ilike: $cpf } }) {
+      cpf
+      created_at
+      email
+      endereco_id
+      id
+      name
+      origem {
+        id
+        name
+      }
+      tratamento
     }
   }
 `;
@@ -120,8 +204,12 @@ const DELETE_DOCUMENTO = gql`
 
 export {
   QUERY_INTERESSADOS,
+  QUERY_INTERESSADOS_CPF,
   QUERY_INTERESSADO,
   ADD_INTERESSADO,
   UPDATE_INTERESSADO,
+  QUERY_PROCESSO_INTERESSADO,
+  INSERT_PROCESSO_INTERESSADO,
+  DELETE_PROCESSO_INTERESSADO,
   DELETE_DOCUMENTO
 };

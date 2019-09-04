@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Icon, Button } from "tabler-react";
 import { Table, Card } from "tabler-react";
-import { QUERY_INTERESSADOS, DELETE_DOCUMENTO } from "./InteressadoQueries";
+import { QUERY_INTERESSADOS_CPF, DELETE_DOCUMENTO } from "./InteressadoQueries";
 import { toast } from "react-toastify";
 import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ import ReactTooltip from "react-tooltip";
 import logar from "../Historico/HistoricoLog";
 import InteressadoRow from "./InteressadoRow";
 
-class ListaInteressados extends Component {
+class ListaInteressadosCPF extends Component {
   constructor() {
     super();
     this.state = {};
@@ -41,7 +41,7 @@ class ListaInteressados extends Component {
     let { id, title, cpf } = this.props;
     if (!title) title = "";
     let cardTitle = "";
-    console.log(cpf + "processo" + id);
+    //console.log(cpf + "processo" + id);
     //Adquire ID do user que está logado para verificar se ele pode editar o formulário
     //const { auth } = this.props;
     //const userLogado = auth.getSub();
@@ -53,33 +53,22 @@ class ListaInteressados extends Component {
     }
 
     return (
-      <Query
-        pollInterval={3000}
-        query={QUERY_INTERESSADOS}
-        variables={variables}
-      >
+      <Query query={QUERY_INTERESSADOS_CPF} variables={variables}>
         {({ loading, error, data }) => {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;
-          //console.log(data.processos_interessados);
-          if (data.processos_interessados.length > 0) {
+          //console.log(data.interessados);
+          if (data.interessados.length > 0) {
             cardTitle =
-              "Processo " +
-              id +
-              " - " +
-              title +
-              " (" +
-              data.processos_interessados.length +
-              " interessado";
-            if (data.processos_interessados.length > 1)
-              cardTitle = cardTitle + "s";
+              "Busca por CPF (" + data.interessados.length + " interessado";
+            if (data.interessados.length > 1) cardTitle = cardTitle + "s";
             cardTitle = cardTitle + ")";
-            //console.log(data.documentos);
+            //console.log(data.interessados);
           } else cardTitle = "Sem interessados";
           return (
             <React.Fragment>
               <Card title={cardTitle}>
-                {data.processos_interessados.length > 0 ? (
+                {data.interessados.length > 0 ? (
                   <Table
                     cards={true}
                     striped={true}
@@ -98,13 +87,13 @@ class ListaInteressados extends Component {
                       </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                      {data.processos_interessados.map((documento, index) => (
+                      {data.interessados.map((documento, index) => (
                         <InteressadoRow
-                          key={index + "interes" + documento.interessado.cpf}
-                          index={index}
+                          key={index + "cpf"}
                           documento={documento}
-                          index={index}
+                          index={index + "cpf"}
                           processo_id={id}
+                          interessado
                           {...this.props}
                         />
                       ))}
@@ -122,4 +111,4 @@ class ListaInteressados extends Component {
   }
 }
 
-export default ListaInteressados;
+export default ListaInteressadosCPF;
