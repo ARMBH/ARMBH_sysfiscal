@@ -6053,7 +6053,7 @@
                     var e;
                     return (e = {}), (e[p] = this.emitter), e;
                   }),
-                  (n.prototype.componentWillReceiveProps = function(e) {
+                  (n.prototype.UNSAFE_componentWillReceiveProps = function(e) {
                     if (this.props.value !== e.value) {
                       var n = this.props.value,
                         r = e.value,
@@ -6092,7 +6092,7 @@
               }
               return (
                 i(n, t),
-                (n.prototype.componentWillReceiveProps = function(e) {
+                (n.prototype.UNSAFE_componentWillReceiveProps = function(e) {
                   var t = e.observedBits;
                   this.observedBits = void 0 === t || null === t ? f : t;
                 }),
@@ -9633,7 +9633,7 @@
                 .catch(r);
             }
           }),
-          (t.prototype.componentWillReceiveProps = function(e, t) {
+          (t.prototype.UNSAFE_componentWillReceiveProps = function(e, t) {
             if (e.skip && !this.props.skip)
               return void this.removeQuerySubscription();
             var n = o(e, t);
@@ -9858,7 +9858,7 @@
           (t.prototype.componentWillUnmount = function() {
             this.hasMounted = !1;
           }),
-          (t.prototype.componentWillReceiveProps = function(e, t) {
+          (t.prototype.UNSAFE_componentWillReceiveProps = function(e, t) {
             var n = o(e, t);
             (s(this.props, e) && this.client === n) ||
               (this.props.mutation !== e.mutation &&
@@ -9952,7 +9952,7 @@
           (t.prototype.componentDidMount = function() {
             this.startSubscription();
           }),
-          (t.prototype.componentWillReceiveProps = function(e, t) {
+          (t.prototype.UNSAFE_componentWillReceiveProps = function(e, t) {
             var n = o(e, t);
             if (
               !s(this.props.variables, e.variables) ||
@@ -19769,7 +19769,7 @@
           (t.prototype.computeMatch = function(e) {
             return { path: "/", url: "/", params: {}, isExact: "/" === e };
           }),
-          (t.prototype.componentWillMount = function() {
+          (t.prototype.UNSAFE_componentWillMount = function() {
             var e = this,
               t = this.props,
               n = t.children,
@@ -19782,7 +19782,7 @@
                 e.setState({ match: e.computeMatch(r.location.pathname) });
               }));
           }),
-          (t.prototype.componentWillReceiveProps = function(e) {
+          (t.prototype.UNSAFE_componentWillReceiveProps = function(e) {
             s()(
               this.props.history === e.history,
               "You cannot change <Router history>"
@@ -20964,15 +20964,15 @@
         a = null,
         s = null;
       if (
-        ("function" === typeof t.componentWillMount
+        ("function" === typeof t.UNSAFE_componentWillMount
           ? (n = "componentWillMount")
           : "function" === typeof t.UNSAFE_componentWillMount &&
             (n = "UNSAFE_componentWillMount"),
-        "function" === typeof t.componentWillReceiveProps
+        "function" === typeof t.UNSAFE_componentWillReceiveProps
           ? (a = "componentWillReceiveProps")
           : "function" === typeof t.UNSAFE_componentWillReceiveProps &&
             (a = "UNSAFE_componentWillReceiveProps"),
-        "function" === typeof t.componentWillUpdate
+        "function" === typeof t.UNSAFE_componentWillUpdate
           ? (s = "componentWillUpdate")
           : "function" === typeof t.UNSAFE_componentWillUpdate &&
             (s = "UNSAFE_componentWillUpdate"),
@@ -20997,14 +20997,15 @@
       }
       if (
         ("function" === typeof e.getDerivedStateFromProps &&
-          ((t.componentWillMount = r), (t.componentWillReceiveProps = o)),
+          ((t.UNSAFE_componentWillMount = r),
+          (t.UNSAFE_componentWillReceiveProps = o)),
         "function" === typeof t.getSnapshotBeforeUpdate)
       ) {
         if ("function" !== typeof t.componentDidUpdate)
           throw new Error(
             "Cannot polyfill getSnapshotBeforeUpdate() for components that do not define componentDidUpdate() on the prototype"
           );
-        t.componentWillUpdate = i;
+        t.UNSAFE_componentWillUpdate = i;
         var l = t.componentDidUpdate;
         t.componentDidUpdate = function(e, t, n) {
           var r = this.__reactInternalSnapshotFlag
@@ -21995,7 +21996,7 @@
               c.match
             );
           }),
-          (t.prototype.componentWillMount = function() {
+          (t.prototype.UNSAFE_componentWillMount = function() {
             s()(
               !(this.props.component && this.props.render),
               "You should not use <Route component> and <Route render> in the same route; <Route render> will be ignored"
@@ -22017,7 +22018,7 @@
                 "You should not use <Route render> and <Route children> in the same route; <Route children> will be ignored"
               );
           }),
-          (t.prototype.componentWillReceiveProps = function(e, t) {
+          (t.prototype.UNSAFE_componentWillReceiveProps = function(e, t) {
             s()(
               !(e.location && !this.props.location),
               '<Route> elements should not change from uncontrolled to controlled (or vice versa). You initially used no "location" prop and then provided one on a subsequent render.'
@@ -23881,14 +23882,12 @@
                       (g = "network-only" === c || "no-cache" === c),
                       (v = g),
                       g ||
-                        ((y = this.dataStore
-                          .getCache()
-                          .diff({
-                            query: d,
-                            variables: f,
-                            returnPartialData: !0,
-                            optimistic: !1
-                          })),
+                        ((y = this.dataStore.getCache().diff({
+                          query: d,
+                          variables: f,
+                          returnPartialData: !0,
+                          optimistic: !1
+                        })),
                         (_ = y.complete),
                         (w = y.result),
                         (v = !_ || "cache-and-network" === c),
@@ -24043,14 +24042,12 @@
                             (_ && _.graphQLErrors) !== n.graphQLErrors;
                         if (p && p.data && !w) (y = p.data), (b = !1);
                         else {
-                          var O = a.dataStore
-                            .getCache()
-                            .diff({
-                              query: l,
-                              variables: n.previousVariables || n.variables,
-                              returnPartialData: !0,
-                              optimistic: !0
-                            });
+                          var O = a.dataStore.getCache().diff({
+                            query: l,
+                            variables: n.previousVariables || n.variables,
+                            returnPartialData: !0,
+                            optimistic: !0
+                          });
                           (y = O.result), (b = !O.complete);
                         }
                       }
@@ -24298,15 +24295,13 @@
             if (c && c.complete) return { data: c.result, partial: !1 };
             if ("no-cache" === i || "network-only" === i)
               return { data: void 0, partial: !1 };
-            var u = this.dataStore
-                .getCache()
-                .diff({
-                  query: o,
-                  variables: r,
-                  previousResult: s ? s.data : void 0,
-                  returnPartialData: !0,
-                  optimistic: t
-                }),
+            var u = this.dataStore.getCache().diff({
+                query: o,
+                variables: r,
+                previousResult: s ? s.data : void 0,
+                returnPartialData: !0,
+                optimistic: t
+              }),
               l = u.result,
               d = u.complete;
             return { data: d || a ? l : void 0, partial: !d };
@@ -24421,14 +24416,12 @@
                     if (("all" === p && (n = e.errors), u || "no-cache" === h))
                       t = e.data;
                     else {
-                      var f = r.dataStore
-                          .getCache()
-                          .diff({
-                            variables: l,
-                            query: s,
-                            optimistic: !1,
-                            returnPartialData: !0
-                          }),
+                      var f = r.dataStore.getCache().diff({
+                          variables: l,
+                          query: s,
+                          optimistic: !1,
+                          returnPartialData: !0
+                        }),
                         m = f.result;
                       (f.complete || c.returnPartialData) && (t = m);
                     }
@@ -32790,8 +32783,8 @@
     }
     function Xt(e, t, n, r) {
       (e = t.state),
-        "function" === typeof t.componentWillReceiveProps &&
-          t.componentWillReceiveProps(n, r),
+        "function" === typeof t.UNSAFE_componentWillReceiveProps &&
+          t.UNSAFE_componentWillReceiveProps(n, r),
         "function" === typeof t.UNSAFE_componentWillReceiveProps &&
           t.UNSAFE_componentWillReceiveProps(n, r),
         t.state !== e && Ia.enqueueReplaceState(t, t.state, null);
@@ -32811,9 +32804,10 @@
         "function" === typeof t.getDerivedStateFromProps ||
           "function" === typeof o.getSnapshotBeforeUpdate ||
           ("function" !== typeof o.UNSAFE_componentWillMount &&
-            "function" !== typeof o.componentWillMount) ||
+            "function" !== typeof o.UNSAFE_componentWillMount) ||
           ((t = o.state),
-          "function" === typeof o.componentWillMount && o.componentWillMount(),
+          "function" === typeof o.UNSAFE_componentWillMount &&
+            o.UNSAFE_componentWillMount(),
           "function" === typeof o.UNSAFE_componentWillMount &&
             o.UNSAFE_componentWillMount(),
           t !== o.state && Ia.enqueueReplaceState(o, o.state, null),
@@ -33595,7 +33589,7 @@
             "function" === typeof a.getSnapshotBeforeUpdate;
         d ||
           ("function" !== typeof a.UNSAFE_componentWillReceiveProps &&
-            "function" !== typeof a.componentWillReceiveProps) ||
+            "function" !== typeof a.UNSAFE_componentWillReceiveProps) ||
           ((s !== r || c !== u) && Xt(t, a, r, u)),
           (ks = !1);
         var f = t.memoizedState;
@@ -33608,9 +33602,9 @@
               (s = ks || Wt(t, n, s, r, f, c, u))
                 ? (d ||
                     ("function" !== typeof a.UNSAFE_componentWillMount &&
-                      "function" !== typeof a.componentWillMount) ||
-                    ("function" === typeof a.componentWillMount &&
-                      a.componentWillMount(),
+                      "function" !== typeof a.UNSAFE_componentWillMount) ||
+                    ("function" === typeof a.UNSAFE_componentWillMount &&
+                      a.UNSAFE_componentWillMount(),
                     "function" === typeof a.UNSAFE_componentWillMount &&
                       a.UNSAFE_componentWillMount()),
                   "function" === typeof a.componentDidMount &&
@@ -33639,7 +33633,7 @@
             "function" === typeof l ||
             "function" === typeof a.getSnapshotBeforeUpdate) ||
             ("function" !== typeof a.UNSAFE_componentWillReceiveProps &&
-              "function" !== typeof a.componentWillReceiveProps) ||
+              "function" !== typeof a.UNSAFE_componentWillReceiveProps) ||
             ((s !== r || c !== u) && Xt(t, a, r, u)),
           (ks = !1),
           (c = t.memoizedState),
@@ -33652,9 +33646,9 @@
               (l = ks || Wt(t, n, s, r, c, f, u))
                 ? (d ||
                     ("function" !== typeof a.UNSAFE_componentWillUpdate &&
-                      "function" !== typeof a.componentWillUpdate) ||
-                    ("function" === typeof a.componentWillUpdate &&
-                      a.componentWillUpdate(r, f, u),
+                      "function" !== typeof a.UNSAFE_componentWillUpdate) ||
+                    ("function" === typeof a.UNSAFE_componentWillUpdate &&
+                      a.UNSAFE_componentWillUpdate(r, f, u),
                     "function" === typeof a.UNSAFE_componentWillUpdate &&
                       a.UNSAFE_componentWillUpdate(r, f, u)),
                   "function" === typeof a.componentDidUpdate &&
@@ -38563,7 +38557,7 @@
         }
         return (
           i(t, e),
-          (t.prototype.componentWillMount = function() {
+          (t.prototype.UNSAFE_componentWillMount = function() {
             s()(
               !this.props.history,
               "<BrowserRouter> ignores the history prop. To use a custom history, use `import { Router }` instead of `import { BrowserRouter as Router }`."
@@ -39366,7 +39360,7 @@
         }
         return (
           i(t, e),
-          (t.prototype.componentWillMount = function() {
+          (t.prototype.UNSAFE_componentWillMount = function() {
             s()(
               !this.props.history,
               "<HashRouter> ignores the history prop. To use a custom history, use `import { Router }` instead of `import { HashRouter as Router }`."
@@ -39447,7 +39441,7 @@
         }
         return (
           i(t, e),
-          (t.prototype.componentWillMount = function() {
+          (t.prototype.UNSAFE_componentWillMount = function() {
             s()(
               !this.props.history,
               "<MemoryRouter> ignores the history prop. To use a custom history, use `import { Router }` instead of `import { MemoryRouter as Router }`."
@@ -39651,14 +39645,14 @@
           (t.prototype.disable = function() {
             this.unblock && (this.unblock(), (this.unblock = null));
           }),
-          (t.prototype.componentWillMount = function() {
+          (t.prototype.UNSAFE_componentWillMount = function() {
             d()(
               this.context.router,
               "You should not use <Prompt> outside a <Router>"
             ),
               this.props.when && this.enable(this.props.message);
           }),
-          (t.prototype.componentWillReceiveProps = function(e) {
+          (t.prototype.UNSAFE_componentWillReceiveProps = function(e) {
             e.when
               ? (this.props.when && this.props.message === e.message) ||
                 this.enable(e.message)
@@ -39750,7 +39744,7 @@
           (t.prototype.isStatic = function() {
             return this.context.router && this.context.router.staticContext;
           }),
-          (t.prototype.componentWillMount = function() {
+          (t.prototype.UNSAFE_componentWillMount = function() {
             p()(
               this.context.router,
               "You should not use <Redirect> outside a <Router>"
@@ -39939,7 +39933,7 @@
           (t.prototype.getChildContext = function() {
             return { router: { staticContext: this.props.context } };
           }),
-          (t.prototype.componentWillMount = function() {
+          (t.prototype.UNSAFE_componentWillMount = function() {
             c()(
               !this.props.history,
               "<StaticRouter> ignores the history prop. To use a custom history, use `import { Router }` instead of `import { StaticRouter as Router }`."
@@ -40027,13 +40021,13 @@
         }
         return (
           i(t, e),
-          (t.prototype.componentWillMount = function() {
+          (t.prototype.UNSAFE_componentWillMount = function() {
             p()(
               this.context.router,
               "You should not use <Switch> outside a <Router>"
             );
           }),
-          (t.prototype.componentWillReceiveProps = function(e) {
+          (t.prototype.UNSAFE_componentWillReceiveProps = function(e) {
             d()(
               !(e.location && !this.props.location),
               '<Switch> elements should not change from uncontrolled to controlled (or vice versa). You initially used no "location" prop and then provided one on a subsequent render.'
@@ -43802,12 +43796,12 @@
             (d = f.state),
             void 0 === d && (f.state = d = null),
             "function" === typeof f.UNSAFE_componentWillMount ||
-              "function" === typeof f.componentWillMount)
+              "function" === typeof f.UNSAFE_componentWillMount)
           )
             if (
-              ("function" === typeof f.componentWillMount &&
+              ("function" === typeof f.UNSAFE_componentWillMount &&
                 "function" !== typeof a.getDerivedStateFromProps &&
-                f.componentWillMount(),
+                f.UNSAFE_componentWillMount(),
               "function" === typeof f.UNSAFE_componentWillMount &&
                 "function" !== typeof a.getDerivedStateFromProps &&
                 f.UNSAFE_componentWillMount(),
@@ -82670,7 +82664,7 @@
               var e;
               return (e = {}), (e[l] = this.emitter), e;
             }),
-            (n.prototype.componentWillReceiveProps = function(e) {
+            (n.prototype.UNSAFE_componentWillReceiveProps = function(e) {
               if (this.props.value !== e.value) {
                 var n = this.props.value,
                   r = e.value,
@@ -82707,7 +82701,7 @@
         }
         return (
           a(n, t),
-          (n.prototype.componentWillReceiveProps = function(e) {
+          (n.prototype.UNSAFE_componentWillReceiveProps = function(e) {
             var t = e.observedBits;
             this.observedBits = void 0 === t || null === t ? v : t;
           }),
@@ -86858,11 +86852,11 @@
                   getInitialState: "DEFINE_MANY_MERGED",
                   getChildContext: "DEFINE_MANY_MERGED",
                   render: "DEFINE_ONCE",
-                  componentWillMount: "DEFINE_MANY",
+                  UNSAFE_componentWillMount: "DEFINE_MANY",
                   componentDidMount: "DEFINE_MANY",
-                  componentWillReceiveProps: "DEFINE_MANY",
+                  UNSAFE_componentWillReceiveProps: "DEFINE_MANY",
                   shouldComponentUpdate: "DEFINE_ONCE",
-                  componentWillUpdate: "DEFINE_MANY",
+                  UNSAFE_componentWillUpdate: "DEFINE_MANY",
                   componentDidUpdate: "DEFINE_MANY",
                   componentWillUnmount: "DEFINE_MANY",
                   updateComponent: "OVERRIDE_BASE"
@@ -89999,11 +89993,11 @@
           getInitialState: "DEFINE_MANY_MERGED",
           getChildContext: "DEFINE_MANY_MERGED",
           render: "DEFINE_ONCE",
-          componentWillMount: "DEFINE_MANY",
+          UNSAFE_componentWillMount: "DEFINE_MANY",
           componentDidMount: "DEFINE_MANY",
-          componentWillReceiveProps: "DEFINE_MANY",
+          UNSAFE_componentWillReceiveProps: "DEFINE_MANY",
           shouldComponentUpdate: "DEFINE_ONCE",
-          componentWillUpdate: "DEFINE_MANY",
+          UNSAFE_componentWillUpdate: "DEFINE_MANY",
           componentDidUpdate: "DEFINE_MANY",
           componentWillUnmount: "DEFINE_MANY",
           UNSAFE_componentWillMount: "DEFINE_MANY",
@@ -91741,7 +91735,7 @@
           (n.componentWillUnmount = function() {
             this._teardownSelectable();
           }),
-          (n.componentWillReceiveProps = function(e) {
+          (n.UNSAFE_componentWillReceiveProps = function(e) {
             e.selectable && !this.props.selectable && this._selectable(),
               !e.selectable &&
                 this.props.selectable &&
@@ -92396,7 +92390,7 @@
         Object(K.a)(t, e);
         var n = t.prototype;
         return (
-          (n.componentWillReceiveProps = function(e) {
+          (n.UNSAFE_componentWillReceiveProps = function(e) {
             var t = e.date;
             this.setState({
               needLimitMeasure: !Object(le.c)(t, this.props.date, "month")
@@ -92859,7 +92853,7 @@
         (n.componentWillUnmount = function() {
           this._teardownSelectable(), this.clearTimeIndicatorInterval();
         }),
-        (n.componentWillReceiveProps = function(e) {
+        (n.UNSAFE_componentWillReceiveProps = function(e) {
           e.selectable && !this.props.selectable && this._selectable(),
             !e.selectable &&
               this.props.selectable &&
@@ -93024,7 +93018,7 @@
       Object(K.a)(t, e);
       var n = t.prototype;
       return (
-        (n.componentWillReceiveProps = function(e) {
+        (n.UNSAFE_componentWillReceiveProps = function(e) {
           var t = e.min,
             n = e.max,
             r = e.timeslots,
@@ -93315,7 +93309,7 @@
         Object(K.a)(t, e);
         var n = t.prototype;
         return (
-          (n.componentWillMount = function() {
+          (n.UNSAFE_componentWillMount = function() {
             this.calculateScroll();
           }),
           (n.componentDidMount = function() {
@@ -93336,7 +93330,7 @@
             null == this.props.width && this.measureGutter(),
               this.applyScroll();
           }),
-          (n.componentWillReceiveProps = function(e) {
+          (n.UNSAFE_componentWillReceiveProps = function(e) {
             var t = this.props,
               n = t.range,
               r = t.scrollToTime;
@@ -94036,7 +94030,7 @@
         Object(K.a)(t, e);
         var n = t.prototype;
         return (
-          (n.componentWillReceiveProps = function(e) {
+          (n.UNSAFE_componentWillReceiveProps = function(e) {
             this.setState({ context: this.getContext(e) });
           }),
           (n.getContext = function(e) {
@@ -94304,7 +94298,7 @@
           (u.shouldComponentUpdate = function() {
             return !this._notifying;
           }),
-          (u.componentWillMount = function() {
+          (u.UNSAFE_componentWillMount = function() {
             var e = this,
               t = this.props;
             (this._values = Object.create(null)),
@@ -94312,7 +94306,7 @@
                 e._values[n] = t[d.b(n)];
               });
           }),
-          (u.componentWillReceiveProps = function(e) {
+          (u.UNSAFE_componentWillReceiveProps = function(e) {
             var t = this,
               n = this.props;
             f.forEach(function(r) {
