@@ -205,6 +205,18 @@ const QUERY_TOTAL_STATUS_ID = gql`
   }
 `;
 
+const QUERY_TOTAL_INTERESSADOS = gql`
+  query getProcessos_Status($processo_id: Int!) {
+    processos_interessados_aggregate(
+      where: { processo_id: { _eq: $processo_id } }
+    ) {
+      aggregate {
+        count
+      }
+    }
+  }
+`;
+
 export {
   QUERY_PROCESSO,
   EDIT_PROCESSO,
@@ -217,5 +229,6 @@ export {
   QUERY_PROCESSOS_STATUS,
   QUERY_TOTAL_HISTORICOS,
   QUERY_TOTAL_DOCUMENTOS,
-  QUERY_TOTAL_STATUS_ID
+  QUERY_TOTAL_STATUS_ID,
+  QUERY_TOTAL_INTERESSADOS
 };
