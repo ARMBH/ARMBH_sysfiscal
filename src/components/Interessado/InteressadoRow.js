@@ -3,7 +3,6 @@ import { Button } from "tabler-react";
 import { Table } from "tabler-react";
 import { DELETE_DOCUMENTO } from "./InteressadoQueries";
 import { toast } from "react-toastify";
-import ReactTooltip from "react-tooltip";
 import logar from "../Historico/HistoricoLog";
 import BotaoInteressadoAddProcesso from "./BotaoInteressadoAddProcesso";
 
@@ -48,34 +47,17 @@ class InteressadoRow extends Component {
         <Table.Col> {documento.interessado.email}</Table.Col>
         <Table.Col>{documento.interessado.origem.name}</Table.Col>
         <Table.Col>
-          {documento.interessado.endereco_id ? (
-            <React.Fragment>
-              <span
-                data-for={documento.id + "vis"}
-                data-tip={"Visualizar endereço do interessado."}
-              >
-                <ReactTooltip id={documento.id + "vis"} />
-                <Button size="sm" color="success">
-                  Visualizar
-                </Button>
-              </span>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <span
-                data-for={documento.id + "add"}
-                data-tip={"Cadastrar endereço do interessado."}
-              >
-                <ReactTooltip id={documento.id + "add"} />
-                <Button size="sm" color="secondary">
-                  Endereço
-                </Button>
-              </span>
-            </React.Fragment>
-          )}
-        </Table.Col>
-        <Table.Col>
           <Button.List>
+            {documento.interessado.endereco_id ? (
+              <Button size="sm" color="success">
+                Visualizar Endereço
+              </Button>
+            ) : (
+              <Button size="sm" color="secondary">
+                Cadastrar Endereço
+              </Button>
+            )}
+
             {processo_id ? (
               <BotaoInteressadoAddProcesso
                 key={index + documento.interessado.cpf}
@@ -95,7 +77,7 @@ class InteressadoRow extends Component {
                 )
               }
             >
-              Editar
+              Editar Interessado
             </Button>
           </Button.List>
         </Table.Col>

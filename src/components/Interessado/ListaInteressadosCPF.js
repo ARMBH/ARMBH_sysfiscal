@@ -78,7 +78,6 @@ class ListaInteressadosCPF extends Component {
                         <Table.ColHeader>CPF</Table.ColHeader>
                         <Table.ColHeader>E-mail</Table.ColHeader>
                         <Table.ColHeader>Tipo</Table.ColHeader>
-                        <Table.ColHeader>Endereço</Table.ColHeader>
                         <Table.ColHeader />
                       </Table.Row>
                     </Table.Header>

@@ -50,7 +50,7 @@ class BotaoInteressadoAddProcesso extends Component {
         if (this.mounted) {
           let interessado =
             data.data.insert_processos_interessados.returning[0];
-          console.log(interessado);
+          //console.log(interessado);
           let message =
             interessado.interessado.origem.name +
             " " +
