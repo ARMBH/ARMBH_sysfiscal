@@ -11,8 +11,10 @@ import { toast } from "react-toastify";
 import {
   ADD_INTERESSADO,
   QUERY_INTERESSADO,
-  UPDATE_INTERESSADO
+  UPDATE_INTERESSADO,
+  INSERT_PROCESSO_INTERESSADO
 } from "./InteressadoQueries";
+import logar from "../Historico/HistoricoLog";
 
 class InteressadoForm extends Component {
   constructor() {
@@ -52,8 +54,6 @@ class InteressadoForm extends Component {
     const paramsUrl = new URLSearchParams(this.props.location.search);
     //Caso haja demanda
     const processo = paramsUrl.get("processo");
-
-    console.log("CPF Props enviado");
 
     if (processo) {
       if (parseInt(processo, 10) > 0) {
@@ -131,6 +131,31 @@ class InteressadoForm extends Component {
     });
   }
 
+  insertInteressadoProcesso(processo_id, interessado_id) {
+    const query = INSERT_PROCESSO_INTERESSADO;
+
+    this.props.client.mutate({
+      mutation: query,
+      variables: { processo_id: processo_id, interessado_id: interessado_id },
+      update: (cache, data) => {
+        if (true) {
+          let interessado =
+            data.data.insert_processos_interessados.returning[0];
+          //console.log(interessado);
+          let message =
+            interessado.interessado.origem.name +
+            " " +
+            interessado.interessado.name +
+            " (" +
+            interessado.interessado.cpf +
+            ") adicionado com sucesso ao processo.";
+          toast.success(message);
+          logar.logar(this.props.client, processo_id, 1, message);
+        }
+      }
+    });
+  }
+
   handleCompleted = data => {
     //this.getEndereco(this.state.processo_id);
     let message = "";
@@ -139,11 +164,16 @@ class InteressadoForm extends Component {
         "Interessado de CPF " +
         data.insert_interessados.returning[0].cpf +
         " cadastrado com sucesso!";
-      this.setState({ id: data.insert_interessados.returning[0].id });
-      toast.success(message);
-      if (this.state.processo_id !== "") {
-        //Add automaticamente ao processo
-      }
+      this.setState({ id: data.insert_interessados.returning[0].id }, () => {
+        toast.success(message);
+        if (this.state.processo_id !== "") {
+          this.insertInteressadoProcesso(
+            this.state.processo_id,
+            data.insert_interessados.returning[0].id
+          );
+          this.props.history.goBack();
+        }
+      });
     }
 
     if (data.update_interessados) {
@@ -154,7 +184,7 @@ class InteressadoForm extends Component {
       this.setState({ id: data.update_interessados.returning[0].id });
       toast.success(message);
     }
-    this.props.history.goBack();
+    if (this.state.processo_id === "") this.props.history.goBack();
     //this.props.history.push("/processo/" + this.state.processo_id);
   };
 
@@ -209,7 +239,7 @@ class InteressadoForm extends Component {
                         email,
                         origem_id
                       };
-                      console.log(variables);
+                      //console.log(variables);
                       //if (modo === "Adicionar") variables.processo_id = processo_id;
                       if (modo === "Editar") variables.id = id;
 
@@ -365,16 +395,19 @@ class InteressadoForm extends Component {
                     </Page.Card>
                   </Form>
                   {processo_id !== "" ? (
-                    <Button
-                      icon="chevrons-left"
-                      onClick={() =>
-                        this.props.history.push(
-                          "/processo/interessados/" + processo_id
-                        )
-                      }
-                    >
-                      Voltar para o processo {processo_id}
-                    </Button>
+                    <React.Fragment>
+                      {id !== "" ? "HA ID" : "NAO HAY"}
+                      <Button
+                        icon="chevrons-left"
+                        onClick={() =>
+                          this.props.history.push(
+                            "/processo/interessados/" + processo_id
+                          )
+                        }
+                      >
+                        Voltar para o processo {processo_id}
+                      </Button>
+                    </React.Fragment>
                   ) : (
                     ""
                   )}
