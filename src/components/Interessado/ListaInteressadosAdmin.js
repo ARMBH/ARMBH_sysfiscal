@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { Table, Card } from "tabler-react";
 import { QUERY_INTERESSADOS_ADMIN } from "./InteressadoQueries";
-import { toast } from "react-toastify";
 import { Query } from "react-apollo";
-
-import logar from "../Historico/HistoricoLog";
 import InteressadoRow from "./InteressadoRow";
 
 class ListaInteressadosAdmin extends Component {

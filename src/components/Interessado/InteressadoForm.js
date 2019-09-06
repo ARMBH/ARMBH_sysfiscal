@@ -51,7 +51,7 @@ class InteressadoForm extends Component {
       toast.success("Cadastrar novo interessado.");
       //this.props.history.push("/listaprocessos");
     }
-    console.log(this.props.location.state);
+    //console.log(this.props.location.state);
     if (this.props.location.state !== undefined) {
       this.setState({ cpf: this.props.location.state.cpf.split("%").join("") });
     }

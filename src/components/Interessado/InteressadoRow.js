@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "tabler-react";
 import { Table } from "tabler-react";
-import { DELETE_DOCUMENTO } from "./InteressadoQueries";
-import { toast } from "react-toastify";
-import logar from "../Historico/HistoricoLog";
 import BotaoInteressadoAddProcesso from "./BotaoInteressadoAddProcesso";
 
 class InteressadoRow extends Component {

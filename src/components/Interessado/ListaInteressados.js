@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { Table, Card } from "tabler-react";
-import { QUERY_INTERESSADOS, DELETE_DOCUMENTO } from "./InteressadoQueries";
-import { toast } from "react-toastify";
+import { QUERY_INTERESSADOS } from "./InteressadoQueries";
 import { Query } from "react-apollo";
-
-import logar from "../Historico/HistoricoLog";
 import InteressadoRow from "./InteressadoRow";
 
 class ListaInteressados extends Component {
@@ -17,10 +14,6 @@ class ListaInteressados extends Component {
     let { id, title, cpf } = this.props;
     if (!title) title = "";
     let cardTitle = "";
-    //console.log(cpf + "processo" + id);
-    //Adquire ID do user que está logado para verificar se ele pode editar o formulário
-    //const { auth } = this.props;
-    //const userLogado = auth.getSub();
     let variables = {};
     if (cpf) {
       variables.cpf = cpf;

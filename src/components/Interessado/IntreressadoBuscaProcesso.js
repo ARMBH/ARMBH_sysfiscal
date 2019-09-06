@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Icon, Button } from "tabler-react";
 import { Card, Grid, Form } from "tabler-react";
-import { Link } from "react-router-dom";
 import ListaInteressadosCPF from "./ListaInteressadosCPF";
 
 class InteressadoBuscaProcesso extends Component {
