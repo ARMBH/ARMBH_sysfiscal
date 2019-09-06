@@ -33,9 +33,7 @@ class InteressadoRow extends Component {
                 Visualizar Endereço
               </Button>
             ) : (
-              <Button size="sm" color="secondary">
-                Cadastrar Endereço
-              </Button>
+              ""
             )}
 
             {processo_id ? (
@@ -50,15 +48,14 @@ class InteressadoRow extends Component {
             )}
             <Button
               size="sm"
-              color="secondary"
+              icon="edit"
+              color="primary"
               onClick={() =>
                 this.props.history.push(
                   "/interessado/" + documento.interessado.id
                 )
               }
-            >
-              Editar Interessado
-            </Button>
+            />
           </Button.List>
         </Table.Col>
       </Table.Row>

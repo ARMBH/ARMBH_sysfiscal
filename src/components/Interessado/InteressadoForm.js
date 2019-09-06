@@ -51,7 +51,10 @@ class InteressadoForm extends Component {
       toast.success("Cadastrar novo interessado.");
       //this.props.history.push("/listaprocessos");
     }
-
+    console.log(this.props.location.state);
+    if (this.props.location.state !== undefined) {
+      this.setState({ cpf: this.props.location.state.cpf.split("%").join("") });
+    }
     //Parametros da URL (após o ?)
     const paramsUrl = new URLSearchParams(this.props.location.search);
     //Caso haja demanda
@@ -402,7 +405,6 @@ class InteressadoForm extends Component {
                   </Form>
                   {processo_id !== "" ? (
                     <React.Fragment>
-                      {id !== "" ? "HA ID" : "NAO HAY"}
                       <Button
                         icon="chevrons-left"
                         onClick={() =>

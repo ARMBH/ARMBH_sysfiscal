@@ -13,22 +13,6 @@ class InteressadoBuscaProcesso extends Component {
     };
   }
 
-  tituloTabela() {
-    return (
-      <Link
-        to={{
-          pathname: "/interessado",
-          search: "?processo=" + this.props.id,
-          state: { cpf: "opaopaopa" }
-        }}
-        className="btn btn-primary ml-auto"
-      >
-        <Icon name="plus-circle" />
-        Adicionar Novo Interessado
-      </Link>
-    );
-  }
-
   handleChange = e => {
     //console.log(e.target.name + ": " + e.target.value);
     this.setState({ [e.target.name]: e.target.value });
@@ -103,7 +87,7 @@ class InteressadoBuscaProcesso extends Component {
             </Grid.Row>
           </Card.Body>
         </Card>
-        {this.limpaCpf(cpf).length > 3 ? (
+        {this.limpaCpf(cpf).length >= 3 ? (
           <ListaInteressadosCPF
             cpf={"%" + this.limpaCpf(cpf) + "%"}
             id={id}
@@ -113,7 +97,6 @@ class InteressadoBuscaProcesso extends Component {
         ) : (
           ""
         )}
-        <Button.List align="right">{this.tituloTabela()}</Button.List>
       </React.Fragment>
     );
   }

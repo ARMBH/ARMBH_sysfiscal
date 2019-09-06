@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Table, Card } from "tabler-react";
+import { Table, Card, Button, Icon } from "tabler-react";
 import { QUERY_INTERESSADOS_CPF, DELETE_DOCUMENTO } from "./InteressadoQueries";
 import { toast } from "react-toastify";
 import { Query } from "react-apollo";
 import logar from "../Historico/HistoricoLog";
 import InteressadoRow from "./InteressadoRow";
+import { Link } from "react-router-dom";
 
 class ListaInteressadosCPF extends Component {
   constructor() {
@@ -12,6 +13,21 @@ class ListaInteressadosCPF extends Component {
     this.state = {};
   }
 
+  tituloTabela() {
+    return (
+      <Link
+        to={{
+          pathname: "/interessado",
+          search: "?processo=" + this.props.id,
+          state: { cpf: this.props.cpf }
+        }}
+        className="btn btn-primary ml-auto"
+      >
+        <Icon name="plus-circle" />
+        Adicionar Novo Interessado
+      </Link>
+    );
+  }
   handleDelete(id, name) {
     if (
       window.confirm("Deseja realmente excluir o interessado " + name + "?")
@@ -95,7 +111,12 @@ class ListaInteressadosCPF extends Component {
                     </Table.Body>
                   </Table>
                 ) : (
-                  <Card.Body>Nenhum interessado cadastrado.</Card.Body>
+                  <Card.Body>
+                    Nenhum interessado encontrado.
+                    <Button.List align="right">
+                      {this.tituloTabela()}
+                    </Button.List>
+                  </Card.Body>
                 )}
               </Card>
             </React.Fragment>
