@@ -15,6 +15,7 @@ import {
   INSERT_PROCESSO_INTERESSADO
 } from "./InteressadoQueries";
 import logar from "../Historico/HistoricoLog";
+import { validateEmail } from "../Utils/Validators";
 
 class InteressadoForm extends Component {
   constructor() {
@@ -34,6 +35,7 @@ class InteressadoForm extends Component {
 
   componentDidMount() {
     //Envia para o Topo da página
+
     window.scrollTo(0, 0);
     const { param } = this.props.match.params;
     if (parseInt(param, 10) > 0) {
@@ -242,6 +244,10 @@ class InteressadoForm extends Component {
                       //console.log(variables);
                       //if (modo === "Adicionar") variables.processo_id = processo_id;
                       if (modo === "Editar") variables.id = id;
+                      if (!validateEmail(variables.email)) {
+                        toast.error("Email inválido.");
+                        return false;
+                      }
 
                       mutationInteressado({
                         variables: variables

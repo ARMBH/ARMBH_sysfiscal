@@ -66,6 +66,24 @@ const DELETE_PROCESSO_INTERESSADO = gql`
   }
 `;
 
+const QUERY_INTERESSADOS_ADMIN = gql`
+  query getInteressados {
+    interessados(order_by: { name: asc }) {
+      cpf
+      created_at
+      email
+      endereco_id
+      id
+      name
+      origem {
+        id
+        name
+      }
+      tratamento
+    }
+  }
+`;
+
 const QUERY_INTERESSADOS = gql`
   query getInteressados($processo_id: Int!) {
     processos_interessados(
@@ -211,5 +229,6 @@ export {
   QUERY_PROCESSO_INTERESSADO,
   INSERT_PROCESSO_INTERESSADO,
   DELETE_PROCESSO_INTERESSADO,
+  QUERY_INTERESSADOS_ADMIN,
   DELETE_DOCUMENTO
 };

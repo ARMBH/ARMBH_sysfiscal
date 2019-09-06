@@ -1,61 +1,33 @@
 import React, { Component } from "react";
 import { Table, Card } from "tabler-react";
-import { QUERY_INTERESSADOS, DELETE_DOCUMENTO } from "./InteressadoQueries";
+import { QUERY_INTERESSADOS_ADMIN } from "./InteressadoQueries";
 import { toast } from "react-toastify";
 import { Query } from "react-apollo";
 
 import logar from "../Historico/HistoricoLog";
 import InteressadoRow from "./InteressadoRow";
 
-class ListaInteressados extends Component {
+class ListaInteressadosAdmin extends Component {
   constructor() {
     super();
     this.state = {};
   }
-
   render() {
-    let { id, title, cpf } = this.props;
-    if (!title) title = "";
-    let cardTitle = "";
-    //console.log(cpf + "processo" + id);
-    //Adquire ID do user que está logado para verificar se ele pode editar o formulário
-    //const { auth } = this.props;
-    //const userLogado = auth.getSub();
-    let variables = {};
-    if (cpf) {
-      variables.cpf = cpf;
-    } else {
-      variables.processo_id = id;
-    }
-
+    let cardTitle = "Lista de interessados";
     return (
-      <Query
-        pollInterval={3000}
-        query={QUERY_INTERESSADOS}
-        variables={variables}
-      >
+      <Query pollInterval={3000} query={QUERY_INTERESSADOS_ADMIN}>
         {({ loading, error, data }) => {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;
           //console.log(data.processos_interessados);
-          if (data.processos_interessados.length > 0) {
-            cardTitle =
-              "Processo " +
-              id +
-              " - " +
-              title +
-              " (" +
-              data.processos_interessados.length +
-              " interessado";
-            if (data.processos_interessados.length > 1)
-              cardTitle = cardTitle + "s";
-            cardTitle = cardTitle + ")";
-            //console.log(data.documentos);
+          if (data.interessados.length > 0) {
+            cardTitle = "Lista de interessados";
           } else cardTitle = "Sem interessados";
+          //console.log(data.interessados);
           return (
             <React.Fragment>
               <Card title={cardTitle}>
-                {data.processos_interessados.length > 0 ? (
+                {data.interessados.length > 0 ? (
                   <Table
                     cards={true}
                     striped={true}
@@ -73,12 +45,12 @@ class ListaInteressados extends Component {
                       </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                      {data.processos_interessados.map((documento, index) => (
+                      {data.interessados.map((documento, index) => (
                         <InteressadoRow
-                          key={index + "interes" + documento.interessado.cpf}
+                          key={index + "interes" + documento.cpf}
                           index={index}
                           documento={documento}
-                          processo_id={id}
+                          interessado
                           {...this.props}
                         />
                       ))}
@@ -96,4 +68,4 @@ class ListaInteressados extends Component {
   }
 }
 
-export default ListaInteressados;
+export default ListaInteressadosAdmin;

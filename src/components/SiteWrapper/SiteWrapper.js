@@ -77,17 +77,17 @@ const navBarItems: Array<navItem> = [
     ]
   },
   {
-    value: "Empreendedores",
+    value: "Interessados",
     icon: "user-check",
     subItems: [
       {
-        value: "Listar Todos os Empreendedores",
-        to: "/listaempreendedores/",
+        value: "Listar Todos os Interessados",
+        to: "/interessados/",
         LinkComponent: NavLink
       },
       {
-        value: "Novo Empreendedor",
-        to: "/novoempreendedor/",
+        value: "Cadastrar Interessado",
+        to: "/interessado/",
         LinkComponent: NavLink
       }
     ]

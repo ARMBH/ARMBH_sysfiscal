@@ -14,7 +14,6 @@ import ProfileForm from "./components/Profile/ProfileForm";
 import StatusForm from "./components/Status/StatusForm";
 import DocumentoUpload from "./components/Documento/DocumentoUpload";
 import ListaProcessos from "./components/Processo/ListaProcessos";
-//import ListaEmpreendedores from './components/Empreendedor/ListaEmpreendedores';
 import Calendario from "./components/Calendario/Calendario";
 import DashboardAdmin from "./components/Admin/DashboardAdmin";
 
@@ -31,6 +30,7 @@ import ProcessoFormDocumentos from "./components/Processo/ProcessoFormDocumentos
 import ProcessoFormVistorias from "./components/Processo/ProcessoFormVistorias";
 import ProcessoFormInteressados from "./components/Processo/ProcessoFormInteressados";
 import InteressadoForm from "./components/Interessado/InteressadoForm";
+import InteressadosAdmin from "./components/Interessado/InteressadosAdmin";
 
 // Call it once in your app. At the root of your app is the best place
 toast.configure({
@@ -140,6 +140,12 @@ export const makeMainRoutes = () => {
             path="/processo/interessados/:param"
             key={"processo"}
             render={props => provideClient(ProcessoFormInteressados, props)}
+          />
+          <Route
+            exact
+            path="/interessados/"
+            key={"interessado"}
+            render={props => provideClient(InteressadosAdmin, props)}
           />
           <Route
             exact

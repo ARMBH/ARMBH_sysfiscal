@@ -12,29 +12,9 @@ class InteressadoRow extends Component {
     this.state = {};
   }
 
-  handleDelete(id, name) {
-    if (
-      window.confirm("Deseja realmente excluir o interessado " + name + "?")
-    ) {
-      let motivo = window.prompt("Por qual motivo deseja excluir?");
-      this.props.client.mutate({
-        mutation: DELETE_DOCUMENTO,
-        variables: { id: id },
-        update: (cache, data) => {
-          let message =
-            "Interessado " + id + " " + name + " excluído com sucesso";
-          if (motivo) message = message + ". Motivo: " + motivo;
-          toast.success(message);
-          logar.logar(this.props.client, this.props.id, 1, message);
-        }
-      });
-    } else {
-      toast.error("Interessado não será deletado.");
-    }
-  }
-
   render() {
     let { documento, index, processo_id, interessado } = this.props;
+    //console.log(this.props);
     if (interessado) {
       index = index + "interessado";
       documento.interessado = documento;
