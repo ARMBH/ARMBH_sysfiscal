@@ -300,12 +300,12 @@ class InteressadoForm extends Component {
                               </Form.Group>
                             </Grid.Col>
                             <Grid.Col width={9}>
-                              <Form.Group label="name">
+                              <Form.Group label="Nome">
                                 <Form.Input
                                   disabled={disableForm}
                                   value={name}
                                   name="name"
-                                  placeholder="Digite o name..."
+                                  placeholder="Digite o nome..."
                                   onChange={this.handleChange}
                                 />
                               </Form.Group>
