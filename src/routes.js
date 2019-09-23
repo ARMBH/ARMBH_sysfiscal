@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Router, Switch } from "react-router-dom";
+import { Route, Router, Switch, Redirect } from "react-router-dom";
 
 import Home from "./components/Home/Home";
 import Error404 from "./components/Home/Error404";
@@ -31,6 +31,7 @@ import ProcessoFormVistorias from "./components/Processo/ProcessoFormVistorias";
 import ProcessoFormInteressados from "./components/Processo/ProcessoFormInteressados";
 import InteressadoForm from "./components/Interessado/InteressadoForm";
 import InteressadosAdmin from "./components/Interessado/InteressadosAdmin";
+import Denuncia from "./components/Denuncia/Denuncia";
 
 // Call it once in your app. At the root of your app is the best place
 toast.configure({
@@ -39,6 +40,19 @@ toast.configure({
 });
 
 let client;
+
+const PublicRoute = ({ component: Component, restricted, ...rest }) => {
+  return (
+    // restricted = false meaning public route
+    // restricted = true meaning restricted route
+    <Route
+      {...rest}
+      render={props =>
+        restricted ? <Redirect to="/dashboard" /> : <Component {...props} />
+      }
+    />
+  );
+};
 
 const provideClient = (Component, renderProps) => {
   // check if logged in
@@ -73,6 +87,12 @@ export const makeMainRoutes = () => {
     <Router history={history}>
       <div>
         <Switch>
+          <PublicRoute
+            restricted={false}
+            component={Denuncia}
+            path="/denuncia"
+            exact
+          />
           <Route
             exact
             path="/login"
