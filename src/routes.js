@@ -45,7 +45,7 @@ const providePublicClient = (Component, renderProps) => {
   if (!client) {
     client = makeApolloClient();
   }
-  console.log(client);
+
   return (
     <ApolloProvider client={client}>
       <Component {...renderProps} client={client} />

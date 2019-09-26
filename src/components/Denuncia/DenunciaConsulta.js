@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Page, Grid } from "tabler-react";
 import { toast } from "react-toastify";
 import { QUERY_DENUNCIA } from "./DenunciaQueries";
-import Moment from "moment";
+//import Moment from "moment";
 import MomentComponent from "react-moment";
 import "moment/locale/pt-br";
 
@@ -13,8 +13,6 @@ class DenunciaConsulta extends Component {
       disableForm: true,
       textoBotao: "Carregando...",
       name: "",
-      description: "",
-      //codigo: "",
       codigoCookie: "",
       exibirNova: true,
       exibeInformacoes: false,
@@ -75,9 +73,7 @@ class DenunciaConsulta extends Component {
         },
         update: (cache, data) => {
           if (data.data.demandas[0]) {
-            console.log(data.data.demandas[0]);
             let variables = data.data.demandas[0];
-            console.log(variables);
             this.setState({
               existe: true,
               description: variables.description,
@@ -143,20 +139,13 @@ class DenunciaConsulta extends Component {
                 </Form.Group>
               </Grid.Col>
             </Grid.Row>
-            <Button
-              color="warning"
-              onClick={() =>
-                (window.location.href = "/denuncia?codigo=" + this.state.codigo)
-              }
-            >
-              Consultar Denúncia
-            </Button>
+            <Button color="warning">Consultar Denúncia</Button>
           </Form>
         </Page.Card>
 
         {codigo !== "" && codigo.length === 19 && exibir ? (
           <React.Fragment>
-            <Page.Card title={codigo}>
+            <Page.Card title={"Consulta à denúncia"}>
               <React.Fragment>
                 <Grid.Row>
                   <Grid.Col width={6}>
@@ -257,7 +246,7 @@ class DenunciaConsulta extends Component {
               </React.Fragment>
               <Button
                 color="danger"
-                onClick={() => this.setState({ codigo: "" })}
+                onClick={() => this.setState({ codigo: "", exibir: false })}
               >
                 Consultar Nova Denúncia
               </Button>

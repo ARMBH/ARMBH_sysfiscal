@@ -3,15 +3,13 @@ import { Form, Button, Page, Grid, Alert } from "tabler-react";
 import MomentPure from "moment";
 import { toast } from "react-toastify";
 //Mutations
-import { Mutation } from "react-apollo";
 import { Query } from "react-apollo";
 import { QUERY_MUNICIPIOS } from "../Processo/ProcessoQueries";
-import { QUERY_DENUNCIA, ADD_DENUNCIA } from "./DenunciaQueries";
+import { ADD_DENUNCIA } from "./DenunciaQueries";
 
 class DenunciaNova extends Component {
   constructor(props) {
     super(props);
-    console.log(props.client);
     this.state = {
       disableForm: true,
       textoBotao: "Carregando...",
