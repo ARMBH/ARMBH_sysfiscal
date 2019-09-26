@@ -232,6 +232,19 @@ class DenunciaConsulta extends Component {
                   </Grid.Col>
                   <Grid.Col width={6}>
                     <Form.Group label="Coordenada Y">{coordenada_y}</Form.Group>
+
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={
+                        "https://www.google.com/maps/place/" +
+                        coordenada_x +
+                        "," +
+                        coordenada_y
+                      }
+                    >
+                      Visualizar no mapa
+                    </a>
                   </Grid.Col>
                 </Grid.Row>
                 <Grid.Row>
