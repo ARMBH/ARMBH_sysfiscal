@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Router, Switch, Redirect } from "react-router-dom";
+import { Route, Router, Switch } from "react-router-dom";
 
 import Home from "./components/Home/Home";
 import Error404 from "./components/Home/Error404";
@@ -41,16 +41,15 @@ toast.configure({
 
 let client;
 
-const PublicRoute = ({ component: Component, restricted, ...rest }) => {
+const providePublicClient = (Component, renderProps) => {
+  if (!client) {
+    client = makeApolloClient();
+  }
+  console.log(client);
   return (
-    // restricted = false meaning public route
-    // restricted = true meaning restricted route
-    <Route
-      {...rest}
-      render={props =>
-        restricted ? <Redirect to="/dashboard" /> : <Component {...props} />
-      }
-    />
+    <ApolloProvider client={client}>
+      <Component {...renderProps} client={client} />
+    </ApolloProvider>
   );
 };
 
@@ -87,11 +86,10 @@ export const makeMainRoutes = () => {
     <Router history={history}>
       <div>
         <Switch>
-          <PublicRoute
-            restricted={false}
-            component={Denuncia}
-            path="/denuncia"
+          <Route
             exact
+            path="/denuncia"
+            render={props => providePublicClient(Denuncia, props)}
           />
           <Route
             exact
