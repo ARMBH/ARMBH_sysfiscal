@@ -91,6 +91,22 @@ const navBarItems: Array<navItem> = [
         LinkComponent: NavLink
       }
     ]
+  },
+  {
+    value: "Demandas",
+    icon: "help-circle",
+    subItems: [
+      {
+        value: "Listar Todos as demandas",
+        to: "/listademandas/",
+        LinkComponent: NavLink
+      },
+      {
+        value: "Cadastrar Interessado",
+        to: "/interessado/",
+        LinkComponent: NavLink
+      }
+    ]
   }
   /**
 	{

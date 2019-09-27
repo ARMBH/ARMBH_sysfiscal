@@ -17,7 +17,7 @@ class InteressadosAdmin extends Component {
   }
 
   render() {
-    let contentTitle = "Lista de todos os processos";
+    let contentTitle = "Lista de todos os interessados";
     return (
       <SiteWrapper {...this.props}>
         <Page.Content title={contentTitle}>
