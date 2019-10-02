@@ -35,7 +35,7 @@ mutation {
 
 */
 import React, { Component } from "react";
-import logar from "../Historico/HistoricoLog";
+//import logar from "../Historico/HistoricoLog";
 import { QUERY_DEMANDA, EDIT_DEMANDA } from "./DemandaQueries";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
@@ -63,7 +63,8 @@ class Demanda extends Component {
       updated_at: "",
       created_at: "",
       status_demanda: "",
-      justificativa: ""
+      justificativa: "",
+      exibir: false
     };
   }
 
@@ -172,145 +173,165 @@ class Demanda extends Component {
     return (
       <SiteWrapper {...this.props}>
         <Page.Content title={"Demanda"}>
-          <Page.Card title={codigo}>
+          {exibir ? (
             <React.Fragment>
-              <Grid.Row>
-                <Grid.Col width={6}>
-                  <Form.Group label="Código da denúncia">
-                    <strong>{codigo}</strong>
-                  </Form.Group>
-                </Grid.Col>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Col width={6}>
-                  <Form.Group label="Data de cadastro">
-                    <MomentComponent format="DD/MM/YYYY HH:mm">
-                      {created_at}
-                    </MomentComponent>
-                  </Form.Group>
-                </Grid.Col>
-                <Grid.Col width={6}>
-                  <Form.Group label="Última atualização">
-                    <MomentComponent fromNow>{updated_at}</MomentComponent>
-                  </Form.Group>
-                </Grid.Col>
-              </Grid.Row>
+              <Page.Card title={codigo}>
+                <React.Fragment>
+                  <Grid.Row>
+                    <Grid.Col width={6}>
+                      <Form.Group label="Código da denúncia">
+                        <strong>{codigo}</strong>
+                      </Form.Group>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Col width={6}>
+                      <Form.Group label="Data de cadastro">
+                        <MomentComponent format="DD/MM/YYYY HH:mm">
+                          {created_at}
+                        </MomentComponent>
+                      </Form.Group>
+                    </Grid.Col>
+                    <Grid.Col width={6}>
+                      <Form.Group label="Última atualização">
+                        <MomentComponent fromNow>{updated_at}</MomentComponent>
+                      </Form.Group>
+                    </Grid.Col>
+                  </Grid.Row>
 
-              <Grid.Row>
-                <Grid.Col width={6}>
-                  <Form.Group label="Origem da denúncia">{origem}</Form.Group>
-                </Grid.Col>
-                <Grid.Col width={6}>
-                  <Form.Group label="Status da Demanda">
-                    <Badge
-                      color={status_demanda === "Nova" ? "success" : "warning"}
-                    >
-                      {status_demanda}
-                    </Badge>
-                  </Form.Group>
-                </Grid.Col>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Col>
-                  <Form.Group label="Descrição">{description}</Form.Group>
-                </Grid.Col>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Col width={12}>
-                  <Form.Group label="Empreendimento">
-                    {empreendimento}
-                  </Form.Group>
-                </Grid.Col>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Col>
-                  <Form.Group label="Dados do Empreendimento">
-                    {empreendimento_dados}
-                  </Form.Group>
-                </Grid.Col>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Col width={12}>
-                  <Form.Group label="Empreendedor">{empreendedor}</Form.Group>
-                </Grid.Col>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Col>
-                  <Form.Group label="Dados do Empreendedor">
-                    {empreendedor_dados}
-                  </Form.Group>
-                </Grid.Col>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Col>
-                  <Form.Group label="Município">{municipio}</Form.Group>
-                </Grid.Col>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Col width={6}>
-                  <Form.Group label="Coordenada X">{coordenada_x}</Form.Group>
-                </Grid.Col>
-                <Grid.Col width={6}>
-                  <Form.Group label="Coordenada Y">{coordenada_y}</Form.Group>
+                  <Grid.Row>
+                    <Grid.Col width={6}>
+                      <Form.Group label="Origem da denúncia">
+                        {origem}
+                      </Form.Group>
+                    </Grid.Col>
+                    <Grid.Col width={6}>
+                      <Form.Group label="Status da Demanda">
+                        <Badge
+                          color={
+                            status_demanda === "Nova"
+                              ? "success"
+                              : status_demanda === "Arquivada"
+                                ? "danger"
+                                : "warning"
+                          }
+                        >
+                          {status_demanda}
+                        </Badge>
+                      </Form.Group>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Col>
+                      <Form.Group label="Descrição">{description}</Form.Group>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Col width={12}>
+                      <Form.Group label="Empreendimento">
+                        {empreendimento}
+                      </Form.Group>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Col>
+                      <Form.Group label="Dados do Empreendimento">
+                        {empreendimento_dados}
+                      </Form.Group>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Col width={12}>
+                      <Form.Group label="Empreendedor">
+                        {empreendedor}
+                      </Form.Group>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Col>
+                      <Form.Group label="Dados do Empreendedor">
+                        {empreendedor_dados}
+                      </Form.Group>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Col>
+                      <Form.Group label="Município">{municipio}</Form.Group>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Col width={6}>
+                      <Form.Group label="Coordenada X">
+                        {coordenada_x}
+                      </Form.Group>
+                    </Grid.Col>
+                    <Grid.Col width={6}>
+                      <Form.Group label="Coordenada Y">
+                        {coordenada_y}
+                      </Form.Group>
 
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={
-                      "https://www.google.com/maps/place/" +
-                      coordenada_x +
-                      "," +
-                      coordenada_y
-                    }
-                  >
-                    Visualizar no mapa
-                  </a>
-                </Grid.Col>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Col>
-                  <Form.Group label="Ponto de Referência">
-                    {pto_de_referencia}
-                  </Form.Group>
-                </Grid.Col>
-              </Grid.Row>
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={
+                          "https://www.google.com/maps/place/" +
+                          coordenada_x +
+                          "," +
+                          coordenada_y
+                        }
+                      >
+                        Visualizar no mapa
+                      </a>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Col>
+                      <Form.Group label="Ponto de Referência">
+                        {pto_de_referencia}
+                      </Form.Group>
+                    </Grid.Col>
+                  </Grid.Row>
+                </React.Fragment>
+              </Page.Card>
+              <Page.Card title="Ações">
+                <Grid.Row>
+                  <Grid.Col>
+                    <Form.Group label="Justificativa">
+                      <Form.Textarea
+                        name="justificativa"
+                        value={justificativa}
+                        placeholder="Atenção! A justificativa é pública..."
+                        rows={6}
+                        onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                  </Grid.Col>
+                </Grid.Row>
+                <Button
+                  disabled={justificativa === null}
+                  icon="shopping-bag"
+                  onClick={() =>
+                    this.alteraDemanda(codigo, "Arquivada", justificativa)
+                  }
+                  color="danger"
+                >
+                  Arquivar Demanda
+                </Button>
+                <Button
+                  disabled={justificativa === null}
+                  icon="navigation"
+                  onClick={() =>
+                    this.alteraDemanda(codigo, "Em andamento", justificativa)
+                  }
+                  color="success"
+                >
+                  Vincular a um Processo
+                </Button>
+              </Page.Card>
             </React.Fragment>
-          </Page.Card>
-          <Page.Card title="Ações">
-            <Grid.Row>
-              <Grid.Col>
-                <Form.Group label="Justificativa">
-                  <Form.Textarea
-                    name="justificativa"
-                    value={justificativa}
-                    placeholder="Atenção! A justificativa é pública..."
-                    rows={6}
-                    onChange={this.handleChange}
-                  />
-                </Form.Group>
-              </Grid.Col>
-            </Grid.Row>
-            <Button
-              disabled={justificativa.length < 1}
-              icon="shopping-bag"
-              onClick={() =>
-                this.alteraDemanda(codigo, "Arquivada", justificativa)
-              }
-              color="danger"
-            >
-              Arquivar Demanda
-            </Button>
-            <Button
-              disabled={justificativa.length < 1}
-              icon="navigation"
-              onClick={() =>
-                this.alteraDemanda(codigo, "Em andamento", justificativa)
-              }
-              color="success"
-            >
-              Vincular a um Processo
-            </Button>
-          </Page.Card>
+          ) : (
+            "Demanda não encontrada."
+          )}
           <Button
             icon="chevrons-left"
             onClick={() => this.props.history.push("/listademandas/")}

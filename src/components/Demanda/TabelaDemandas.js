@@ -162,22 +162,24 @@ class TabelaDemandas extends Component {
                         {demanda.empreendedor.length > 18 ? "(...)" : ""}
                       </Table.Col>
                       <Table.Col>
-                        {Moment().diff(demanda.updated_at, "hours") < 24 ? (
-                          <React.Fragment>
-                            <Badge color="success">Recente</Badge>{" "}
-                          </React.Fragment>
-                        ) : (
-                          ""
-                        )}
                         <Badge
                           color={
                             demanda.status_demanda === "Nova"
                               ? "success"
-                              : "warning"
+                              : demanda.status_demanda === "Arquivada"
+                                ? "danger"
+                                : "warning"
                           }
                         >
                           {demanda.status_demanda}
-                        </Badge>
+                        </Badge>{" "}
+                        {Moment().diff(demanda.updated_at, "hours") < 24 ? (
+                          <React.Fragment>
+                            <Badge color="secondary">Recente</Badge>{" "}
+                          </React.Fragment>
+                        ) : (
+                          ""
+                        )}
                       </Table.Col>
                       <Table.Col>{demanda.municipio.name}</Table.Col>
                       <Table.Col>
