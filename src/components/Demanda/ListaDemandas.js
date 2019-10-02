@@ -40,7 +40,7 @@ class ListaDemandas extends Component {
                       size={data.demandas.length}
                       data={data.demandas}
                       userLogado={userLogado}
-                      categoria="Nova"
+                      //categoria="Nova"
                     />
                   </React.Fragment>
                 );

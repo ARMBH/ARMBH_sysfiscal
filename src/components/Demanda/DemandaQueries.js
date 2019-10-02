@@ -26,83 +26,58 @@ const ADD_PROCESSO = gql`
   }
 `;
 
-const EDIT_PROCESSO = gql`
+const EDIT_DEMANDA = gql`
   mutation(
-    $id: Int!
-    $name: String!
-    $description: String!
-    $origem_id: Int!
-    $municipio_id: Int!
+    $codigo: String!
+    $status_demanda: String!
+    $justificativa: String!
   ) {
-    update_processos(
-      where: { id: { _eq: $id } }
-      _set: {
-        name: $name
-        origem_id: $origem_id
-        description: $description
-        municipio_id: $municipio_id
-      }
+    update_demandas(
+      where: { codigo: { _eq: $codigo } }
+      _set: { status_demanda: $status_demanda, justificativa: $justificativa }
     ) {
       affected_rows
       returning {
-        id
-        name
+        status_demanda
+        updated_at
+        justificativa
       }
     }
   }
 `;
 
-const QUERY_PROCESSO = gql`
-  query getProcesso($processoId: Int!) {
-    processos(where: { id: { _eq: $processoId } }) {
-      id
-      name
-      user {
-        id
-        name
-      }
-      origem_id
+const QUERY_DEMANDA = gql`
+  query getDemanda($codigo: String!) {
+    demandas(where: { codigo: { _eq: $codigo } }) {
+      codigo
+      coordenada_x
+      coordenada_y
+      created_at
       description
-      created_at
-      status_id
-      status {
-        name
-        type
-      }
-      municipio_id
-      due_date
-    }
-  }
-`;
-
-const QUERY_PROCESSOS = gql`
-  {
-    processos(order_by: { id: desc }) {
-      created_at
+      empreendedor
+      empreendedor_dados
+      empreendimento
+      empreendimento_dados
       id
-      name
-      status_id
-      status {
-        name
-        type
-      }
       municipio {
         id
         name
       }
-      due_date
-      user {
+      origem {
         id
         name
-        id
       }
+      pto_de_referencia
+      status_demanda
+      updated_at
+      justificativa
     }
   }
 `;
 
 const QUERY_DEMANDAS = gql`
   {
-    demandas(order_by: { created_at: asc }) {
+    demandas(order_by: { created_at: desc }) {
       codigo
       created_at
       description
@@ -210,15 +185,14 @@ const QUERY_TOTAL_INTERESSADOS = gql`
 `;
 
 export {
-  QUERY_PROCESSO,
-  EDIT_PROCESSO,
+  QUERY_DEMANDA,
+  EDIT_DEMANDA,
   ADD_PROCESSO,
-  QUERY_PROCESSOS,
+  QUERY_DEMANDAS,
   QUERY_ORIGEMS,
   QUERY_MUNICIPIOS,
   QUERY_STATUS,
   SUBSCRIPTION_TOTAL_PROCESSOS,
-  QUERY_DEMANDAS,
   QUERY_TOTAL_HISTORICOS,
   QUERY_TOTAL_DOCUMENTOS,
   QUERY_TOTAL_STATUS_ID,

@@ -5,9 +5,11 @@ const QUERY_DENUNCIA = gql`
     demandas {
       id
       municipio {
+        id
         name
       }
       origem {
+        id
         name
       }
       pto_de_referencia

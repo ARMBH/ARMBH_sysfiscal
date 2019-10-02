@@ -33,6 +33,7 @@ import InteressadoForm from "./components/Interessado/InteressadoForm";
 import InteressadosAdmin from "./components/Interessado/InteressadosAdmin";
 import Denuncia from "./components/Denuncia/Denuncia";
 import ListaDemandas from "./components/Demanda/ListaDemandas";
+import Demanda from "./components/Demanda/Demanda";
 
 // Call it once in your app. At the root of your app is the best place
 toast.configure({
@@ -135,6 +136,11 @@ export const makeMainRoutes = () => {
             exact
             path="/listademandas/"
             render={props => provideClient(ListaDemandas, props)}
+          />
+          <Route
+            exact
+            path="/demanda/:param"
+            render={props => provideClient(Demanda, props)}
           />
           <Route
             exact
