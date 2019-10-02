@@ -24,6 +24,7 @@ const QUERY_DENUNCIA = gql`
       empreendedor_dados
       empreendimento
       empreendimento_dados
+      justificativa
     }
   }
 `;

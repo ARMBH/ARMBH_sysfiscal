@@ -31,7 +31,8 @@ class DenunciaConsulta extends Component {
       origem: "",
       updated_at: "",
       created_at: "",
-      status_demanda: ""
+      status_demanda: "",
+      justificativa: ""
     };
   }
 
@@ -89,6 +90,7 @@ class DenunciaConsulta extends Component {
               updated_at: variables.updated_at,
               created_at: variables.created_at,
               status_demanda: variables.status_demanda,
+              justificativa: variables.justificativa,
               exibir: true
             });
           } else toast.error("Denúncia não encontrada.");
@@ -115,7 +117,8 @@ class DenunciaConsulta extends Component {
       exibir,
       status_demanda,
       updated_at,
-      created_at
+      created_at,
+      justificativa
     } = this.state;
     //console.log(codigo);
     return (
@@ -243,6 +246,17 @@ class DenunciaConsulta extends Component {
                     </Form.Group>
                   </Grid.Col>
                 </Grid.Row>
+                {justificativa.length > 1 ? (
+                  <Grid.Row>
+                    <Grid.Col>
+                      <Form.Group label="Justificativa">
+                        {justificativa}
+                      </Form.Group>
+                    </Grid.Col>
+                  </Grid.Row>
+                ) : (
+                  ""
+                )}
               </React.Fragment>
               <Button
                 color="danger"
