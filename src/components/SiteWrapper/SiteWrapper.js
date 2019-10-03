@@ -102,11 +102,6 @@ const navBarItems: Array<navItem> = [
         value: "Listar Todos as demandas",
         to: "/listademandas/",
         LinkComponent: NavLink
-      },
-      {
-        value: "Cadastrar Interessado",
-        to: "/interessado/",
-        LinkComponent: NavLink
       }
     ]
   }
