@@ -34,11 +34,13 @@ class BotaoContadorDemandas extends Component {
           if (loading) return "Carregando...";
           if (error) return `Erro! ${error.message}`;
           if (data.demandas_aggregate.aggregate.count < 1) return "";
+
           return (
             <React.Fragment>
               <Link to="/listademandas">
                 <Button pill outline color="primary">
-                  {data.demandas_aggregate.aggregate.count} novas demandas
+                  {data.demandas_aggregate.aggregate.count} demanda
+                  {data.demandas_aggregate.aggregate.count > 1 ? "s" : ""}
                 </Button>
               </Link>
             </React.Fragment>
