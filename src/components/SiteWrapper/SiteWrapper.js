@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from "react";
-import { NavLink, withRouter } from "react-router-dom";
+import { NavLink, withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   Site,
@@ -9,6 +9,7 @@ import {
   Grid,
   List,
   Button,
+  Badge,
   RouterContextProvider
 } from "tabler-react";
 import "tabler-react/dist/Tabler.css";
@@ -16,6 +17,7 @@ import type { NotificationProps } from "tabler-react";
 import auth from "../Auth/Auth";
 import "./SiteWrapper.css";
 import { QUERY_USER, UPDATE_LASTSEEN_MUTATION } from "./SiteWrapperQueries";
+import BotaoContadorDemandas from "../Demanda/BotaoContadorDemandas";
 const authLogo = require("../../images/auth.png");
 
 type Props = {|
@@ -304,7 +306,7 @@ class SiteWrapper extends React.Component<Props, State> {
           imageURL: authLogo,
           navItems: (
             <Nav.Item type="div" className="d-none d-md-flex">
-              {/** Local do antigo botão SOURCE CODE */}
+              <BotaoContadorDemandas status_demanda="Nova" origem_id={3} />
             </Nav.Item>
           ),
           /** NOTIFICACOES

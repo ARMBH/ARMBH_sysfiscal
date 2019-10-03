@@ -172,13 +172,16 @@ const QUERY_TOTAL_STATUS_ID = gql`
   }
 `;
 
-const QUERY_TOTAL_INTERESSADOS = gql`
-  query getProcessos_Status($processo_id: Int!) {
-    processos_interessados_aggregate(
-      where: { processo_id: { _eq: $processo_id } }
+const QUERY_TOTAL_DEMANDAS = gql`
+  query getProcessos_Status($origem_id: Int!, $status_demanda: String!) {
+    demandas_aggregate(
+      where: {
+        origem_id: { _eq: $origem_id }
+        status_demanda: { _eq: $status_demanda }
+      }
     ) {
       aggregate {
-        count
+        count(columns: id)
       }
     }
   }
@@ -196,5 +199,5 @@ export {
   QUERY_TOTAL_HISTORICOS,
   QUERY_TOTAL_DOCUMENTOS,
   QUERY_TOTAL_STATUS_ID,
-  QUERY_TOTAL_INTERESSADOS
+  QUERY_TOTAL_DEMANDAS
 };

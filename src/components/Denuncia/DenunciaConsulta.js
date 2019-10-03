@@ -246,7 +246,7 @@ class DenunciaConsulta extends Component {
                     </Form.Group>
                   </Grid.Col>
                 </Grid.Row>
-                {justificativa.length > 1 ? (
+                {justificativa !== null ? (
                   <Grid.Row>
                     <Grid.Col>
                       <Form.Group label="Justificativa">
