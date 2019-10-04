@@ -69,6 +69,10 @@ class Demanda extends Component {
               justificativa: variables.justificativa
             });
             toast.success(codigo + ": " + status_novo + "!");
+            setTimeout(() => {
+              window.scrollTo(0, 0);
+              this.props.history.push("/listademandas/");
+            }, 2000);
             return true;
           } else {
             toast.error("Erro ao alterar demanda.");

@@ -52,6 +52,11 @@ class VincularDemandaProcesso extends Component {
                 " ao processo " +
                 processo_id
             );
+
+            setTimeout(() => {
+              window.scrollTo(0, 0);
+              this.props.history.push("/processo/" + processo_id);
+            }, 2000);
           } else {
             toast.error("Erro ao vincular demanda.");
             return false;
