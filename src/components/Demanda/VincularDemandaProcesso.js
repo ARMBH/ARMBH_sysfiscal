@@ -143,7 +143,7 @@ class VincularDemandaProcesso extends Component {
                     ? "Selecione um processo sem demandas"
                     : "Atenção! Os processos já possuem demandas"}
                 </option>
-                <Query query={QUERY_PROCESSOS}>
+                <Query query={QUERY_PROCESSOS} pollInterval={5000}>
                   {({ loading, error, data }) => {
                     if (loading) return "Carregando...";
                     if (error) return `Erro! ${error.message}`;
@@ -157,7 +157,11 @@ class VincularDemandaProcesso extends Component {
                               <option key={item.id} value={item.id}>
                                 {item.id} {" / "}
                                 {Moment(item.created_at).format("YYYY")} -{" "}
-                                {item.name} ({item.demanda_codigo})
+                                {item.name} (
+                                {item.demanda_codigo
+                                  ? item.demanda_codigo
+                                  : "N/A"}
+                                )
                               </option>
                             )}
                           </React.Fragment>
