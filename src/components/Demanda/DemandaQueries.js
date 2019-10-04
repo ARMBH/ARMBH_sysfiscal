@@ -1,31 +1,5 @@
 import gql from "graphql-tag";
 
-const ADD_PROCESSO = gql`
-  mutation(
-    $name: String!
-    $description: String!
-    $origem_id: Int!
-    $status_id: Int!
-    $municipio_id: Int!
-  ) {
-    insert_processos(
-      objects: {
-        name: $name
-        description: $description
-        origem_id: $origem_id
-        municipio_id: $municipio_id
-        status_id: $status_id
-      }
-    ) {
-      affected_rows
-      returning {
-        id
-        name
-      }
-    }
-  }
-`;
-
 const EDIT_DEMANDA = gql`
   mutation(
     $codigo: String!
@@ -41,6 +15,21 @@ const EDIT_DEMANDA = gql`
         status_demanda
         updated_at
         justificativa
+      }
+    }
+  }
+`;
+
+const EDIT_PROCESSO_DEMANDA = gql`
+  mutation($id: Int!, $demanda_codigo: String!) {
+    update_processos(
+      where: { id: { _eq: $id } }
+      _set: { demanda_codigo: $demanda_codigo }
+    ) {
+      affected_rows
+      returning {
+        id
+        demanda_codigo
       }
     }
   }
@@ -117,63 +106,8 @@ const QUERY_MUNICIPIOS = gql`
   }
 `;
 
-const QUERY_STATUS = gql`
-  {
-    status(order_by: { name: asc }) {
-      id
-      name
-      type
-    }
-  }
-`;
-
-const SUBSCRIPTION_TOTAL_PROCESSOS = gql`
-  subscription getProcessos {
-    processos_aggregate {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
-
-const QUERY_TOTAL_HISTORICOS = gql`
-  query totalHistoricos($processo_id: Int!) {
-    historicos_aggregate(where: { processo_id: { _eq: $processo_id } }) {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
-
-const QUERY_TOTAL_DOCUMENTOS = gql`
-  query totalDocumentos($processo_id: Int!) {
-    documentos_aggregate(where: { processo_id: { _eq: $processo_id } }) {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
-
-const QUERY_TOTAL_STATUS_ID = gql`
-  query getProcessos_Status($processo_id: Int!, $status_id: Int!) {
-    processos_status_aggregate(
-      where: {
-        processo_id: { _eq: $processo_id }
-        status_id: { _eq: $status_id }
-      }
-    ) {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
-
 const QUERY_TOTAL_DEMANDAS = gql`
-  query getProcessos_Status($origem_id: Int!, $status_demanda: String!) {
+  query getdemandas_aggregate($origem_id: Int!, $status_demanda: String!) {
     demandas_aggregate(
       where: {
         origem_id: { _eq: $origem_id }
@@ -187,17 +121,22 @@ const QUERY_TOTAL_DEMANDAS = gql`
   }
 `;
 
+const QUERY_DEMANDA_PROCESSO = gql`
+  query getDemandaProcesso($codigo: String!) {
+    processos(where: { demanda: { codigo: { _eq: $codigo } } }) {
+      id
+      demanda_codigo
+      name
+    }
+  }
+`;
 export {
   QUERY_DEMANDA,
   EDIT_DEMANDA,
-  ADD_PROCESSO,
   QUERY_DEMANDAS,
   QUERY_ORIGEMS,
   QUERY_MUNICIPIOS,
-  QUERY_STATUS,
-  SUBSCRIPTION_TOTAL_PROCESSOS,
-  QUERY_TOTAL_HISTORICOS,
-  QUERY_TOTAL_DOCUMENTOS,
-  QUERY_TOTAL_STATUS_ID,
-  QUERY_TOTAL_DEMANDAS
+  QUERY_TOTAL_DEMANDAS,
+  QUERY_DEMANDA_PROCESSO,
+  EDIT_PROCESSO_DEMANDA
 };

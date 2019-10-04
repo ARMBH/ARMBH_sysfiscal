@@ -20,8 +20,8 @@ class BotaoContadorDemandas extends Component {
 
   render() {
     const variables = {
-      status_demanda: "Nova",
-      origem_id: 3
+      status_demanda: this.props.status_demanda,
+      origem_id: this.props.origem_id
     };
 
     return (

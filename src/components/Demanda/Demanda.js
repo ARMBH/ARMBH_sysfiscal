@@ -12,26 +12,6 @@ Origens distintas:
     }
   }
 }
-Conta quantas são:
-{
-  demandas_aggregate(where: {origem_id: {_eq: 3}, status_demanda: {_eq: "Nova"}}) {
-    aggregate {
-      count(columns: id)
-    }
-  }
-}
-
-Update Demanda
-mutation {
-  update_demandas(where: {codigo: {_eq: "2019-09-27-TxF8Ho2J"}}, _set: {status_demanda: "Alterada"}) {
-    affected_rows
-    returning {
-      status_demanda
-      updated_at
-    }
-  }
-}
-
 
 */
 import React, { Component } from "react";
@@ -44,6 +24,7 @@ import { Form, Button, Page, Grid, Badge } from "tabler-react";
 import { toast } from "react-toastify";
 import MomentComponent from "react-moment";
 import "moment/locale/pt-br";
+import VincularDemandaProcesso from "./VincularDemandaProcesso";
 
 class Demanda extends Component {
   constructor() {
@@ -88,11 +69,16 @@ class Demanda extends Component {
               justificativa: variables.justificativa
             });
             toast.success(codigo + ": " + status_novo + "!");
-          } else toast.error("Erro ao alterar demanda.");
+            return true;
+          } else {
+            toast.error("Erro ao alterar demanda.");
+            return false;
+          }
         }
       })
       .catch(error => {
         toast.error("Atenção! " + error);
+        return false;
       });
   }
 
@@ -307,26 +293,28 @@ class Demanda extends Component {
                     </Form.Group>
                   </Grid.Col>
                 </Grid.Row>
-                <Button
-                  disabled={justificativa === null}
-                  icon="shopping-bag"
-                  onClick={() =>
-                    this.alteraDemanda(codigo, "Arquivada", justificativa)
-                  }
-                  color="danger"
-                >
-                  Arquivar Demanda
-                </Button>
-                <Button
-                  disabled={justificativa === null}
-                  icon="navigation"
-                  onClick={() =>
-                    this.alteraDemanda(codigo, "Em andamento", justificativa)
-                  }
-                  color="success"
-                >
-                  Vincular a um Processo
-                </Button>
+                <VincularDemandaProcesso
+                  {...this.props}
+                  codigo={codigo}
+                  justificativa={justificativa}
+                  alteraDemanda={this.alteraDemanda}
+                />
+                <Grid.Row>
+                  <Grid.Col width={3}>
+                    <Form.Group label="Outras Ações">
+                      <Button
+                        disabled={justificativa === null}
+                        icon="shopping-bag"
+                        onClick={() =>
+                          this.alteraDemanda(codigo, "Arquivada", justificativa)
+                        }
+                        color="danger"
+                      >
+                        Arquivar Demanda
+                      </Button>
+                    </Form.Group>
+                  </Grid.Col>
+                </Grid.Row>
               </Page.Card>
             </React.Fragment>
           ) : (
