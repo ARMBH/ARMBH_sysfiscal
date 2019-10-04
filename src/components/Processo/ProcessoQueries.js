@@ -91,6 +91,7 @@ const QUERY_PROCESSOS = gql`
         name
       }
       due_date
+      demanda_codigo
       user {
         id
         name

@@ -14,7 +14,8 @@ class VincularDemandaProcesso extends Component {
     super(props);
     this.state = {
       codigo: props.codigo,
-      processo_id: ""
+      processo_id: "",
+      jaDemanda: true
     };
   }
 
@@ -43,7 +44,10 @@ class VincularDemandaProcesso extends Component {
               this.props.client,
               processo_id,
               1,
-              "Demanda " + codigo + " vinculada ao processo"
+              "Demanda " +
+                codigo +
+                " vinculada ao processo: " +
+                this.props.justificativa
             );
 
             toast.success(
@@ -108,7 +112,7 @@ class VincularDemandaProcesso extends Component {
   };
 
   render() {
-    const { codigo, processo_id } = this.state;
+    const { codigo, processo_id, jaDemanda } = this.state;
     const variables = {
       status_demanda: "Nova",
       origem_id: 3
@@ -116,14 +120,29 @@ class VincularDemandaProcesso extends Component {
     return (
       <React.Fragment>
         <Grid.Row>
-          <Grid.Col width={9}>
+          <Grid.Col width={0}>
+            <Form.Group label="Selecionar">
+              <Form.Switch
+                name="tandcs"
+                value="tandcs"
+                checked={jaDemanda}
+                id={processo_id}
+                onChange={() => this.setState({ jaDemanda: !jaDemanda })}
+              />
+            </Form.Group>
+          </Grid.Col>
+          <Grid.Col width={8}>
             <Form.Group label="Processo">
               <Form.Select
                 name="processo_id"
                 value={processo_id}
                 onChange={this.handleChange}
               >
-                <option value="0">Selecione um processo</option>
+                <option value="0">
+                  {jaDemanda
+                    ? "Selecione um processo sem demandas"
+                    : "Atenção! Os processos já possuem demandas"}
+                </option>
                 <Query query={QUERY_PROCESSOS}>
                   {({ loading, error, data }) => {
                     if (loading) return "Carregando...";
@@ -131,11 +150,17 @@ class VincularDemandaProcesso extends Component {
                     return (
                       <React.Fragment>
                         {data.processos.map(item => (
-                          <option key={item.id} value={item.id}>
-                            {item.id} {" / "}
-                            {Moment(item.created_at).format("YYYY")} -{" "}
-                            {item.name}
-                          </option>
+                          <React.Fragment>
+                            {item.demanda_codigo && jaDemanda ? (
+                              ""
+                            ) : (
+                              <option key={item.id} value={item.id}>
+                                {item.id} {" / "}
+                                {Moment(item.created_at).format("YYYY")} -{" "}
+                                {item.name} ({item.demanda_codigo})
+                              </option>
+                            )}
+                          </React.Fragment>
                         ))}
                       </React.Fragment>
                     );
