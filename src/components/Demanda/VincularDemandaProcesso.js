@@ -134,7 +134,7 @@ class VincularDemandaProcesso extends Component {
                 value={processo_id}
                 onChange={this.handleChange}
               >
-                <option value="0">
+                <option key={"demanda0inicio"} value="0">
                   {jaDemanda
                     ? "Selecione um processo sem demandas"
                     : "Atenção! Os processos já possuem demandas"}
@@ -146,7 +146,7 @@ class VincularDemandaProcesso extends Component {
                     return (
                       <React.Fragment>
                         {data.processos.map(item => (
-                          <React.Fragment>
+                          <React.Fragment key={"topo" + item.id}>
                             {item.demanda_codigo && jaDemanda ? (
                               ""
                             ) : (
