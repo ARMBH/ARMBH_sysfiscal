@@ -30,7 +30,9 @@ class App extends Component {
       }, 5000);
 
     const { param } = this.props.match.params;
+    console.log(param);
     if (param === "logout") {
+      console.log(param);
       this.logout();
       alert("Sair!");
     }

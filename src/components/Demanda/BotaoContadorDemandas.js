@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { QUERY_TOTAL_DEMANDAS } from "./DemandaQueries";
 import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { Button, Badge } from "tabler-react";
+import { Button } from "tabler-react";
 
 class BotaoContadorDemandas extends Component {
   constructor() {

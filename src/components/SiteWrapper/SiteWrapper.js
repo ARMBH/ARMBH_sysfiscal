@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from "react";
-import { NavLink, withRouter, Link } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   Site,
@@ -9,7 +9,7 @@ import {
   Grid,
   List,
   Button,
-  Badge,
+  //Badge,
   RouterContextProvider
 } from "tabler-react";
 import "tabler-react/dist/Tabler.css";
@@ -193,7 +193,8 @@ class SiteWrapper extends React.Component<Props, State> {
             });
             //Confere roles
             if (localStorage.getItem("roles") !== data.data.users[0].role) {
-              this.props.history.push("/home/logout");
+              //Por enquanto os Roles não são automáticos e não há a devida conferencia no FRONTEND
+              //this.props.history.push("/home/logout");
             }
           }
         }

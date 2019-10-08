@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { EDIT_DEMANDA, EDIT_PROCESSO_DEMANDA } from "./DemandaQueries";
 import { Query } from "react-apollo";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { Button, Badge, Grid, Form } from "tabler-react";
+//import { Link } from "react-router-dom";
+import { Button, Grid, Form } from "tabler-react";
 import { toast } from "react-toastify";
 import { QUERY_PROCESSOS } from "../Processo/ProcessoQueries";
 import Moment from "moment";
@@ -113,10 +112,7 @@ class VincularDemandaProcesso extends Component {
 
   render() {
     const { codigo, processo_id, jaDemanda } = this.state;
-    const variables = {
-      status_demanda: "Nova",
-      origem_id: 3
-    };
+
     return (
       <React.Fragment>
         <Grid.Row>
