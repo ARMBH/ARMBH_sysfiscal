@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { registerLocale } from "react-datepicker";
 import ptBR from "date-fns/locale/pt-BR";
 import "react-datepicker/dist/react-datepicker.css";
+import DemandaSumario from "../Demanda/DemandaSumario";
 registerLocale("pt-BR", ptBR);
 
 class ProcessoFormDemanda extends Component {
@@ -102,21 +103,20 @@ class ProcessoFormDemanda extends Component {
                       <React.Fragment>
                         {demanda_codigo ? (
                           <React.Fragment>
-                            <Page.Card title={"Consulta à demanda"}>
-                              {demanda_codigo}
-                              <Button.List align="right">
-                                <Button
-                                  size="sm"
-                                  color="primary"
-                                  icon="edit"
-                                  onClick={() =>
-                                    this.gotoDemanda(demanda_codigo)
-                                  }
-                                >
-                                  Editar Demanda
-                                </Button>
-                              </Button.List>
-                            </Page.Card>
+                            <DemandaSumario
+                              codigo={demanda_codigo}
+                              {...this.props}
+                            />
+                            <Button.List align="right">
+                              <Button
+                                size="sm"
+                                color="primary"
+                                icon="edit"
+                                onClick={() => this.gotoDemanda(demanda_codigo)}
+                              >
+                                Editar Demanda
+                              </Button>
+                            </Button.List>
                           </React.Fragment>
                         ) : (
                           <React.Fragment>
