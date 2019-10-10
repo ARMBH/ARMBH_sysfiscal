@@ -5,6 +5,7 @@ import { QUERY_DENUNCIA } from "./DenunciaQueries";
 //import Moment from "moment";
 import MomentComponent from "react-moment";
 import "moment/locale/pt-br";
+import DenunciaRelatorio from "./DenunciaRelatorio";
 
 class DenunciaConsulta extends Component {
   constructor() {
@@ -149,115 +150,7 @@ class DenunciaConsulta extends Component {
         {codigo !== "" && codigo.length === 19 && exibir ? (
           <React.Fragment>
             <Page.Card title={"Consulta à denúncia"}>
-              <React.Fragment>
-                <Grid.Row>
-                  <Grid.Col width={6}>
-                    <Form.Group label="Código da denúncia">
-                      <strong>{codigo}</strong>
-                    </Form.Group>
-                  </Grid.Col>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Col width={6}>
-                    <Form.Group label="Data de cadastro">
-                      <MomentComponent format="DD/MM/YYYY HH:mm">
-                        {created_at}
-                      </MomentComponent>
-                    </Form.Group>
-                  </Grid.Col>
-                  <Grid.Col width={6}>
-                    <Form.Group label="Última atualização">
-                      <MomentComponent fromNow>{updated_at}</MomentComponent>
-                    </Form.Group>
-                  </Grid.Col>
-                </Grid.Row>
-
-                <Grid.Row>
-                  <Grid.Col width={6}>
-                    <Form.Group label="Origem da denúncia">{origem}</Form.Group>
-                  </Grid.Col>
-                  <Grid.Col width={6}>
-                    <Form.Group label="Status da Demanda">
-                      {status_demanda}
-                    </Form.Group>
-                  </Grid.Col>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Col>
-                    <Form.Group label="Descrição">{description}</Form.Group>
-                  </Grid.Col>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Col width={12}>
-                    <Form.Group label="Empreendimento">
-                      {empreendimento}
-                    </Form.Group>
-                  </Grid.Col>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Col>
-                    <Form.Group label="Dados do Empreendimento">
-                      {empreendimento_dados}
-                    </Form.Group>
-                  </Grid.Col>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Col width={12}>
-                    <Form.Group label="Empreendedor">{empreendedor}</Form.Group>
-                  </Grid.Col>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Col>
-                    <Form.Group label="Dados do Empreendedor">
-                      {empreendedor_dados}
-                    </Form.Group>
-                  </Grid.Col>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Col>
-                    <Form.Group label="Município">{municipio}</Form.Group>
-                  </Grid.Col>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Col width={6}>
-                    <Form.Group label="Coordenada X">{coordenada_x}</Form.Group>
-                  </Grid.Col>
-                  <Grid.Col width={6}>
-                    <Form.Group label="Coordenada Y">{coordenada_y}</Form.Group>
-
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={
-                        "https://www.google.com/maps/place/" +
-                        coordenada_x +
-                        "," +
-                        coordenada_y
-                      }
-                    >
-                      Visualizar no mapa
-                    </a>
-                  </Grid.Col>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Col>
-                    <Form.Group label="Ponto de Referência">
-                      {pto_de_referencia}
-                    </Form.Group>
-                  </Grid.Col>
-                </Grid.Row>
-                {justificativa !== null ? (
-                  <Grid.Row>
-                    <Grid.Col>
-                      <Form.Group label="Justificativa">
-                        {justificativa}
-                      </Form.Group>
-                    </Grid.Col>
-                  </Grid.Row>
-                ) : (
-                  ""
-                )}
-              </React.Fragment>
+              <DenunciaRelatorio codigo={codigo} {...this.props} />
               <Button
                 color="danger"
                 onClick={() => this.setState({ codigo: "", exibir: false })}

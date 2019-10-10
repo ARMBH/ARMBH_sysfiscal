@@ -14,6 +14,7 @@ import { registerLocale } from "react-datepicker";
 import ptBR from "date-fns/locale/pt-BR";
 import "react-datepicker/dist/react-datepicker.css";
 import InteressadoBuscaProcesso from "../Interessado/IntreressadoBuscaProcesso";
+import DenunciaRelatorio from "../Denuncia/DenunciaRelatorio";
 registerLocale("pt-BR", ptBR);
 
 class ProcessoFormDemanda extends Component {
@@ -74,6 +75,10 @@ class ProcessoFormDemanda extends Component {
     }
   }
 
+  gotoDemanda(id) {
+    this.props.history.push("/demanda/" + id);
+  }
+
   render() {
     //Declara variaveis do state/props para facilitar
     const { id, name, demanda_codigo } = this.state;
@@ -100,7 +105,24 @@ class ProcessoFormDemanda extends Component {
                       <React.Fragment>
                         {demanda_codigo ? (
                           <React.Fragment>
-                            <Page.Card>{demanda_codigo}</Page.Card>
+                            <Page.Card title={"Consulta à demanda"}>
+                              <DenunciaRelatorio
+                                codigo={demanda_codigo}
+                                {...this.props}
+                              />
+                              <Button.List align="right">
+                                <Button
+                                  size="sm"
+                                  color="primary"
+                                  icon="edit"
+                                  onClick={() =>
+                                    this.gotoDemanda(demanda_codigo)
+                                  }
+                                >
+                                  Editar Demanda
+                                </Button>
+                              </Button.List>
+                            </Page.Card>
                           </React.Fragment>
                         ) : (
                           <React.Fragment>
