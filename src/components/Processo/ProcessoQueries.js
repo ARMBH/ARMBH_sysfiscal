@@ -71,6 +71,7 @@ const QUERY_PROCESSO = gql`
       }
       municipio_id
       due_date
+      demanda_codigo
     }
   }
 `;
@@ -218,6 +219,15 @@ const QUERY_TOTAL_INTERESSADOS = gql`
   }
 `;
 
+const QUERY_PROCESSO_DEMANDA = gql`
+  query getProcesso($processo_id: Int!) {
+    processos(where: { id: { _eq: $processo_id } }) {
+      id
+      demanda_codigo
+    }
+  }
+`;
+
 export {
   QUERY_PROCESSO,
   EDIT_PROCESSO,
@@ -231,5 +241,6 @@ export {
   QUERY_TOTAL_HISTORICOS,
   QUERY_TOTAL_DOCUMENTOS,
   QUERY_TOTAL_STATUS_ID,
-  QUERY_TOTAL_INTERESSADOS
+  QUERY_TOTAL_INTERESSADOS,
+  QUERY_PROCESSO_DEMANDA
 };

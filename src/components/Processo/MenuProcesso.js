@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Button, Page, Grid, List, Badge } from "tabler-react";
+import { Button, Page, Grid, List, Badge, Icon } from "tabler-react";
 import {
   QUERY_TOTAL_HISTORICOS,
   QUERY_TOTAL_DOCUMENTOS,
   QUERY_TOTAL_STATUS_ID,
-  QUERY_TOTAL_INTERESSADOS
+  QUERY_TOTAL_INTERESSADOS,
+  QUERY_PROCESSO_DEMANDA
 } from "./ProcessoQueries";
 import { toast } from "react-toastify";
 
@@ -16,7 +17,8 @@ class MenuProcesso extends Component {
       total_historicos: this.getLocalStorageFor("historicos"),
       total_documentos: this.getLocalStorageFor("documentos"),
       total_vistorias: this.getLocalStorageFor("vistorias"),
-      total_interessados: this.getLocalStorageFor("interessados")
+      total_interessados: this.getLocalStorageFor("interessados"),
+      demanda_codigo: this.getLocalStorageFor("demanda")
     };
   }
   componentDidMount() {
@@ -38,6 +40,7 @@ class MenuProcesso extends Component {
           this.getTotalDocumentos(param);
           this.getTotalVistorias(param);
           this.getTotalInteressados(param);
+          this.getDemandaCodigo(param);
         }
       );
     } else {
@@ -62,6 +65,24 @@ class MenuProcesso extends Component {
               data.data.processos_status_aggregate.aggregate.count
           });
           this.setLocalStorageFor("vistorias", this.state.total_vistorias);
+        }
+      }
+    });
+  }
+
+  getDemandaCodigo(id) {
+    this.props.client.mutate({
+      mutation: QUERY_PROCESSO_DEMANDA,
+      variables: {
+        processo_id: id
+      },
+      update: (cache, data) => {
+        if (data) {
+          console.log(data.data.processos[0].demanda_codigo);
+          this.setState({
+            demanda_codigo: data.data.processos[0].demanda_codigo
+          });
+          this.setLocalStorageFor("demanda", this.state.demanda_codigo);
         }
       }
     });
@@ -137,7 +158,8 @@ class MenuProcesso extends Component {
       total_historicos,
       total_documentos,
       total_vistorias,
-      total_interessados
+      total_interessados,
+      demanda_codigo
     } = this.state;
     //console.log(this.props);
 
@@ -174,6 +196,23 @@ class MenuProcesso extends Component {
               Documentos{" "}
               <Badge className="ml-auto badge badge-primary">
                 {total_documentos}
+              </Badge>
+            </List.GroupItem>
+            <List.GroupItem
+              className="d-flex align-items-center"
+              to={"/processo/demanda/" + id}
+              icon="book"
+              RootComponent={NavLink}
+            >
+              Demanda{" "}
+              <Badge className="ml-auto badge badge-primary">
+                {demanda_codigo ? (
+                  <React.Fragment>
+                    <Icon name="check" />
+                  </React.Fragment>
+                ) : (
+                  ""
+                )}
               </Badge>
             </List.GroupItem>
             <List.GroupItem
