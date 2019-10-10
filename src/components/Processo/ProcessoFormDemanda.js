@@ -4,17 +4,14 @@ import { QUERY_PROCESSO } from "./ProcessoQueries";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import MenuProcesso from "./MenuProcesso";
-import ListaInteressados from "../Interessado/ListaInteressados";
 //Componentes de Terceiros
-import { Form, Button, Page, Grid, Container } from "tabler-react";
+import { Button, Page, Grid, Container } from "tabler-react";
 import { toast } from "react-toastify";
 //import { Link } from "react-router-dom";
 // Relativos à data:
 import { registerLocale } from "react-datepicker";
 import ptBR from "date-fns/locale/pt-BR";
 import "react-datepicker/dist/react-datepicker.css";
-import InteressadoBuscaProcesso from "../Interessado/IntreressadoBuscaProcesso";
-import DenunciaRelatorio from "../Denuncia/DenunciaRelatorio";
 registerLocale("pt-BR", ptBR);
 
 class ProcessoFormDemanda extends Component {
@@ -81,7 +78,7 @@ class ProcessoFormDemanda extends Component {
 
   render() {
     //Declara variaveis do state/props para facilitar
-    const { id, name, demanda_codigo } = this.state;
+    const { id, demanda_codigo } = this.state;
 
     //Adquire ID do user que está logado para verificar se ele pode editar o formulário
     /*
@@ -106,10 +103,7 @@ class ProcessoFormDemanda extends Component {
                         {demanda_codigo ? (
                           <React.Fragment>
                             <Page.Card title={"Consulta à demanda"}>
-                              <DenunciaRelatorio
-                                codigo={demanda_codigo}
-                                {...this.props}
-                              />
+                              {demanda_codigo}
                               <Button.List align="right">
                                 <Button
                                   size="sm"

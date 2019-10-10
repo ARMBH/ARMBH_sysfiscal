@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button, Page, Grid } from "tabler-react";
+import { Form, Grid } from "tabler-react";
 import { toast } from "react-toastify";
 import { QUERY_DENUNCIA } from "./DenunciaQueries";
 //import Moment from "moment";
@@ -14,8 +14,6 @@ class DenunciaRelatorio extends Component {
       textoBotao: "Carregando...",
       name: "",
       codigoCookie: "",
-      exibirNova: true,
-      exibeInformacoes: false,
       exibir: false,
       // Dados a serem enviados
       codigo: "",
@@ -101,7 +99,6 @@ class DenunciaRelatorio extends Component {
       empreendedor_dados,
       pto_de_referencia,
       origem,
-      exibir,
       status_demanda,
       updated_at,
       created_at,

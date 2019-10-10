@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { Form, Button, Page, Grid } from "tabler-react";
 import { toast } from "react-toastify";
 import { QUERY_DENUNCIA } from "./DenunciaQueries";
-//import Moment from "moment";
-import MomentComponent from "react-moment";
-import "moment/locale/pt-br";
 import DenunciaRelatorio from "./DenunciaRelatorio";
 
 class DenunciaConsulta extends Component {
@@ -19,21 +16,7 @@ class DenunciaConsulta extends Component {
       exibeInformacoes: false,
       exibir: false,
       // Dados a serem enviados
-      codigo: "",
-      description: "",
-      municipio: "",
-      coordenada_x: "",
-      coordenada_y: "",
-      empreendimento: "",
-      empreendimento_dados: "",
-      empreendedor: "",
-      empreendedor_dados: "",
-      pto_de_referencia: "",
-      origem: "",
-      updated_at: "",
-      created_at: "",
-      status_demanda: "",
-      justificativa: ""
+      codigo: ""
     };
   }
 
@@ -75,23 +58,8 @@ class DenunciaConsulta extends Component {
         },
         update: (cache, data) => {
           if (data.data.demandas[0]) {
-            let variables = data.data.demandas[0];
+            //let variables = data.data.demandas[0];
             this.setState({
-              existe: true,
-              description: variables.description,
-              municipio: variables.municipio.name,
-              coordenada_x: variables.coordenada_x,
-              coordenada_y: variables.coordenada_y,
-              empreendimento: variables.empreendimento,
-              empreendimento_dados: variables.empreendimento_dados,
-              empreendedor: variables.empreendedor,
-              empreendedor_dados: variables.empreendedor_dados,
-              pto_de_referencia: variables.pto_de_referencia,
-              origem: variables.origem.name,
-              updated_at: variables.updated_at,
-              created_at: variables.created_at,
-              status_demanda: variables.status_demanda,
-              justificativa: variables.justificativa,
               exibir: true
             });
           } else toast.error("Denúncia não encontrada.");
@@ -103,24 +71,7 @@ class DenunciaConsulta extends Component {
   }
 
   render() {
-    const {
-      codigo,
-      description,
-      municipio,
-      coordenada_x,
-      coordenada_y,
-      empreendimento,
-      empreendimento_dados,
-      empreendedor,
-      empreendedor_dados,
-      pto_de_referencia,
-      origem,
-      exibir,
-      status_demanda,
-      updated_at,
-      created_at,
-      justificativa
-    } = this.state;
+    const { codigo, exibir } = this.state;
     //console.log(codigo);
     return (
       <React.Fragment>

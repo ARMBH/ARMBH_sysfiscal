@@ -10,7 +10,7 @@ import WidgetProcessos from "../WidgetsProcessos/WidgetProcessos";
 import WidgetHistoricos from "../WidgetsHistoricos/WidgetHistoricos";
 //import Loading from '../Loading/Loading';
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
-import { Page, Grid, Card, StatsCard } from "tabler-react";
+import { Page, Grid, Card } from "tabler-react";
 import DemandaWidget from "../Demanda/DemandaWidget";
 
 //import auth from "../Auth/Auth";
