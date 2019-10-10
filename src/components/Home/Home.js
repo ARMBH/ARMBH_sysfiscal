@@ -11,6 +11,7 @@ import WidgetHistoricos from "../WidgetsHistoricos/WidgetHistoricos";
 //import Loading from '../Loading/Loading';
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import { Page, Grid, Card, StatsCard } from "tabler-react";
+import DemandaWidget from "../Demanda/DemandaWidget";
 
 //import auth from "../Auth/Auth";
 //import gql from 'graphql-tag';
@@ -30,7 +31,7 @@ class App extends Component {
       }, 5000);
 
     const { param } = this.props.match.params;
-    console.log(param);
+    //console.log(param);
     if (param === "logout") {
       console.log(param);
       this.logout();
@@ -44,38 +45,7 @@ class App extends Component {
             <React.Fragment>
               {/* <!-- INICIO ADMIN PERMISSAO widget -->*/}
               <Grid.Row cards={true}>
-                <Grid.Col width={6} sm={4} lg={2}>
-                  <StatsCard
-                    layout={1}
-                    movement={6}
-                    total="43"
-                    label="New Tickets"
-                  />
-                </Grid.Col>
-                <Grid.Col width={6} sm={4} lg={2}>
-                  <StatsCard
-                    layout={1}
-                    movement={-3}
-                    total="17"
-                    label="Closed Today"
-                  />
-                </Grid.Col>
-                <Grid.Col width={6} sm={4} lg={2}>
-                  <StatsCard
-                    layout={1}
-                    movement={9}
-                    total="7"
-                    label="New Replies"
-                  />
-                </Grid.Col>
-                <Grid.Col width={6} sm={4} lg={2}>
-                  <StatsCard
-                    layout={1}
-                    movement={3}
-                    total="27.3k"
-                    label="Followers"
-                  />
-                </Grid.Col>
+                <DemandaWidget total={true} />
                 <ProcessoWidget total={true} />
                 <OnlineUsers total={true} />
               </Grid.Row>

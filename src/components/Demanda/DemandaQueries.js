@@ -130,6 +130,17 @@ const QUERY_DEMANDA_PROCESSO = gql`
     }
   }
 `;
+
+const SUBSCRIPTION_TOTAL_DEMANDAS = gql`
+  subscription getDemandas {
+    demandas_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+`;
+
 export {
   QUERY_DEMANDA,
   EDIT_DEMANDA,
@@ -138,5 +149,6 @@ export {
   QUERY_MUNICIPIOS,
   QUERY_TOTAL_DEMANDAS,
   QUERY_DEMANDA_PROCESSO,
-  EDIT_PROCESSO_DEMANDA
+  EDIT_PROCESSO_DEMANDA,
+  SUBSCRIPTION_TOTAL_DEMANDAS
 };
