@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //Mutations
 import { Mutation } from "react-apollo";
 //import axios from "axios";
-import { QUERY_PROFILE, EDIT_PROFILE } from "./ProfileQueries";
+import { QUERY_PROFILE, EDIT_PROFILE } from "./AdminQueries";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 //Componentes de Terceiros
@@ -10,7 +10,7 @@ import { Form, Button, Page, Grid, Card, Avatar } from "tabler-react";
 import { toast } from "react-toastify";
 import Moment from "moment";
 
-class ProfileForm extends Component {
+class UserForm extends Component {
   constructor() {
     super();
     this.state = {
@@ -34,8 +34,6 @@ class ProfileForm extends Component {
           if (data) {
             //Configurar o preenchimento do AvatarURL
             let picture = require("../../images/user-icon.png");
-            if (localStorage.getItem("auth0:id_token:picture"))
-              picture = localStorage.getItem("auth0:id_token:picture");
             if (!data.data.users[0].name)
               toast.info("Por favor atualize seu Profile.");
             this.setState({
@@ -55,7 +53,9 @@ class ProfileForm extends Component {
   }
 
   componentDidMount() {
-    this.getUser(this.props.auth.getSub());
+    //Parametros do Routes.js
+    const { param } = this.props.match.params;
+    this.getUser(param);
   }
 
   handleChange = e => {
@@ -67,7 +67,7 @@ class ProfileForm extends Component {
     if (data.update_users.affected_rows) {
       let message = "Usuário " + this.state.email + " alterado com sucesso";
       toast.success(message);
-      this.props.history.push("/");
+      this.props.history.push("/admin/users");
     } else {
       toast.error("Erro ao editar usuário.");
     }
@@ -87,10 +87,18 @@ class ProfileForm extends Component {
 
     let contentTitle = "Editar usuário " + email;
     let cardTitle = name;
-
+    let context = {
+      headers: {
+        "x-hasura-role": "admin"
+      }
+    };
     return (
       <React.Fragment>
-        <Mutation mutation={EDIT_PROFILE} onCompleted={this.handleCompleted}>
+        <Mutation
+          mutation={EDIT_PROFILE}
+          onCompleted={this.handleCompleted}
+          context={context}
+        >
           {(mutationProfile, { loading, error }) => {
             return (
               <SiteWrapper {...this.props}>
@@ -216,7 +224,7 @@ class ProfileForm extends Component {
                     icon="chevrons-left"
                     onClick={() => this.props.history.push("/")}
                   >
-                    Voltar para a página Inicial
+                    Voltar
                   </Button>
                 </Page.Content>
               </SiteWrapper>
@@ -228,4 +236,4 @@ class ProfileForm extends Component {
   }
 }
 
-export default ProfileForm;
+export default UserForm;

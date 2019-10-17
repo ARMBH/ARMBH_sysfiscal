@@ -285,10 +285,22 @@ class SiteWrapper extends React.Component<Props, State> {
 
     let itemAdmin = {
       value: "Admin",
-      to: "/admin",
+      //to: "/admin",
       icon: "settings",
-      LinkComponent: NavLink,
-      useExact: true
+      //LinkComponent: NavLink,
+      //useExact: true,
+      subItems: [
+        {
+          value: "Dashboard",
+          to: "/admin/",
+          LinkComponent: NavLink
+        },
+        {
+          value: "Usuários",
+          to: "/admin/users",
+          LinkComponent: NavLink
+        }
+      ]
     };
 
     //Adiciona Item de administradores ao Menu
