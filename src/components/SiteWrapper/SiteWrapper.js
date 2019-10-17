@@ -290,8 +290,12 @@ class SiteWrapper extends React.Component<Props, State> {
       LinkComponent: NavLink,
       useExact: true
     };
+
     //Adiciona Item de administradores ao Menu
-    if (localStorage.getItem("roles").includes("admin"))
+    if (
+      localStorage.getItem("roles") &&
+      localStorage.getItem("roles").includes("admin")
+    )
       navBarItemsNew.push(itemAdmin);
 
     return (

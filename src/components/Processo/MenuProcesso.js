@@ -78,7 +78,7 @@ class MenuProcesso extends Component {
       },
       update: (cache, data) => {
         if (data) {
-          console.log(data.data.processos[0].demanda_codigo);
+          //console.log(data.data.processos[0].demanda_codigo);
           this.setState({
             demanda_codigo: data.data.processos[0].demanda_codigo
           });

@@ -42,7 +42,12 @@ class DashboardAdmin extends Component {
     this.state = { data: null };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    if (!localStorage.getItem("roles").includes("admin")) {
+      toast.error("Área reservada aos Admins.");
+      this.props.history.push("/home");
+    }
+  }
 
   getTotal() {
     this.props.client
@@ -69,10 +74,6 @@ class DashboardAdmin extends Component {
 
     let contentTitle = "Dashboard Administração";
     //let cardTitle = 'Dashboard Administração';
-
-    let { auth } = this.props;
-    let role = auth.getRolePayload();
-    console.log(role);
 
     return (
       <SiteWrapper {...this.props}>

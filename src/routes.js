@@ -63,6 +63,16 @@ const provideClient = (Component, renderProps) => {
     if (!client) {
       client = makeApolloClient();
     }
+
+    if (localStorage.getItem("roles") === "") {
+      localStorage.setItem("isLoggedIn", "false");
+      alert(
+        "Seu cadastro encontra-se em análise. Você receberá um e-mail quando o acesso estiver liberado."
+      );
+      //history.replace("/login");
+      return (window.location.href = "/login");
+    }
+
     return (
       <ApolloProvider client={client}>
         <Component {...renderProps} auth={auth} client={client} />
