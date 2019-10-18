@@ -81,7 +81,7 @@ class TabelaDemandas extends Component {
   }
   render() {
     const { updatedList, value } = this.state;
-    const { userLogado, data } = this.props;
+    const { data } = this.props;
     //console.log(userLogado);
     let cardTitle = "Nenhum usuário encontrado";
     if (updatedList.length > 0)

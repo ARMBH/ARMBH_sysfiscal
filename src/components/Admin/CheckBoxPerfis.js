@@ -1,20 +1,11 @@
 import React, { Component } from "react";
-//Mutations
-import { Mutation } from "react-apollo";
-//import axios from "axios";
-import { QUERY_PROFILE, EDIT_PROFILE } from "./AdminQueries";
-//Componentes do Projeto
-import SiteWrapper from "../SiteWrapper/SiteWrapper";
 //Componentes de Terceiros
-import { Form, Button, Page, Grid, Card, Avatar } from "tabler-react";
+import { Form, Page } from "tabler-react";
 import { toast } from "react-toastify";
-import Moment from "moment";
 import axios from "axios";
 
 class CheckBoxPerfis extends Component {
   constructor(props) {
-    console.log(process.env.REACT_APP_VERSAO);
-    console.log(process.env.REACT_APP_HOOK);
     super(props);
     this.state = {
       urlHook: "http://" + process.env.REACT_APP_HOOK + "/roles",
@@ -28,12 +19,14 @@ class CheckBoxPerfis extends Component {
   setUserRoles(roles, rolesUser) {
     let arr = roles;
     rolesUser.map(item => {
-      let obj = arr.find((o, i) => {
+      arr.find((o, i) => {
         if (o.id === item.id) {
           arr[i] = { check: true, ...arr[i] };
           return true; // stop searching
         }
+        return false;
       });
+      return arr;
     });
 
     //console.log(arr)
@@ -41,10 +34,11 @@ class CheckBoxPerfis extends Component {
   }
 
   setPerfilHasura() {
-    const { id, roles } = this.state;
+    const { roles } = this.state;
     let perfil = "";
     roles.map(item => {
       if (item["check"]) perfil = perfil + item["description"] + "/";
+      return item;
     });
 
     if (perfil === "") {
@@ -52,6 +46,7 @@ class CheckBoxPerfis extends Component {
     } else {
       perfil = perfil.slice(0, -1);
     }
+
     this.setState({ perfil: perfil });
     this.sendData(perfil);
   }
@@ -226,7 +221,7 @@ class CheckBoxPerfis extends Component {
   }
 
   render() {
-    const { id, roles, info } = this.state;
+    const { roles, info } = this.state;
 
     return (
       <Page.Card>

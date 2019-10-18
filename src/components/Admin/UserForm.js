@@ -10,7 +10,6 @@ import CheckBoxPerfis from "./CheckBoxPerfis";
 import { Form, Button, Page, Grid, Card, Avatar } from "tabler-react";
 import { toast } from "react-toastify";
 import Moment from "moment";
-import axios from "axios";
 
 class UserForm extends Component {
   constructor() {
@@ -23,8 +22,7 @@ class UserForm extends Component {
       email: "",
       role: "",
       picture: "",
-      created_at: "",
-      role: ""
+      created_at: ""
     };
   }
 
@@ -121,8 +119,7 @@ class UserForm extends Component {
       email,
       role,
       created_at,
-      picture,
-      roles
+      picture
     } = this.state;
 
     let contentTitle = "Editar usuário " + email;
