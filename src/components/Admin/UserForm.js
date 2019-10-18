@@ -259,6 +259,7 @@ class UserForm extends Component {
                       <CheckBoxPerfis
                         parentCallback={this.callbackFunction}
                         id={id}
+                        perfil={role}
                       />
                     ) : (
                       "Carregando Perfis..."

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 //Componentes de Terceiros
-import { Form, Page } from "tabler-react";
+import { Form, Page, Alert } from "tabler-react";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -12,7 +12,7 @@ class CheckBoxPerfis extends Component {
       id: props.id, //ID do usuario
       roles: [],
       info: "Carregando Perfis...",
-      perfil: ""
+      perfil: props.perfil
     };
   }
 
@@ -77,6 +77,9 @@ class CheckBoxPerfis extends Component {
       })
       .catch(err => {
         // handle error
+        this.setState({
+          info: "Erro: Este usuário foi excluído da base do Auth0"
+        });
         console.log(err);
       });
   }
@@ -102,6 +105,7 @@ class CheckBoxPerfis extends Component {
       .catch(err => {
         // handle error
         console.log(err);
+        this.setState({ info: "Erro: " + err });
       });
   }
 
@@ -221,7 +225,7 @@ class CheckBoxPerfis extends Component {
   }
 
   render() {
-    const { roles, info } = this.state;
+    const { roles, info, perfil } = this.state;
 
     return (
       <Page.Card>
@@ -243,6 +247,21 @@ class CheckBoxPerfis extends Component {
                       />
                     </React.Fragment>
                   ))}
+                  {perfil === "NOVO" ? (
+                    <Alert type="success" icon="plus-circle">
+                      "Atenção! Este usuário precisa ser autorizado. Escolha um
+                      perfil de acesso."
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
+                  {perfil === "Inativo" ? (
+                    <Alert type="danger" icon="alert-triangle">
+                      Atenção! Este usuário não pode mais entrar no sistema.
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
                 </React.Fragment>
               ) : (
                 "Carregando Perfis do usuário..."
