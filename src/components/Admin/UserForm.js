@@ -2,13 +2,15 @@ import React, { Component } from "react";
 //Mutations
 import { Mutation } from "react-apollo";
 //import axios from "axios";
-import { QUERY_PROFILE, EDIT_PROFILE } from "./AdminQueries";
+import { QUERY_PROFILE, EDIT_PROFILE, EDIT_ROLE } from "./AdminQueries";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
+import CheckBoxPerfis from "./CheckBoxPerfis";
 //Componentes de Terceiros
 import { Form, Button, Page, Grid, Card, Avatar } from "tabler-react";
 import { toast } from "react-toastify";
 import Moment from "moment";
+import axios from "axios";
 
 class UserForm extends Component {
   constructor() {
@@ -21,7 +23,8 @@ class UserForm extends Component {
       email: "",
       role: "",
       picture: "",
-      created_at: ""
+      created_at: "",
+      role: ""
     };
   }
 
@@ -34,8 +37,7 @@ class UserForm extends Component {
           if (data) {
             //Configurar o preenchimento do AvatarURL
             let picture = require("../../images/user-icon.png");
-            if (!data.data.users[0].name)
-              toast.info("Por favor atualize seu Profile.");
+            if (!data.data.users[0].name) toast.info("Usuário SEM NOME.");
             this.setState({
               id: id,
               name: data.data.users[0].name,
@@ -53,6 +55,10 @@ class UserForm extends Component {
   }
 
   componentDidMount() {
+    if (!localStorage.getItem("roles").includes("admin")) {
+      toast.error("Área reservada aos Admins.");
+      this.props.history.push("/home");
+    }
     //Parametros do Routes.js
     const { param } = this.props.match.params;
     this.getUser(param);
@@ -73,6 +79,39 @@ class UserForm extends Component {
     }
   };
 
+  callbackFunction = childData => {
+    const { id } = this.state;
+
+    this.props.client
+      .mutate({
+        mutation: EDIT_ROLE,
+        context: {
+          headers: {
+            "x-hasura-role": "admin"
+          }
+        },
+        variables: {
+          id: id,
+          role: childData
+        },
+        update: (cache, data) => {
+          //console.log(data);
+          if (data.data.update_users.returning) {
+            //console.log(data.data.update_users.affected_rows);
+            this.setState({ role: childData });
+            return true;
+          } else {
+            toast.error("Erro ao alterar perfil.");
+            return false;
+          }
+        }
+      })
+      .catch(error => {
+        toast.error("Atenção! " + error);
+        return false;
+      });
+  };
+
   render() {
     const {
       id,
@@ -82,7 +121,8 @@ class UserForm extends Component {
       email,
       role,
       created_at,
-      picture
+      picture,
+      roles
     } = this.state;
 
     let contentTitle = "Editar usuário " + email;
@@ -149,8 +189,7 @@ class UserForm extends Component {
                         <Grid.Col>
                           <Form.Group>
                             <Form.Label>Perfil</Form.Label>
-                            {role.charAt(0).toUpperCase()}
-                            {role.slice(1)}
+                            {role}
                           </Form.Group>
                         </Grid.Col>
                         <Grid.Col>
@@ -219,10 +258,18 @@ class UserForm extends Component {
                         </Button>
                       </Form.Footer>
                     </Page.Card>
+                    {id ? (
+                      <CheckBoxPerfis
+                        parentCallback={this.callbackFunction}
+                        id={id}
+                      />
+                    ) : (
+                      "Carregando Perfis..."
+                    )}
                   </Form>
                   <Button
                     icon="chevrons-left"
-                    onClick={() => this.props.history.push("/")}
+                    onClick={() => this.props.history.push("/admin/users")}
                   >
                     Voltar
                   </Button>

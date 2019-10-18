@@ -47,6 +47,10 @@ class TabelaDemandas extends Component {
             .toLowerCase()
             .toString()
             .search(searchValue) !== -1 ||
+          item.role
+            .toLowerCase()
+            .toString()
+            .search(searchValue) !== -1 ||
           item.cpf
             .toLowerCase()
             .toString()
@@ -143,7 +147,7 @@ class TabelaDemandas extends Component {
                       <Table.Col>{user.cpf}</Table.Col>
                       <Table.Col>
                         <Highlight matchClass="highlightNovo" search={value}>
-                          <Link title={user.name} to={"admin/user/" + user.id}>
+                          <Link title={user.name} to={"/admin/user/" + user.id}>
                             {user.name}
                           </Link>
                         </Highlight>

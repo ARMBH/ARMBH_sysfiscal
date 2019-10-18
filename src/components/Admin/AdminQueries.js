@@ -44,4 +44,16 @@ const EDIT_PROFILE = gql`
   }
 `;
 
-export { QUERY_PROFILE, EDIT_PROFILE, QUERY_USERS };
+const EDIT_ROLE = gql`
+  mutation($id: String!, $role: String!) {
+    update_users(where: { id: { _eq: $id } }, _set: { role: $role }) {
+      affected_rows
+      returning {
+        id
+        email
+      }
+    }
+  }
+`;
+
+export { QUERY_PROFILE, EDIT_PROFILE, QUERY_USERS, EDIT_ROLE };
