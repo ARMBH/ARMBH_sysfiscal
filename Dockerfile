@@ -1,21 +1,13 @@
-# Este Docker File ainda não funciona
-FROM node:carbon
-
-# Create app directory
+FROM mhart/alpine-node:11 AS builder
 WORKDIR /app
+COPY . .
+RUN npm install -g --silent
+RUN npm install react-scripts -g --silent
+RUN yarn run build
 
-# Install app dependencies
-RUN npm -g install serve
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json ./
+FROM mhart/alpine-node
+RUN yarn global add serve
+WORKDIR /app
+COPY --from=builder /app/build .
+CMD ["serve", "-p", "80", "-s", "."]
 
-RUN npm install
-
-# Bundle app source
-COPY src /app
-#Build react/vue/angular bundle static files
-RUN npm run build
-
-# EXPOSE 8080
-# serve dist folder on port 8080
-# CMD ["serve", "-s", "dist", "-p", "8080"]

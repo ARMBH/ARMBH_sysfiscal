@@ -17,4 +17,3 @@ export const authDomain = process.env.REACT_APP_AUTHDOMAIN;
 export const callbackUrl = `${scheme(
   "http"
 )}://${REACT_APOLLO_FRONTEND}/callback`;
-export const telegramBotToken = process.env.REACT_APP_TELEGRAMBOTTOKEN; //Token do BOT do Telegram para envio de notificações
