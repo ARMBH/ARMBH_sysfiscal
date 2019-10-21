@@ -133,7 +133,7 @@ class CheckBoxPerfis extends Component {
       .then(response => {
         //console.log(response.data);
         //Se sucesso:
-        toast.success("Role adicionada com sucesso: " + role["description"]);
+        toast.success("Perfil adicionado com sucesso: " + role["description"]);
         this.alterCheckRole(index);
       })
       .catch(err => {
@@ -167,7 +167,7 @@ class CheckBoxPerfis extends Component {
       .then(response => {
         //console.log(response.data);
         //Se sucesso:
-        toast.success("Role removida com sucesso: " + role["description"]);
+        toast.success("Perfil removido com sucesso: " + role["description"]);
         this.alterCheckRole(index);
       })
       .catch(err => {
@@ -249,8 +249,8 @@ class CheckBoxPerfis extends Component {
                   ))}
                   {perfil === "NOVO" ? (
                     <Alert type="success" icon="plus-circle">
-                      "Atenção! Este usuário precisa ser autorizado. Escolha um
-                      perfil de acesso."
+                      Atenção! Este usuário precisa ser autorizado. Escolha um
+                      perfil de acesso.
                     </Alert>
                   ) : (
                     ""
