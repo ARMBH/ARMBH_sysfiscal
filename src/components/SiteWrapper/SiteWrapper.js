@@ -352,6 +352,7 @@ class SiteWrapper extends React.Component<Props, State> {
         navProps={{ itemsObjects: navBarItemsNew }}
         routerContextComponentType={withRouter(RouterContextProvider)}
         footerProps={{
+          /*
           links: [
             <a>First Link</a>,
             <a>Second Link</a>,
@@ -362,13 +363,14 @@ class SiteWrapper extends React.Component<Props, State> {
             <a>Seventh Link</a>,
             <a>Eigth Link</a>
           ],
+          */
           note: (
             <React.Fragment>
               Sistema de Fiscalização Digital
               {process.env.NODE_ENV === "production" ? (
                 <span>
                   {" "}
-                  <br /> Produção - {process.env.NODE_ENV}
+                  <br /> Produção
                 </span>
               ) : (
                 <span>

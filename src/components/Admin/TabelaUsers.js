@@ -184,18 +184,7 @@ class TabelaDemandas extends Component {
           ) : (
             <Card.Body>Nenhuma user encontrada.</Card.Body>
           )}
-          <Card.Footer>
-            {" "}
-            <Button.List align="right">
-              <Button
-                color="success"
-                icon="file-plus"
-                onClick={() => this.props.history.push("/novauser/")}
-              >
-                Adicionar Nova user
-              </Button>
-            </Button.List>
-          </Card.Footer>
+          <Card.Footer />
         </Card>
       </React.Fragment>
     );
