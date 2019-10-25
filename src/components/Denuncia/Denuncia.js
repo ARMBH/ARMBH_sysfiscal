@@ -14,6 +14,7 @@ class Denuncia extends Component {
   }
 
   componentDidMount() {
+    window.localStorage.clear();
     //Parametros da URL (após o ?)
     const paramsUrl = new URLSearchParams(this.props.location.search);
     const codigo = paramsUrl.get("codigo");

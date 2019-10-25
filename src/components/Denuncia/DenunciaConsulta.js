@@ -40,6 +40,7 @@ class DenunciaConsulta extends Component {
   }
 
   componentDidMount() {
+    window.localStorage.clear();
     const codigo = this.props.codigo;
     if (codigo) {
       this.setState({ codigo: codigo });
