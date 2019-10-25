@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Form, Button, Page, Grid, Alert } from "tabler-react";
+import { Form, Button, Page, Grid, Alert, Icon } from "tabler-react";
 import MomentPure from "moment";
 import { toast } from "react-toastify";
 //Mutations
 import { Query } from "react-apollo";
 import { QUERY_MUNICIPIOS } from "../Processo/ProcessoQueries";
 import { ADD_DENUNCIA } from "./DenunciaQueries";
+import ReactTooltip from "react-tooltip";
 
 class DenunciaNova extends Component {
   constructor(props) {
@@ -24,7 +25,9 @@ class DenunciaNova extends Component {
       empreendimento_dados: "",
       empreendedor: "",
       empreendedor_dados: "",
-      pto_de_referencia: ""
+      pto_de_referencia: "",
+      feedback: "",
+      touched: false
     };
   }
 
@@ -75,8 +78,8 @@ class DenunciaNova extends Component {
   }
 
   setDenuncia(variables) {
-    console.log(variables);
-
+    //console.log(variables);
+    this.setState({ touched: true });
     this.props.client
       .mutate({
         mutation: ADD_DENUNCIA,
@@ -88,7 +91,7 @@ class DenunciaNova extends Component {
         },
         update: (cache, data) => {
           if (data) {
-            console.log(data);
+            //console.log(data);
             this.setState({
               disableForm: true,
               textoBotao: "Aguarde 24h p/ enviar nova denúncia",
@@ -100,7 +103,9 @@ class DenunciaNova extends Component {
         }
       })
       .catch(error => {
-        toast.error("Atenção! " + error);
+        console.log("Atenção! " + error);
+        toast.error("Preencha todos os campos obrigatórios.");
+        this.setState({ feedback: "Este campo é obrigatório" });
       });
   }
 
@@ -124,7 +129,9 @@ class DenunciaNova extends Component {
       empreendimento_dados,
       empreendedor,
       empreendedor_dados,
-      pto_de_referencia
+      pto_de_referencia,
+      feedback,
+      touched
     } = this.state;
     let cardTitle = "Nova Denúncia Anônima ";
     let variables = {};
@@ -172,14 +179,24 @@ class DenunciaNova extends Component {
                   codigo: this.randomstring(8)
                 };
                 let permitir = true;
+                //Falta determinar os campos obrigatórios
                 for (var key in variables) {
                   if (variables.hasOwnProperty(key)) {
                     //console.log(key + " -> " + variables[key]);
-                    if (variables[key] === "") permitir = false;
+                    if (variables[key] === "") {
+                      variables[key] = null;
+                      if (
+                        key === "coordenada_x" ||
+                        key === "coordenada_y" ||
+                        key === "empreendedor" ||
+                        key === "empreendedor_dados"
+                      )
+                        variables[key] = "";
+                    }
                   }
                 }
 
-                console.log(variables);
+                //console.log(variables);
                 //CriaCookie para permitir denúncia apenas daqui a 24h
                 //this.criaCookie(variables.codigo);
                 if (permitir) this.setDenuncia(variables);
@@ -192,21 +209,50 @@ class DenunciaNova extends Component {
                     <Form.Textarea
                       name="description"
                       value={description}
-                      placeholder="Descreva a denúncia..."
+                      placeholder="Descreva o tipo de atividade que está ocorrendo no local (venda de lotes, desmatamento, abertura de vias, construções, etc.) "
                       rows={6}
                       onChange={this.handleChange}
+                      feedback={feedback}
+                      invalid={touched && description.length === 0}
+                      valid={description.length >= 3}
+                      tick={description.length >= 3}
                     />
                   </Form.Group>
                 </Grid.Col>
               </Grid.Row>
               <Grid.Row>
                 <Grid.Col width={12}>
-                  <Form.Group label="Empreendimento">
+                  <Form.Group
+                    label={
+                      <React.Fragment>
+                        <strong>Empreendimento</strong>
+                        <a data-tip data-for="empreendimento">
+                          {" "}
+                          <Icon name="help-circle" />
+                        </a>
+                        <ReactTooltip id="empreendimento">
+                          <p>
+                            Digite o nome do Empreendimento
+                            <br />
+                            (Ex: Condomínio Vale do Paraiso,
+                            <br /> Bairro das Oliveiras,
+                            <br /> Fazenda Mato Verde,
+                            <br />
+                            etc.)
+                          </p>
+                        </ReactTooltip>
+                      </React.Fragment>
+                    }
+                  >
                     <Form.Input
                       value={empreendimento}
                       name="empreendimento"
                       placeholder="Digite o nome do Empreendimento..."
                       onChange={this.handleChange}
+                      feedback={feedback}
+                      invalid={touched && empreendimento.length === 0}
+                      valid={empreendimento.length >= 3}
+                      tick={empreendimento.length >= 3}
                     />
                   </Form.Group>
                 </Grid.Col>
@@ -217,9 +263,13 @@ class DenunciaNova extends Component {
                     <Form.Textarea
                       name="empreendimento_dados"
                       value={empreendimento_dados}
-                      placeholder="Descreva os dados do empreendimento..."
+                      placeholder="Descreva os dados  e endereço do empreendimento: rua, fazenda, bairro, etc."
                       rows={6}
                       onChange={this.handleChange}
+                      feedback={feedback}
+                      invalid={touched && empreendimento_dados.length === 0}
+                      valid={empreendimento_dados.length >= 3}
+                      tick={empreendimento_dados.length >= 3}
                     />
                   </Form.Group>
                 </Grid.Col>
@@ -230,7 +280,7 @@ class DenunciaNova extends Component {
                     <Form.Input
                       value={empreendedor}
                       name="empreendedor"
-                      placeholder="Digite o nome do Empreendedor..."
+                      placeholder="Digite o nome do responsável pelo parcelamento/e ou atividades no local objeto da denúncia (vendedor dos lotes, responsável pelas intervenções e obras no local)."
                       onChange={this.handleChange}
                     />
                   </Form.Group>
@@ -242,7 +292,7 @@ class DenunciaNova extends Component {
                     <Form.Textarea
                       name="empreendedor_dados"
                       value={empreendedor_dados}
-                      placeholder="Descreva os dados do empreendedor..."
+                      placeholder="Descreva os dados do empreendedor, endereço do responsável pelo parcelamento/e ou atividades no local objeto da denúncia. ..."
                       rows={6}
                       onChange={this.handleChange}
                     />
@@ -257,6 +307,10 @@ class DenunciaNova extends Component {
                       name="municipio_id"
                       value={municipio_id}
                       onChange={this.handleChange}
+                      feedback={feedback}
+                      invalid={touched && municipio_id.length === 0}
+                      valid={municipio_id.length > 0}
+                      tick={municipio_id.length > 0}
                     >
                       <option value="0">Selecione um município</option>
                       <Query query={QUERY_MUNICIPIOS}>
@@ -280,21 +334,47 @@ class DenunciaNova extends Component {
               </Grid.Row>
               <Grid.Row>
                 <Grid.Col width={6}>
-                  <Form.Group label="Coordenada X">
+                  <Form.Group
+                    label={
+                      <React.Fragment>
+                        <strong>Coordenada X</strong>
+                        <a data-tip data-for="coordenada">
+                          {" "}
+                          <Icon name="help-circle" />
+                        </a>
+                        <ReactTooltip id="coordenada">
+                          <p>
+                            Coordenadas UTM ou qualquer outro sistema (por ex.
+                            Google Earth)
+                          </p>
+                        </ReactTooltip>
+                      </React.Fragment>
+                    }
+                  >
                     <Form.Input
                       value={coordenada_x}
                       name="coordenada_x"
-                      placeholder="Digite a coordenada..."
+                      placeholder="Digite a coordenada X..."
                       onChange={this.handleChange}
                     />
                   </Form.Group>
                 </Grid.Col>
                 <Grid.Col width={6}>
-                  <Form.Group label="Coordenada Y">
+                  <Form.Group
+                    label={
+                      <React.Fragment>
+                        <strong>Coordenada Y</strong>
+                        <a data-tip data-for="coordenada">
+                          {" "}
+                          <Icon name="help-circle" />
+                        </a>
+                      </React.Fragment>
+                    }
+                  >
                     <Form.Input
                       value={coordenada_y}
                       name="coordenada_y"
-                      placeholder="Digite a coordenada..."
+                      placeholder="Digite a coordenada Y..."
                       onChange={this.handleChange}
                     />
                   </Form.Group>
@@ -309,6 +389,10 @@ class DenunciaNova extends Component {
                       placeholder="Digite um ponto de referência..."
                       rows={6}
                       onChange={this.handleChange}
+                      feedback={feedback}
+                      invalid={touched && pto_de_referencia.length === 0}
+                      valid={pto_de_referencia.length >= 3}
+                      tick={pto_de_referencia.length >= 3}
                     />
                   </Form.Group>
                 </Grid.Col>
