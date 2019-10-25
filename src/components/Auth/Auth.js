@@ -1,7 +1,11 @@
 import history from "../../utils/history";
 import auth0 from "auth0-js";
 import { AUTH_CONFIG } from "./auth0-variables";
-
+import {
+  authDomain,
+  authClientId,
+  REACT_APOLLO_FRONTEND
+} from "../../utils/constants";
 class Auth {
   auth0 = new auth0.WebAuth({
     domain: AUTH_CONFIG.domain,
@@ -125,7 +129,15 @@ class Auth {
     localStorage.removeItem("isLoggedIn");
     localStorage.clear();
     // navigate to the home route
-    history.replace("/");
+    //Limpa cookies Auth0:
+    window.location.href =
+      "https://" +
+      authDomain +
+      "/v2/logout?client_id=" +
+      authClientId +
+      "&returnTo=http://" +
+      REACT_APOLLO_FRONTEND;
+    //history.replace(authDomain + "/");
     // window.location.href="/home";
   }
 

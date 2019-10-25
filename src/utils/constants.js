@@ -1,6 +1,7 @@
 const HASURA_GRAPHQL_ENGINE_HOSTNAME =
   process.env.REACT_APP_HASURA_GRAPHQL_ENGINE_HOSTNAME;
-const REACT_APOLLO_FRONTEND = process.env.REACT_APP_REACT_APOLLO_FRONTEND;
+export const REACT_APOLLO_FRONTEND =
+  process.env.REACT_APP_REACT_APOLLO_FRONTEND;
 
 const scheme = proto => {
   return window.location.protocol === "https:" ? `${proto}s` : proto;
