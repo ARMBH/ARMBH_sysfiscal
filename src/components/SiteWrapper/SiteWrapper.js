@@ -218,10 +218,7 @@ class SiteWrapper extends React.Component<Props, State> {
 
     if (localStorage.getItem("isLoggedIn") === "true") {
       // eslint-disable-next-line
-      const lastSeenMutation = setInterval(
-        this.updateLastSeen.bind(this),
-        15000
-      );
+      this.updateLastSeen.bind(this);
 
       renewSession().then(data => {
         if (localStorage.getItem("session") !== "true") {
