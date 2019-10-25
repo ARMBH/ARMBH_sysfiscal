@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 //import moment from 'moment';
 import TodoPrivateWrapper from "../Todo/TodoPrivateWrapper";
-import OnlineUsers from "../OnlineUsers/OnlineUsers";
-import ProcessoWidget from "../Processo/ProcessoWidget";
+
 import ChartMunicipio from "../Charts/ChartMunicipio";
 import ChartStatus from "../Charts/ChartStatus";
 import WidgetProcessos from "../WidgetsProcessos/WidgetProcessos";
@@ -11,7 +10,6 @@ import WidgetHistoricos from "../WidgetsHistoricos/WidgetHistoricos";
 //import Loading from '../Loading/Loading';
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 import { Page, Grid, Card } from "tabler-react";
-import DemandaWidget from "../Demanda/DemandaWidget";
 
 //import auth from "../Auth/Auth";
 //import gql from 'graphql-tag';
@@ -41,27 +39,7 @@ class App extends Component {
     return (
       <SiteWrapper {...this.props}>
         <Page.Content title="Página Inicial">
-          {role && role[0] === "admin" ? (
-            <React.Fragment>
-              {/* <!-- INICIO ADMIN PERMISSAO widget -->*/}
-              <Grid.Row cards={true}>
-                <DemandaWidget total={true} />
-                <ProcessoWidget total={true} />
-                <OnlineUsers total={true} />
-              </Grid.Row>
-              {/* <!-- ONLINE widget -->*/}
-              <Grid.Row>
-                <Grid.Col lg={12}>
-                  <h4>Usuários Online</h4>
-                </Grid.Col>
-                <OnlineUsers total={false} />
-              </Grid.Row>
-              {/* <!-- FIM ONLINE widget -->*/}
-              {/* <!-- FIM ADMIN PERMISSAO widget -->*/}
-            </React.Fragment>
-          ) : (
-            ""
-          )}
+          {role && role[0] === "admin" ? "Perfil: Admin" : ""}
           <Grid.Row>
             <Grid.Col lg={6}>
               <Card>

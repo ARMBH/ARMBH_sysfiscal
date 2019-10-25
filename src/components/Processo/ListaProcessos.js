@@ -16,6 +16,7 @@ class ListaProcessos extends Component {
   componentDidMount() {
     //console.log(Date());
     this.setState({ last_update: Date() });
+    console.log("Montou");
   }
 
   render() {
@@ -28,10 +29,11 @@ class ListaProcessos extends Component {
       <SiteWrapper {...this.props}>
         <Page.Content title={contentTitle}>
           <Grid.Row cards deck>
-            <Query query={QUERY_PROCESSOS_STATUS} pollInterval={5000}>
+            <Query query={QUERY_PROCESSOS_STATUS} fetchPolicy="no-cache">
               {({ loading, error, data }) => {
                 if (loading) return "Carregando...";
                 if (error) return `Erro! ${error.message}`;
+                console.log(data);
                 return (
                   <React.Fragment>
                     <TabelaProcessos

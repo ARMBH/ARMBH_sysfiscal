@@ -220,7 +220,7 @@ class SiteWrapper extends React.Component<Props, State> {
       // eslint-disable-next-line
       const lastSeenMutation = setInterval(
         this.updateLastSeen.bind(this),
-        5000
+        15000
       );
 
       renewSession().then(data => {
@@ -276,7 +276,6 @@ class SiteWrapper extends React.Component<Props, State> {
     const notificationsObjects = this.state.notificationsObjects || [];
 		const unreadCount = this.state.notificationsObjects.reduce((a, v) => a || v.unread, false);
     */
-
     const userId = auth.getSub();
     if (userId) this.getUser(userId);
 

@@ -23,7 +23,7 @@ class ListaInteressados extends Component {
 
     return (
       <Query
-        pollInterval={3000}
+        fetchPolicy="no-cache"
         query={QUERY_INTERESSADOS}
         variables={variables}
       >

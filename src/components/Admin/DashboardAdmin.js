@@ -2,9 +2,12 @@ import React, { Component } from "react";
 //Componentes do Projeto
 import SiteWrapper from "../SiteWrapper/SiteWrapper";
 //Componentes de Terceiros
-import { Button, Page, Card } from "tabler-react";
+import { Button, Page, Card, Grid } from "tabler-react";
 import { toast } from "react-toastify";
 import gql from "graphql-tag";
+import OnlineUsers from "../OnlineUsers/OnlineUsers";
+import ProcessoWidget from "../Processo/ProcessoWidget";
+import DemandaWidget from "../Demanda/DemandaWidget";
 
 const QUERY_TOTAL = gql`
   {
@@ -78,6 +81,23 @@ class DashboardAdmin extends Component {
     return (
       <SiteWrapper {...this.props}>
         <Page.Content title={contentTitle}>
+          <React.Fragment>
+            {/* <!-- INICIO ADMIN PERMISSAO widget -->*/}
+            <Grid.Row cards={true}>
+              <DemandaWidget total={true} />
+              <ProcessoWidget total={true} />
+              <OnlineUsers total={true} />
+            </Grid.Row>
+            {/* <!-- ONLINE widget -->*/}
+            <Grid.Row>
+              <Grid.Col lg={12}>
+                <h4>Usuários Online</h4>
+              </Grid.Col>
+              <OnlineUsers total={false} />
+            </Grid.Row>
+            {/* <!-- FIM ONLINE widget -->*/}
+            {/* <!-- FIM ADMIN PERMISSAO widget -->*/}
+          </React.Fragment>
           <Card>
             <Button onClick={() => this.getTotal()}>Calcular Total</Button>
           </Card>
