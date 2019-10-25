@@ -72,19 +72,25 @@ class EnderecoForm extends Component {
       this.setState({ disableForm: true });
       toast.info("Buscando CEP " + e.target.value);
       const apiEnd = "https://viacep.com.br/ws/" + e.target.value + "/json/";
-      axios.get(apiEnd).then(res => {
-        let data = res.data;
-        if (data.erro) {
-          toast.error("Erro ao buscar CEP.");
-        } else {
-          //console.log(data);
-          toast.success("Endereço encontrado!");
-          this.setState({ ...data }, () => {
-            //console.log("Preenche endereço.");
-          });
-        }
-        this.setState({ disableForm: false });
-      });
+      axios
+        .get(apiEnd)
+        .then(res => {
+          let data = res.data;
+          if (data.erro) {
+            toast.error("Erro ao buscar CEP.");
+          } else {
+            //console.log(data);
+            toast.success("Endereço encontrado!");
+            this.setState({ ...data }, () => {
+              //console.log("Preenche endereço.");
+            });
+          }
+          this.setState({ disableForm: false });
+        })
+        .catch(error => {
+          this.setState({ disableForm: false });
+          toast.error("Erro ao buscar CEP: " + error);
+        });
     }
   };
 
